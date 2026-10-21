@@ -1,0 +1,1735 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<meta name="googlebot" content="noindex,nofollow">
+<meta name="referrer" content="no-referrer">
+<meta name="theme-color" content="#2563eb">
+<meta name="apple-mobile-web-app-title" content="NCLEX Trainer">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%2214%22%20fill%3D%22%232563eb%22%2F%3E%3Cpath%20d%3D%22M27%2014h10v13h13v10H37v13H27V37H14V27h13z%22%20fill%3D%22%23fff%22%2F%3E%3C%2Fsvg%3E">
+<link rel="icon" href="data:,">
+<title>NCLEX Case Study Trainer</title>
+<style>
+:root{--bg:#f6f7fb;--card:#fff;--ink:#1d2433;--mute:#5b6577;--line:#e3e7ef;--pri:#3157d5;--prisoft:#e8ecf7;--ok:#1f9d55;--okbg:#e3f6ea;--near:#9a6412;--nearbg:#fdf3dc;--bad:#c53030;--badbg:#fde8e8;--none:#eef0f4;--inner:#fbfcff;--hl:#fff1a8;--hdr:#1e2a4a;
+--hA:#bfe8cf;--hAi:#145c34;--hN:#f8dd9c;--hNi:#6b450c;--hB:#f5b5b5;--hBi:#7d1d1d}
+[data-theme=dark]{--bg:#11151f;--card:#1a2030;--ink:#e6e9f0;--mute:#9aa3b5;--line:#2c3448;--pri:#7b9bff;--prisoft:#26304a;--ok:#5fd08f;--okbg:#173626;--near:#f0c060;--nearbg:#3a2f14;--bad:#ff8a8a;--badbg:#3d1d1f;--none:#262d3d;--inner:#161b28;--hl:#6b5a12;--hdr:#0b0f18;
+--hA:#1f5c3a;--hAi:#c8f5d9;--hN:#6b5113;--hNi:#ffe6a6;--hB:#6e2626;--hBi:#ffd0d0}
+*{box-sizing:border-box}body{margin:0;font:15px/1.5 system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:var(--bg);color:var(--ink)}
+header{background:var(--hdr);color:#fff;padding:12px 20px;display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+header h1{font-size:18px;margin:0 8px 0 0}
+nav button,.themebtn{background:transparent;border:1px solid #ffffff40;color:#fff;padding:6px 13px;border-radius:20px;cursor:pointer;margin:2px 4px 2px 0;font-size:14px}
+nav button.active{background:#fff;color:#1e2a4a}.themebtn{margin-left:auto}
+main{max-width:1200px;margin:0 auto;padding:18px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px;margin-bottom:14px}
+.card.inner{background:var(--inner);margin-top:12px}
+h2{margin:0 0 10px;font-size:19px}h3{margin:14px 0 8px;font-size:16px}
+.mute{color:var(--mute)}.small{font-size:13px}
+.btn{display:inline-block;background:var(--pri);color:#fff;border:0;border-radius:8px;padding:8px 14px;cursor:pointer;font-size:14px;line-height:1.3}
+[data-theme=dark] .btn{color:#0b0f18}
+.btn.sec{background:var(--prisoft);color:var(--pri)}.btn.danger{background:var(--badbg);color:var(--bad)}
+.btn:disabled{opacity:.45;cursor:default}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+textarea,input,select{font:inherit;padding:7px 9px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--ink)}
+textarea{width:100%;min-height:120px}
+.pill{display:inline-block;padding:1px 8px;border-radius:12px;font-size:12px;font-weight:600}
+.r-Above{background:var(--okbg);color:var(--ok)}.r-Near{background:var(--nearbg);color:var(--near)}.r-Below{background:var(--badbg);color:var(--bad)}.r-none{background:var(--none);color:var(--mute)}
+table{border-collapse:collapse;width:100%}th,td{padding:6px 7px;border-bottom:1px solid var(--line);text-align:left;font-size:14px;vertical-align:middle}
+th{font-size:12px;color:var(--mute);text-transform:uppercase;letter-spacing:.03em}
+.scroll{overflow-x:auto}
+.heat td.cell{text-align:center;font-weight:700;font-size:12px;min-width:44px;border:2px solid var(--card)}
+.heat td.cell.Above{background:var(--hA);color:var(--hAi)}.heat td.cell.Near{background:var(--hN);color:var(--hNi)}.heat td.cell.Below{background:var(--hB);color:var(--hBi)}.heat td.cell.none{background:var(--none);color:var(--mute)}
+.scorebar{height:8px;background:var(--none);border-radius:4px;width:80px;display:inline-block;vertical-align:middle;margin-right:6px}
+.scorebar i{display:block;height:100%;border-radius:4px;background:linear-gradient(90deg,#f0b429,#e53e3e)}
+.start{border:2px solid var(--pri)}.start h2{color:var(--pri)}
+.opt{display:block;border:1px solid var(--line);border-radius:8px;padding:9px 12px;margin:6px 0;cursor:pointer;background:var(--card)}
+.opt input{margin-right:8px}.correct{border-color:var(--ok)!important;background:var(--okbg)!important}.wrong{border-color:var(--bad)!important;background:var(--badbg)!important}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:4px 16px}
+.areasel{display:flex;justify-content:space-between;align-items:center;gap:8px;border-bottom:1px dashed var(--line);padding:4px 0}
+.notice{padding:10px 12px;border-radius:8px;background:var(--prisoft);border:1px solid var(--line);margin:8px 0}
+.notice.warn{background:var(--nearbg)}.notice.err{background:var(--badbg)}
+.hidden{display:none!important}
+.trend{font-size:13px;white-space:nowrap}
+.exam{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:14px;align-items:start}
+.exam .left{position:sticky;top:10px;max-height:calc(100vh - 20px);overflow:auto}
+@media (max-width:820px){.exam{grid-template-columns:1fr}.exam .left{position:static;max-height:none}}
+.tabs{display:flex;gap:4px;flex-wrap:wrap;border-bottom:2px solid var(--line);margin-bottom:10px}
+.tabs button{border:0;background:transparent;color:var(--mute);padding:7px 11px;cursor:pointer;font-size:14px;border-bottom:3px solid transparent;margin-bottom:-2px}
+.tabs button.on{color:var(--pri);border-bottom-color:var(--pri);font-weight:600}
+.exbody{white-space:pre-wrap;font-size:14px}.exbody table{white-space:normal}
+.playerbar{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-bottom:10px}
+.playerbar .btn{margin-left:auto}
+.timer{font-variant-numeric:tabular-nums;font-weight:600}
+.stem{font-weight:600}
+.matrix th,.matrix td{text-align:center}.matrix td:first-child,.matrix th:first-child{text-align:left}
+.matrix tr.correct td,.matrix tr.wrong td{background:transparent}
+.hltext{line-height:2;font-size:15px}
+.hl{cursor:pointer;padding:2px 2px;border-radius:4px;border-bottom:1px dotted var(--mute)}
+.hl.sel{background:var(--hl)}.hl.correct{outline:2px solid var(--ok)}.hl.wrong{outline:2px solid var(--bad)}
+.cloze{line-height:2.4}.cloze select{margin:0 3px}
+.pre{background:var(--none);padding:10px;border-radius:8px;overflow:auto;white-space:pre}
+.badge{display:inline-block;font-size:11px;padding:1px 7px;border-radius:10px;background:var(--prisoft);color:var(--pri);margin-left:6px}
+.steps textarea{min-height:70px}
+.chart{width:100%;height:auto;background:var(--inner);border-radius:8px}
+.big{font-size:20px;font-weight:700}
+.flash{min-height:220px;border:1px solid var(--line);border-radius:14px;padding:26px;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;font-size:18px;background:var(--inner);cursor:pointer}
+.flash .cls{font-size:12px;color:var(--mute);margin-bottom:10px}.flash .back{margin-top:16px;padding-top:16px;border-top:1px dashed var(--line);font-size:16px}
+.boxes{display:flex;gap:6px;flex-wrap:wrap}.boxes span{background:var(--none);border-radius:8px;padding:4px 9px}
+.ordlist{list-style:none;padding:0;margin:0}.ord{display:flex;align-items:center;gap:8px;border:1px solid var(--line);border-radius:8px;padding:8px 10px;margin:6px 0;background:var(--card);cursor:grab}
+.ord.dragging{opacity:.5}.ord .otext{flex:1}.ord .grip{color:var(--mute);font-size:18px}.ord .arrows{display:flex;gap:4px}.ord .mv{padding:4px 9px}
+.badge.auto{background:var(--nearbg);color:var(--near)}
+.warnb{background:var(--nearbg);color:var(--near);border:1px solid var(--near);border-radius:8px;padding:6px 10px;font-size:13px;margin-bottom:10px;max-width:100%}
+.exam.solo{grid-template-columns:minmax(0,820px);justify-content:center}
+/* NGN extras: bowtie, groups, no-key badge */
+.badge.nokey { background: #fde8e8; color: #8a1c1c; border-color: #f2b8b8; }
+.ghead { font-weight: 600; margin: 10px 0 4px; }
+.bowtie { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; align-items: center; margin: 6px 0 14px; }
+.bcol { display: flex; flex-direction: column; gap: 10px; }
+.bcol.mid { justify-content: center; }
+.bslot { border: 2px dashed var(--line, #c9d1dc); border-radius: 8px; padding: 10px; min-height: 44px; font-size: .92em; display: flex; align-items: center; }
+.bslot.full { border-style: solid; border-color: var(--accent, #2b6cb0); }
+.bchoices { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; }
+.opt.sel { outline: 2px solid var(--accent, #2b6cb0); }
+@media (max-width: 600px) { .bowtie { grid-template-columns: 1fr; } }
+
+/* phone width: keep long selects/inputs/code inside the screen */
+select,input,textarea{max-width:100%}.row>select{min-width:0;flex:1 1 auto}pre{max-width:100%;overflow-x:auto}
+#reportList{overflow-x:auto;max-width:100%}code{overflow-wrap:anywhere}
+
+</style>
+</head>
+<body>
+<header>
+  <h1>NCLEX Case Study Trainer</h1>
+  <nav>
+    <button data-tab="practice" class="active">Practice</button>
+    <button data-tab="mock">Mock NCLEX</button>
+    <button data-tab="cpr">My CPR</button>
+    <button data-tab="cards">Flashcards</button>
+    <button data-tab="bank">Question bank</button>
+  </nav>
+  <button id="themeBtn" class="themebtn" title="Toggle dark/light">&#9790; Dark</button>
+</header>
+<main>
+  <!-- PRACTICE -->
+  <section id="tab-practice">
+    <div class="card" id="practiceSetup">
+      <h2>Practice</h2>
+      <div class="row">
+        <button class="btn" id="startWeak">Study my weakest areas</button>
+        <button class="btn sec" id="startAll">All case studies</button>
+        <button class="btn sec" id="startMissed">Review missed</button>
+      </div>
+      <div class="row" style="margin-top:8px">
+        <select id="areaFilter"><option value="">Client Needs area...</option></select>
+        <select id="stepFilter"><option value="">Clinical judgment step...</option></select>
+        <button class="btn sec" id="startFilter">Start filtered set</button>
+      </div>
+      <div class="row"><select id="caseSel" aria-label="Pick a case study"><option value="">Practice a specific case...</option></select>
+        <button class="btn sec" id="startCase">Start this case</button></div>
+      <p class="mute small" id="weakNote"></p>
+      <div id="readingList"></div>
+    </div>
+  </section>
+
+  <!-- MOCK -->
+  <section id="tab-mock" class="hidden">
+    <div class="card" id="mockSetup">
+      <h2>Mock NCLEX (adaptive)</h2>
+      <p class="mute">Modeled on NCLEX-RN computerized adaptive testing: each answer updates an ability estimate (Rasch model), the next item is chosen near that estimate, and Client Needs areas are balanced to the test plan. Case studies appear as 6-item units. The exam stops when the 95% confidence interval is fully above or below the passing standard (after the minimum length), at the maximum length, or when time runs out. There is no going back, and no feedback until the end.</p>
+      <div id="mockBankInfo"></div>
+      <div class="row">
+        <button class="btn" id="mockFull">Start full mock (85-150 items, 5 h)</button>
+        <button class="btn sec" id="mockMini">Start mini mock (30 items, 60 min)</button>
+      </div>
+      <div id="mockLast"></div>
+    </div>
+    <div class="card hidden" id="mockReport"></div>
+  </section>
+
+  <!-- shared exam player -->
+  <section id="player" class="hidden">
+    <div class="playerbar"><strong id="pTitle"></strong><span id="pPos" class="mute small"></span><span id="pTimer" class="timer"></span>
+      <button class="btn sec" id="pQuit">End session</button></div>
+    <div class="exam">
+      <div class="card left">
+        <div class="tabs" id="exTabs"></div>
+        <div id="exBody" class="exbody"></div>
+      </div>
+      <div class="card right">
+        <div id="qMeta" class="small"></div>
+        <p id="qStem" class="stem"></p>
+        <div id="qBody"></div>
+        <div id="qFeedback"></div>
+        <div class="row" style="margin-top:12px">
+          <button class="btn" id="lockBtn" disabled>Lock it in</button>
+          <button class="btn sec hidden" id="nextBtn">Next</button>
+        </div>
+      </div>
+    </div>
+  </section>
+  <div class="card hidden" id="summary"></div>
+
+  <!-- guided reading -->
+  <section id="reading" class="hidden">
+    <div class="playerbar"><strong id="rTitle"></strong><span class="mute small">Guided reading - no questions found in this file, so work through the 6 clinical judgment steps. Notes save automatically on this device.</span>
+      <button class="btn sec" id="rClose">Close</button></div>
+    <div class="exam">
+      <div class="card left"><div class="tabs" id="rTabs"></div><div id="rBody" class="exbody"></div></div>
+      <div class="card right" id="rSteps"></div>
+    </div>
+  </section>
+
+  <!-- CPR -->
+  <section id="tab-cpr" class="hidden">
+    <div class="card start" id="startHere"></div>
+    <div class="card">
+      <h2>My Candidate Performance Reports</h2>
+      <p class="mute">Add each NCLEX CPR you have. Every report is information about where to aim next, not a verdict on you. Upload a PDF or a screenshot, paste the text, or enter the ratings by hand. You always get to check the ratings before anything is saved, and only the ratings, attempt number and date are stored (never your name or candidate number).</p>
+      <div class="row">
+        <label class="btn" id="loadHistory">Import my CPR history<input type="file" id="loadHistoryFile" accept=".json,.txt,application/json,text/plain" class="hidden"></label>
+        <label class="btn sec">Upload CPR (PDF or image)<input type="file" id="cprFile" accept="application/pdf,.pdf,image/*,.jpg,.jpeg,.png,.txt,.json,text/plain,application/json" multiple class="hidden"></label>
+        <button class="btn sec" id="pasteBtn">Paste CPR text</button>
+        <button class="btn sec" id="manualBtn">Enter manually</button>
+      </div>
+      <div id="pasteBox" class="hidden" style="margin-top:10px">
+        <textarea id="pasteText" placeholder="Paste the text from your CPR here..."></textarea>
+        <div class="row" style="margin-top:6px"><button class="btn" id="parsePaste">Read ratings</button></div>
+      </div>
+      <div id="cprMsg"></div>
+      <div id="editor" class="card hidden inner">
+        <h3 id="editorTitle">Report details</h3>
+        <div class="row">
+          <label>Attempt # <input type="number" id="edAttempt" min="1" max="99" style="width:80px"></label>
+          <label>Exam date <input type="date" id="edDate"></label>
+        </div>
+        <h3>Client Needs</h3><div class="grid2" id="edAreas"></div>
+        <h3>Clinical Judgment</h3><div class="grid2" id="edSteps"></div>
+        <div class="row" style="margin-top:12px">
+          <button class="btn" id="edSave">Save report</button>
+          <button class="btn sec" id="edCancel">Cancel</button>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <h2>Trend across attempts</h2>
+      <p class="mute small">Rows are sorted by priority. Priority score (0-100) = 55% recency-weighted rating (later attempts count more) + 45% consistency (share of attempts Below); ties go to the area with more test-plan weight. "Your accuracy" is from practice in this app.</p>
+      <h3>Client Needs</h3><div id="trend" class="scroll"></div>
+      <h3>Clinical Judgment</h3><div id="trendCJ" class="scroll"></div>
+    </div>
+    <div class="card"><h2>Saved reports</h2><div id="reportList"></div></div>
+  </section>
+
+  <!-- FLASHCARDS -->
+  <section id="tab-cards" class="hidden">
+    <div class="card" id="fcSetup">
+      <h2>Flashcards</h2>
+      <p class="mute">Leitner boxes: cards you mark <b>Known</b> move up a box and come back later (box 1 today, then 1, 3, 7, 14 days); <b>Unsure</b> sends a card back to box 1. Progress is saved on this device.</p>
+      <div class="row">
+        <button class="btn" id="fcPharmDay">Pharm day</button>
+        <select id="fcClass"></select>
+        <button class="btn sec" id="fcStudyClass">Study this class</button>
+        <button class="btn sec" id="fcStudyDue">All due cards</button>
+        <label class="btn sec">Import cards (.json/.txt)<input type="file" id="fcFile" accept=".json,.txt,application/json,text/plain" class="hidden"></label>
+        <label class="btn sec">Load my library<input type="file" id="libFile2" accept=".json,.txt,application/json,text/plain" multiple class="hidden"></label>
+      </div>
+      <div id="fcMsg"></div>
+      <div id="fcStats" class="small" style="margin-top:8px"></div>
+    </div>
+    <div class="card hidden" id="fcStudy">
+      <div class="playerbar"><strong id="fcTitle"></strong><span id="fcPos" class="mute small"></span><button class="btn sec" id="fcEnd">End</button></div>
+      <div id="fcCard" class="flash" tabindex="0"></div>
+      <div class="row" style="margin-top:12px;justify-content:center">
+        <button class="btn sec" id="fcFlip">Flip (space)</button>
+        <button class="btn danger hidden" id="fcUnsure">Unsure</button>
+        <button class="btn hidden" id="fcKnown">Known</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- BANK -->
+  <section id="tab-bank" class="hidden">
+    <div class="card">
+      <h2>Question bank</h2>
+      <p class="mute" id="bankStats"></p>
+      <div class="row"><label class="btn">Load my library<input type="file" id="libFile" accept=".json,.txt,application/json,text/plain" multiple class="hidden"></label>
+        <span class="small mute">Pick both files at once: <code>nclex-qbank-5600.json</code> (questions) and <code>pharm-flashcards.json</code> (flashcards).</span></div>
+      <div class="row" style="margin-top:8px"><button class="btn sec" id="loadSample">Reset to sample cases</button>
+        <button class="btn sec" id="exportData">Export my data (JSON)</button>
+        <label class="btn sec">Import data backup<input type="file" id="importData" accept=".json,.txt,application/json,text/plain" class="hidden"></label></div>
+    </div>
+    <div class="card">
+      <h3>Add case studies</h3>
+      <div class="row"><label class="btn">Upload case files (.txt, .md, .json, .pdf)<input type="file" id="bankFile" accept=".txt,.md,.markdown,.json,.pdf,application/pdf,application/json,text/plain,text/markdown" multiple class="hidden"></label></div>
+      <p class="small mute">Big JSON banks (thousands of items) are fine - they are stored in this browser's IndexedDB. Duplicate item ids are skipped, so re-importing is safe. Files with questions are added to the bank. Files with only a case (no questions) open in guided reading mode. You can also paste below.</p>
+      <details><summary class="small">Text format reference</summary>
+<pre class="small pre">CASE: Client with DKA
+SOURCE: (optional) where it came from
+SCENARIO: intro text
+NOTES: nurses' notes (lines continue until the next keyword)
+VITALS: Time | HR | BP          (use | for table columns)
+LABS: Test | Result | Reference
+ORDERS: one order per line
+
+Q: Which prescription should the nurse implement first?
+AREA: Pharmacological and Parenteral Therapies   (optional Client Needs area)
+STEP: Prioritize Hypotheses                      (optional clinical judgment step)
+DIFFICULTY: 3                                    (optional 1-5, default 3)
+A. Regular insulin IV infusion
+B. 0.9% sodium chloride 1 L IV
+ANSWER: B          (letters A=1, B=2...; options display as 1, 2, 3; several letters = select all that apply, +/- scoring)
+
+Q: In what order should the nurse...?
+TYPE: ORDERED
+A. ...  B. ...  C. ...
+ANSWER: B, A, C    (correct order, first to last; exact order scoring)
+RATIONALE: ...
+
+Q: For each finding, indicate ...
+TYPE: MATRIX
+COLUMNS: Expected | Requires follow-up
+ROW: Pain 4/10 = Expected
+
+Q: Complete the sentence.
+TYPE: CLOZE
+TEXT: The client is at risk for {1} because of {2}.
+BLANK 1: hypokalemia * | hypernatremia      (* marks the correct option)
+BLANK 2: furosemide * | metoprolol
+
+Q: Click to highlight the findings that require follow-up.
+TYPE: HIGHLIGHT
+TEXT: [[RR 8/min]] [Dressing dry]   ([[ ]] = correct phrase, [ ] = selectable distractor)
+
+KIND: standalone   (on a CASE line block: items are served one by one, not as a unit)</pre>
+<p class="small mute">JSON: <code>{"cases":[{"title","scenario","exhibits":{"notes","vitals","labs","orders"},"kind","items":[{"type":"single|sata|matrix|cloze|highlight|ordered","q","options","answer","columns","rows":[{"label","answer"}],"text","blanks":[{"options","answer"}],"area","step","difficulty","rationale"}]}]}</code></p></details>
+      <textarea id="bankText" placeholder="Paste text or JSON here"></textarea>
+      <div class="row" style="margin-top:6px">
+        <button class="btn" id="addBank">Add to bank</button>
+        <button class="btn sec" id="replaceBank">Replace bank</button>
+      </div>
+      <div id="bankMsg"></div>
+    </div>
+    <div class="card"><h3>Items by Client Needs area and clinical judgment step</h3><div id="bankAreas"></div></div>
+  </section>
+</main>
+<script>window.__SINGLE_FILE = true;</script>
+<script>/* core.js */
+/* NCLEX Case Study Trainer - core logic (pure functions, no DOM). Works in browser and Node. */
+(function (root) {
+  'use strict';
+  var AREAS = ['Management of Care', 'Safety and Infection Control', 'Health Promotion and Maintenance', 'Psychosocial Integrity',
+    'Basic Care and Comfort', 'Pharmacological and Parenteral Therapies', 'Reduction of Risk Potential', 'Physiological Adaptation'];
+  var STEPS = ['Recognize Cues', 'Analyze Cues', 'Prioritize Hypotheses', 'Generate Solutions', 'Take Actions', 'Evaluate Outcomes'];
+  var CJ = 'Clinical Judgment';
+  var DOMAINS = AREAS.concat([CJ], STEPS);
+  var SHORT = {
+    'Management of Care': 'MOC', 'Safety and Infection Control': 'SIC', 'Health Promotion and Maintenance': 'HPM', 'Psychosocial Integrity': 'PSY',
+    'Basic Care and Comfort': 'BCC', 'Pharmacological and Parenteral Therapies': 'PHARM', 'Reduction of Risk Potential': 'RRP', 'Physiological Adaptation': 'PHYS',
+    'Clinical Judgment': 'CJ', 'Recognize Cues': 'RC', 'Analyze Cues': 'AC', 'Prioritize Hypotheses': 'PH', 'Generate Solutions': 'GS', 'Take Actions': 'TA', 'Evaluate Outcomes': 'EO'
+  };
+  // NCLEX-RN test plan (2023) Client Needs weights, midpoints of the published ranges.
+  var TEST_PLAN = { 'Management of Care': 0.18, 'Safety and Infection Control': 0.13, 'Health Promotion and Maintenance': 0.09, 'Psychosocial Integrity': 0.09,
+    'Basic Care and Comfort': 0.09, 'Pharmacological and Parenteral Therapies': 0.16, 'Reduction of Risk Potential': 0.12, 'Physiological Adaptation': 0.14 };
+  var STEP_PROMPTS = {
+    'Recognize Cues': 'Which findings are relevant or abnormal? What jumps out from the notes, vitals, labs?',
+    'Analyze Cues': 'Which conditions do these cues fit? Which cues support or contradict each?',
+    'Prioritize Hypotheses': 'Which problem is most urgent or dangerous right now, and why (ABCs, risk, time)?',
+    'Generate Solutions': 'What outcomes do you want, and which interventions get there (and which to avoid)?',
+    'Take Actions': 'Which actions would you take first? What would you give, hold, teach, or escalate?',
+    'Evaluate Outcomes': 'Which findings would show the plan is working, and which would mean it is not?'
+  };
+  var ALIASES = {
+    'Management of Care': ['management of care', 'moc', 'management'],
+    'Safety and Infection Control': ['safety and infection control', 'safety and infection prevention and control', 'sic', 'sipc', 'infection control', 'safety'],
+    'Health Promotion and Maintenance': ['health promotion and maintenance', 'hpm', 'health promotion'],
+    'Psychosocial Integrity': ['psychosocial integrity', 'psychosocial', 'psy', 'psych'],
+    'Basic Care and Comfort': ['basic care and comfort', 'bcc', 'basic care'],
+    'Pharmacological and Parenteral Therapies': ['pharmacological and parenteral therapies', 'pharmacological therapies', 'pharmacology', 'pharmacological', 'pharm', 'ppt'],
+    'Reduction of Risk Potential': ['reduction of risk potential', 'reduction of risk', 'rrp'],
+    'Physiological Adaptation': ['physiological adaptation', 'phys', 'pa', 'physio'],
+    'Recognize Cues': ['recognize cues', 'rc', 'recognize', 'recognizing cues'],
+    'Analyze Cues': ['analyze cues', 'ac', 'analyze', 'analyzing cues'],
+    'Prioritize Hypotheses': ['prioritize hypotheses', 'ph', 'prioritize', 'prioritizing hypotheses', 'prioritization'],
+    'Generate Solutions': ['generate solutions', 'gs', 'generate', 'generating solutions'],
+    'Take Actions': ['take actions', 'take action', 'ta', 'taking actions', 'take'],
+    'Evaluate Outcomes': ['evaluate outcomes', 'eo', 'evaluate', 'evaluating outcomes'],
+    'Clinical Judgment': ['clinical judgment', 'clinical judgement', 'cj']
+  };
+  var RATINGS = ['Above', 'Near', 'Below'];
+  var SEV = { Above: 0, Near: 0.5, Below: 1 };
+
+  function norm(s) { return String(s || '').toLowerCase().replace(/&/g, ' and ').replace(/[^a-z0-9]+/g, ' ').trim(); }
+  function lookup(s, list) {
+    var n = norm(s); if (!n) return null;
+    for (var i = 0; i < list.length; i++) if (norm(list[i]) === n) return list[i];
+    for (var j = 0; j < list.length; j++) { var al = ALIASES[list[j]] || []; for (var k = 0; k < al.length; k++) if (norm(al[k]) === n) return list[j]; }
+    for (var x = 0; x < list.length; x++) { var al2 = ALIASES[list[x]] || []; for (var y = 0; y < al2.length; y++) { var a = norm(al2[y]); if (a.length >= 8 && n.indexOf(a) !== -1) return list[x]; } }
+    return null;
+  }
+  function normalizeArea(s) { return lookup(s, AREAS); }
+  function normalizeStep(s) { return lookup(s, STEPS); }
+  function normalizeRating(s) {
+    var n = norm(s);
+    if (/^(above|a|pass)/.test(n)) return 'Above';
+    if (/^(near|n|borderline)/.test(n)) return 'Near';
+    if (/^(below|b|fail)/.test(n)) return 'Below';
+    return null;
+  }
+
+  // ---------- CPR text parsing (PDF text, pasted text, or OCR output) ----------
+  var DOMAIN_RE = {
+    'Management of Care': /management\s+of\s+care/ig,
+    'Safety and Infection Control': /safety\s+(?:and|&)\s+infection\s+(?:prevention\s+(?:and|&)\s+)?control/ig,
+    'Health Promotion and Maintenance': /health\s+promotion\s+(?:and|&)\s+maintenance/ig,
+    'Psychosocial Integrity': /psychosocial\s+integrity/ig,
+    'Basic Care and Comfort': /basic\s+care\s+(?:and|&)\s+comfort/ig,
+    'Pharmacological and Parenteral Therapies': /pharmacological\s+(?:and|&)\s+parenteral\s+therapies/ig,
+    'Reduction of Risk Potential': /reduction\s+of\s+risk\s+potential/ig,
+    'Physiological Adaptation': /physiological\s+adaptation/ig,
+    'Clinical Judgment': /clinical\s+judge?ment\b/ig,
+    'Recognize Cues': /recogni[sz]e\s+cues/ig,
+    'Analyze Cues': /analy[sz]e\s+cues/ig,
+    'Prioritize Hypotheses': /prioriti[sz]e\s+hypothes[ie]s/ig,
+    'Generate Solutions': /generate\s+solutions/ig,
+    'Take Actions': /take\s+actions?\b/ig,
+    'Evaluate Outcomes': /evaluate\s+outcomes/ig
+  };
+  var DATE_RE = /\b(\d{1,2})[\/\-.](\d{1,2})[\/\-.](\d{2,4})\b|\b(\d{4})-(\d{2})-(\d{2})\b|\b(Jan(?:uary)?|Feb(?:ruary)?|Mar(?:ch)?|Apr(?:il)?|May|Jun(?:e)?|Jul(?:y)?|Aug(?:ust)?|Sep(?:t(?:ember)?)?|Oct(?:ober)?|Nov(?:ember)?|Dec(?:ember)?)\.?\s+(\d{1,2}),?\s+(\d{4})\b/i;
+  var MONTHS = { jan: 1, feb: 2, mar: 3, apr: 4, may: 5, jun: 6, jul: 7, aug: 8, sep: 9, oct: 10, nov: 11, dec: 12 };
+  function pad(n) { n = String(n); return n.length < 2 ? '0' + n : n; }
+  function toIsoDate(m) {
+    if (!m) return '';
+    var y, mo, d;
+    if (m[1]) { mo = +m[1]; d = +m[2]; y = +m[3]; if (y < 100) y += 2000; }
+    else if (m[4]) { y = +m[4]; mo = +m[5]; d = +m[6]; }
+    else { mo = MONTHS[m[7].slice(0, 3).toLowerCase()]; d = +m[8]; y = +m[9]; }
+    if (!(mo >= 1 && mo <= 12 && d >= 1 && d <= 31)) return '';
+    return y + '-' + pad(mo) + '-' + pad(d);
+  }
+  function findDate(text) {
+    var labeled = /(exam(?:ination)?\s*date|date\s*of\s*(?:exam(?:ination)?|test)|test\s*date|appointment\s*date)\s*[:\-]?\s*([^\n]{0,40})/i.exec(text);
+    if (labeled) { var m1 = DATE_RE.exec(labeled[2]); if (m1) return toIsoDate(m1); }
+    var m2 = DATE_RE.exec(text);
+    return m2 ? toIsoDate(m2) : '';
+  }
+  function findAttempt(text) {
+    var m = /attempt\s*(?:number|no\.?|#)?\s*[:#]?\s*(\d{1,2})\b/i.exec(text) || /\b(\d{1,2})(?:st|nd|rd|th)\s+attempt\b/i.exec(text);
+    return m ? +m[1] : null;
+  }
+  var RATING_RE = /\b(above|near|below)\b/ig;
+  function parseCprText(text) {
+    text = String(text || '').replace(/\u00a0/g, ' ');
+    var hits = [];
+    DOMAINS.forEach(function (d) { var re = new RegExp(DOMAIN_RE[d].source, 'ig'), m; while ((m = re.exec(text))) hits.push({ d: d, start: m.index, end: m.index + m[0].length }); });
+    hits.sort(function (a, b) { return a.start - b.start; });
+    var ratings = {}, method = 'inline';
+    for (var i = 0; i < hits.length; i++) {
+      var h = hits[i]; if (ratings[h.d]) continue;
+      var segEnd = i + 1 < hits.length ? hits[i + 1].start : Math.min(text.length, h.end + 400);
+      var seg = text.slice(h.end, segEnd);
+      if (/above[\s\S]{0,60}near[\s\S]{0,60}below/i.test(seg)) continue; // legend
+      RATING_RE.lastIndex = 0; var r = RATING_RE.exec(seg);
+      if (r) ratings[h.d] = normalizeRating(r[1]);
+    }
+    if (Object.keys(ratings).length < 4 && hits.length) { // column layout fallback
+      var order = [], seen = {}; hits.forEach(function (h) { if (!seen[h.d]) { seen[h.d] = 1; order.push(h); } });
+      var tail = text.slice(order[order.length - 1].end).replace(/above\s+the\s+passing\s+standard[\s,;:]*near\s+the\s+passing\s+standard[\s,;:]*below\s+the\s+passing\s+standard/ig, ' ');
+      var list = [], rm; RATING_RE.lastIndex = 0;
+      while ((rm = RATING_RE.exec(tail))) list.push(normalizeRating(rm[1]));
+      if (list.length >= order.length) {
+        var col = {}; order.forEach(function (h, idx) { col[h.d] = list[idx]; });
+        if (Object.keys(col).length > Object.keys(ratings).length) { ratings = col; method = 'columns'; }
+      }
+    }
+    var missing = DOMAINS.filter(function (a) { return !ratings[a]; });
+    return { ratings: ratings, found: DOMAINS.length - missing.length, foundAreas: AREAS.filter(function (a) { return ratings[a]; }).length, missing: missing, date: findDate(text), attempt: findAttempt(text), method: method };
+  }
+
+  // ---------- Multi-report analysis ----------
+  function sortReports(reports) {
+    return (reports || []).slice().sort(function (a, b) {
+      var aa = a.attempt == null ? 1e9 : +a.attempt, bb = b.attempt == null ? 1e9 : +b.attempt;
+      return aa !== bb ? aa - bb : String(a.date || '').localeCompare(String(b.date || ''));
+    });
+  }
+  function mean(arr) { return arr.length ? arr.reduce(function (s, x) { return s + x; }, 0) / arr.length : 0; }
+  /** Priority score 0-100 = 100*(0.55*recency-weighted severity + 0.45*share of attempts Below). Weights 1..n (latest heaviest). */
+  function analyzeDomain(d, sorted, accuracy) {
+    var series = sorted.map(function (r) { return (r.ratings || {})[d] || null; });
+    var pts = []; series.forEach(function (v, i) { if (v) pts.push({ i: i, v: v, s: SEV[v] }); });
+    var n = pts.length, wsum = 0, wsev = 0;
+    pts.forEach(function (p, k) { wsum += k + 1; wsev += (k + 1) * p.s; });
+    var recency = n ? wsev / wsum : 0;
+    var belowCount = pts.filter(function (p) { return p.v === 'Below'; }).length, nearCount = pts.filter(function (p) { return p.v === 'Near'; }).length;
+    var consistency = n ? belowCount / n : 0, score = n ? Math.round(100 * (0.55 * recency + 0.45 * consistency)) : 0;
+    var latest = n ? pts[n - 1].v : null, trend = 'none', delta = 0;
+    if (n >= 2) {
+      var half = Math.floor(n / 2);
+      var early = n === 2 ? pts[0].s : mean(pts.slice(0, n - half).map(function (p) { return p.s; }));
+      var late = n === 2 ? pts[1].s : mean(pts.slice(n - half).map(function (p) { return p.s; }));
+      delta = +(early - late).toFixed(3);
+      if (delta >= 0.25) trend = 'improving'; else if (delta <= -0.25) trend = 'slipping';
+      else if (late >= 0.6) trend = 'stuck'; else if (late <= 0.25) trend = 'steady'; else trend = 'mixed';
+    } else if (n === 1) trend = latest === 'Below' ? 'stuck' : (latest === 'Above' ? 'steady' : 'mixed');
+    return { area: d, short: SHORT[d], series: series, n: n, latest: latest, belowCount: belowCount, nearCount: nearCount, aboveCount: n - belowCount - nearCount,
+      recency: +recency.toFixed(3), consistency: +consistency.toFixed(3), score: score, trend: trend, delta: delta,
+      persistentBelow: n > 0 && latest === 'Below' && consistency >= 0.5, accuracy: accuracy && accuracy[d] ? accuracy[d] : null };
+  }
+  function rankList(list, order) {
+    // ties: more Below ratings first, then the heavier NCLEX test-plan weight, then listed order
+    list.sort(function (a, b) { return b.score - a.score || b.belowCount - a.belowCount || (TEST_PLAN[b.area] || 0) - (TEST_PLAN[a.area] || 0) || order.indexOf(a.area) - order.indexOf(b.area); });
+    list.forEach(function (a, i) { a.rank = i + 1; }); return list;
+  }
+  function analyzeReports(reports, accuracy) {
+    var sorted = sortReports(reports);
+    var areas = rankList(AREAS.map(function (d) { return analyzeDomain(d, sorted, accuracy); }), AREAS);
+    var steps = rankList(STEPS.map(function (d) { return analyzeDomain(d, sorted, accuracy); }), STEPS);
+    return { areas: areas, steps: steps, cj: analyzeDomain(CJ, sorted, accuracy), reports: sorted };
+  }
+  function describe(a) { return a.area + ' (Below on ' + a.belowCount + ' of ' + a.n + ', latest: ' + a.latest + ')'; }
+  function pickFocus(list) {
+    var persistent = list.filter(function (a) { return a.persistentBelow; });
+    var focus = persistent.slice(0, 2);
+    if (focus.length < 2) list.forEach(function (a) { if (focus.length < 2 && focus.indexOf(a) === -1 && a.latest && a.latest !== 'Above' && a.belowCount > 0) focus.push(a); });
+    if (!focus.length) focus = list.filter(function (a) { return a.latest && a.latest !== 'Above'; }).slice(0, 2);
+    if (!focus.length) focus = list.slice(0, 1);
+    return { focus: focus, persistent: persistent };
+  }
+  function recommend(an) {
+    if (!an.reports.length) return null;
+    var fa = pickFocus(an.areas), fs = pickFocus(an.steps);
+    var all = an.areas.concat(an.steps);
+    var improving = all.filter(function (a) { return a.trend === 'improving'; }).sort(function (a, b) { return b.delta - a.delta || b.n - a.n; })[0] || null;
+    var stuck = all.filter(function (a) { return a.trend === 'stuck' || a.trend === 'slipping'; }).sort(function (a, b) { return b.score - a.score; })[0] || null;
+    var stepFocus = fs.focus[0];
+    var lines = [];
+    lines.push((fa.persistent.length ? 'Client Needs below the standard most consistently: ' : 'Your highest-priority Client Needs areas right now: ') + fa.focus.map(describe).join('; ') + '.');
+    if (stepFocus && stepFocus.n) lines.push('Clinical judgment focus: ' + describe(stepFocus) + '. Practice this step on every case - the sample cases here lean on it.');
+    if (stuck) lines.push('Stuck area: ' + stuck.area + ' ' + (stuck.trend === 'slipping' ? 'has dipped on your recent attempts' : 'has not moved yet') + ' (Below ' + stuck.belowCount + ' of ' + stuck.n + '). Try a fresh approach here: short content review first, then questions.');
+    if (improving) lines.push('Improving: ' + improving.area + ' has moved up on your recent attempts (latest: ' + improving.latest + '). That is real progress - keep it warm with a few mixed items each week.');
+    if (an.cj.n) lines.push('Clinical Judgment overall: latest ' + an.cj.latest + ' (Below on ' + an.cj.belowCount + ' of ' + an.cj.n + ').');
+    var plan = fa.focus.map(function (a) { return a.area + ': 20-25 practice items a day, read every rationale, note what tripped you up.'; });
+    if (stepFocus) plan.push(stepFocus.area + ': before answering, say out loud which problem is most urgent and why.');
+    plan.push('Finish each session with 5 mixed items so your stronger areas stay sharp.');
+    return { headline: 'Start here: ' + fa.focus.map(function (a) { return a.area; }).join(' + ') + (stepFocus ? ' (clinical judgment: ' + stepFocus.area + ')' : ''),
+      focus: fa.focus.map(function (a) { return a.area; }), stepFocus: stepFocus ? stepFocus.area : null,
+      improving: improving ? improving.area : null, stuck: stuck ? stuck.area : null, lines: lines, plan: plan };
+  }
+
+  // ---------- Question bank ----------
+  function hashStr(s) { var h = 5381; s = String(s); for (var i = 0; i < s.length; i++) h = ((h << 5) + h + s.charCodeAt(i)) | 0; return 'q' + (h >>> 0).toString(36); }
+  function letterIdx(l) { return String(l).trim().toUpperCase().charCodeAt(0) - 65; }
+  /** Highlight markup: [[correct phrase]] and [selectable but incorrect phrase]; other text is plain. */
+  function parseHighlight(text) {
+    var segs = [], re = /\[\[([^\]]+)\]\]|\[([^\]]+)\]/g, last = 0, m;
+    while ((m = re.exec(text))) {
+      if (m.index > last) segs.push({ text: text.slice(last, m.index) });
+      segs.push({ text: m[1] || m[2], selectable: true, correct: !!m[1] });
+      last = re.lastIndex;
+    }
+    if (last < text.length) segs.push({ text: text.slice(last) });
+    return segs;
+  }
+  var KEYS = /^(CASE|SOURCE|KIND|SCENARIO|NOTES|NURSES'? NOTES|VITALS|LABS|ORDERS|Q\s*\d*|AREA|STEP|DIFFICULTY|TYPE|ANSWERS?|RATIONALE|COLUMNS|ROW|TEXT|BLANK\s*\d+|CONTEXT)\s*[:.]\s?(.*)$/i;
+  function parseTextBank(text) {
+    var cases = [], errors = [], cur = null, item = null, mode = null;
+    function newCase(title) { return { title: title || 'Untitled case', source: '', kind: 'case', scenario: '', exhibits: {}, items: [] }; }
+    function finishItem() {
+      if (item && cur) { var e = validateItem(item); if (e) errors.push(e); else cur.items.push(item); }
+      item = null;
+    }
+    function finishCase() { finishItem(); if (cur && cur.items.length) cases.push(cur); cur = null; }
+    String(text || '').replace(/\r/g, '').split('\n').forEach(function (raw, ln) {
+      var line = raw.trim(), m;
+      if (!line) { if (mode === 'ex') cur.exhibits[cur._ex] += '\n'; return; }
+      m = KEYS.exec(line);
+      if (m && /^Q\s*\d*$/i.test(m[1]) && !/^Q\s*\d*\s*:/i.test(line) && !/^Q\d*\./i.test(line)) m = null;
+      var key = m ? m[1].toUpperCase().replace(/\s+/g, ' ') : null, val = m ? m[2] : '';
+      if (key === 'CASE') { finishCase(); cur = newCase(val); mode = 'case'; return; }
+      if (!cur) cur = newCase();
+      if (key === 'SOURCE') { cur.source = val; return; }
+      if (key === 'KIND') { cur.kind = /stand/i.test(val) ? 'standalone' : 'case'; return; }
+      if (key === 'SCENARIO') { finishItem(); cur.scenario = val; mode = 'scenario'; return; }
+      if (key && /^(NOTES|NURSES'? NOTES|VITALS|LABS|ORDERS)$/.test(key)) {
+        finishItem(); var ek = key.indexOf('NOTES') !== -1 ? 'notes' : key.toLowerCase(); cur._ex = ek; cur.exhibits[ek] = val; mode = 'ex'; return;
+      }
+      if (key && /^Q/.test(key)) { finishItem(); item = { q: val, options: [], answer: [], rationale: '', area: null, step: null, difficulty: 3, rows: [], columns: [], blanks: [], text: '' }; mode = 'q'; return; }
+      if (!item) {
+        if (mode === 'scenario') cur.scenario += '\n' + line; else if (mode === 'ex') cur.exhibits[cur._ex] += '\n' + line;
+        return;
+      }
+      if (key === 'AREA') { mode = 'meta'; item.area = normalizeArea(val); if (!item.area) errors.push('Line ' + (ln + 1) + ': unknown AREA "' + val + '" (left untagged)'); return; }
+      if (key === 'STEP') { mode = 'meta'; item.step = normalizeStep(val); if (!item.step) errors.push('Line ' + (ln + 1) + ': unknown STEP "' + val + '" (left untagged)'); return; }
+      if (key === 'DIFFICULTY') { var d = parseFloat(val); item.difficulty = d >= 1 && d <= 5 ? d : 3; mode = 'meta'; return; }
+      if (key === 'TYPE') { item.type = norm(val).replace(/\s/g, ''); if (/drop|cloze/.test(item.type)) item.type = 'cloze'; if (/grid|matrix/.test(item.type)) item.type = 'matrix'; if (/highlight/.test(item.type)) item.type = 'highlight'; if (/sata|select|multi/.test(item.type)) item.type = 'sata'; if (/single|mc|multiplechoice/.test(item.type)) item.type = 'single'; if (/order|rank|drag/.test(item.type)) item.type = 'ordered'; return; }
+      if (key === 'CONTEXT') { item.context = val; mode = 'context'; return; }
+      if (key === 'COLUMNS') { item.columns = val.split('|').map(function (s) { return s.trim(); }).filter(Boolean); return; }
+      if (key === 'ROW') { var p = val.split('='); item.rows.push({ label: p[0].trim(), _ans: (p[1] || '').trim() }); return; }
+      if (key === 'TEXT') { item.text = val; mode = 'text'; return; }
+      if (key && /^BLANK/.test(key)) {
+        var opts = val.split('|').map(function (s) { return s.trim(); }).filter(Boolean), ans = -1;
+        opts = opts.map(function (o, i) { if (/\*$/.test(o)) { ans = i; return o.replace(/\s*\*$/, ''); } return o; });
+        item.blanks[parseInt(key.replace(/\D/g, ''), 10) - 1] = { options: opts, answer: ans }; return;
+      }
+      if (key === 'ANSWER' || key === 'ANSWERS') { item.answer = val.split(/[\s,;&]+|\band\b/i).filter(Boolean).map(letterIdx).filter(function (x) { return x >= 0 && x < 26; }); mode = 'answer'; return; }
+      if (key === 'RATIONALE') { item.rationale = val; mode = 'rationale'; return; }
+      if ((m = /^([A-Ha-h])\s*[.)]\s+(.*)$/.exec(line)) && (mode === 'q' || mode === 'opt' || mode === 'meta')) { item.options.push(m[2]); mode = 'opt'; return; }
+      if (mode === 'q') item.q += ' ' + line; else if (mode === 'rationale') item.rationale += ' ' + line;
+      else if (mode === 'opt') item.options[item.options.length - 1] += ' ' + line;
+      else if (mode === 'text') item.text += '\n' + line; else if (mode === 'context') item.context += '\n' + line;
+    });
+    finishCase();
+    return { cases: finalizeCases(cases), errors: errors };
+  }
+  var TYPES = ['single', 'sata', 'matrix', 'cloze', 'highlight', 'ordered', 'bowtie'];
+  var BOWTIE = [{ k: 'actions', label: 'Actions to take', n: 2 }, { k: 'conditions', label: 'Condition most likely experiencing', n: 1 }, { k: 'parameters', label: 'Parameters to monitor', n: 2 }];
+  function inferType(it) {
+    if (it.type && TYPES.indexOf(it.type) !== -1) return it.type;
+    if (it.conditions && it.actions && it.parameters) return 'bowtie';
+    if (it.rows && it.rows.length) return 'matrix';
+    if (it.blanks && it.blanks.length) return 'cloze';
+    if (it.text && /\[\[/.test(it.text)) return 'highlight';
+    return it.answer && it.answer.length > 1 ? 'sata' : 'single';
+  }
+  function validateItem(it) {
+    var label = '"' + String(it.q || '').slice(0, 40) + '"';
+    if (!it.q) return 'Item without a question stem was skipped';
+    it.type = inferType(it);
+    if (it.noKey) { // answer key missing in the source: keep the item for practice, never score it
+      if (it.type === 'bowtie') return BOWTIE.every(function (g) { return it[g.k] && it[g.k].options && it[g.k].options.length; }) ? null : 'Bowtie ' + label + ' is missing choices';
+      if (it.type === 'highlight') { it.segments = parseHighlight(it.text || ''); return it.segments.some(function (x) { return x.selectable; }) ? null : 'Highlight ' + label + ' has no selectable text'; }
+      if (it.type === 'cloze') return it.blanks && it.blanks.length ? null : 'Drop-down ' + label + ' has no blanks';
+      if (it.type === 'matrix') return it.rows && it.rows.length && it.columns.length >= 2 ? null : 'Matrix ' + label + ' has no rows';
+      return it.options && it.options.length >= 2 ? null : 'Question ' + label + ' needs at least 2 options';
+    }
+    if (it.type === 'bowtie') {
+      for (var g = 0; g < BOWTIE.length; g++) {
+        var grp = it[BOWTIE[g].k];
+        if (!grp || !grp.options || grp.options.length < 2) return 'Bowtie ' + label + ' needs ' + BOWTIE[g].k + ' options';
+        if (!grp.answer || grp.answer.length !== BOWTIE[g].n || !grp.answer.every(function (a) { return a >= 0 && a < grp.options.length; })) return 'Bowtie ' + label + ': ' + BOWTIE[g].k + ' needs exactly ' + BOWTIE[g].n + ' answer(s)';
+      }
+      return null;
+    }
+    if (it.type === 'matrix') {
+      if (it.columns.length < 2) return 'Matrix ' + label + ' needs COLUMNS with at least 2 columns';
+      for (var i = 0; i < it.rows.length; i++) {
+        var r = it.rows[i];
+        if (r._ans !== undefined) {
+          var ci = it.columns.map(norm).indexOf(norm(r._ans));
+          if (ci === -1 && /^[a-h]$/i.test(r._ans)) ci = letterIdx(r._ans);
+          r.answer = ci; delete r._ans;
+        }
+        if (it.multi) { if (!Array.isArray(r.answer) || !r.answer.every(function (a) { return a >= 0 && a < it.columns.length; })) return 'Matrix ' + label + ': row "' + r.label + '" needs a list of column answers'; continue; }
+        if (!(r.answer >= 0 && r.answer < it.columns.length)) return 'Matrix ' + label + ': row "' + r.label + '" answer does not match a column';
+      }
+      if (!it.rows.length) return 'Matrix ' + label + ' has no ROW lines';
+    } else if (it.type === 'cloze') {
+      var nb = (String(it.text).match(/\{\d+\}/g) || []).length;
+      if (!it.text || !nb) return 'Drop-down ' + label + ' needs TEXT with {1}, {2}... blanks';
+      for (var b = 0; b < nb; b++) { var bl = it.blanks[b]; if (!bl || bl.options.length < 2 || !(bl.answer >= 0)) return 'Drop-down ' + label + ': BLANK ' + (b + 1) + ' needs options with one marked *'; }
+    } else if (it.type === 'highlight') {
+      it.segments = parseHighlight(it.text || '');
+      if (!it.segments.some(function (s) { return s.correct; })) return 'Highlight ' + label + ' needs TEXT with at least one [[correct phrase]]';
+    } else if (it.type === 'ordered') {
+      if (it.options.length < 2) return 'Ordered item ' + label + ' needs at least 2 options';
+      var srt = it.answer.slice().sort(function (a, b) { return a - b; });
+      if (srt.length !== it.options.length || !srt.every(function (v, i) { return v === i; })) return 'Ordered item ' + label + ': ANSWER must list every option exactly once, in the correct order';
+    } else {
+      if (it.options.length < 2) return 'Question ' + label + ' needs at least 2 options';
+      if (!it.answer.length || !it.answer.every(function (a) { return a >= 0 && a < it.options.length; })) return 'Question ' + label + ' has a missing or invalid ANSWER';
+    }
+    return null;
+  }
+  function finalizeCases(cases) {
+    cases.forEach(function (c) {
+      delete c._ex;
+      Object.keys(c.exhibits || {}).forEach(function (k) { c.exhibits[k] = String(c.exhibits[k]).replace(/\n+$/, ''); if (!c.exhibits[k]) delete c.exhibits[k]; });
+      c.items.forEach(function (it) { it.id = it.id || hashStr(c.title + '|' + it.q + '|' + (it.text || '')); if (!(it.difficulty >= 1 && it.difficulty <= 5)) it.difficulty = 3; });
+    });
+    return cases;
+  }
+  function parseJsonBank(json) {
+    var data = typeof json === 'string' ? JSON.parse(json) : json, errors = [];
+    var list = Array.isArray(data) ? data : (data.cases || (data.bank && data.bank.cases) || []);
+    var cases = list.map(function (c, ci) {
+      var items = (c.items || c.questions || []).map(function (it) {
+        var ans = it.answer; if (ans == null) ans = []; if (!Array.isArray(ans)) ans = [ans];
+        ans = ans.map(function (a) { return typeof a === 'number' ? a : letterIdx(String(a)); });
+        var area = it.area ? normalizeArea(it.area) : null, step = it.step ? normalizeStep(it.step) : null;
+        if (it.area && !area) errors.push('Unknown area "' + it.area + '" (left untagged)');
+        if (it.step && !step) errors.push('Unknown step "' + it.step + '" (left untagged)');
+        var cols = it.columns || it.cols || [];
+        var colIdx = function (a) { return typeof a === 'number' ? a : cols.map(norm).indexOf(norm(a)); };
+        var rows = (it.rows || []).map(function (r) { var a = Array.isArray(r.answer) ? r.answer.map(colIdx) : r.answer == null ? null : colIdx(r.answer); return { label: r.label, answer: a }; });
+        var blanks = (it.blanks || []).map(function (b) { return { options: b.options || [], answer: typeof b.answer === 'number' ? b.answer : b.answer == null ? null : (b.options || []).indexOf(b.answer) }; });
+        var t = String(it.type || '').toLowerCase();
+        t = TYPES.indexOf(t) !== -1 ? t : /bow/.test(t) ? 'bowtie' : /order|rank|drag/.test(t) ? 'ordered' : /cloze|drop/.test(t) ? 'cloze' : /matrix|grid/.test(t) ? 'matrix' : /highlight/.test(t) ? 'highlight' : /sata|select|multi/.test(t) ? 'sata' : /single|mc/.test(t) ? 'single' : '';
+        var out = { id: it.id, q: it.q || it.question || '', options: it.options || [], answer: ans, rationale: it.rationale || '', area: area, step: step,
+          difficulty: +it.difficulty >= 1 && +it.difficulty <= 5 ? +it.difficulty : 3, rows: rows, columns: cols, blanks: blanks, text: it.text || '', context: it.context || '', type: t || undefined,
+          strategy: it.strategy || '', autoTagged: isAutoTagged(it.tagSource || c.tagSource || data.tagSource) };
+        ['exhibits', 'multi', 'scoring', 'selectN', 'groups', 'noKey', 'keyNote', 'points', 'ocr', 'source', 'sourceRef', 'dragdrop', 'keySource'].forEach(function (k) { if (it[k] != null) out[k] = it[k]; });
+        BOWTIE.forEach(function (g) { if (it[g.k]) out[g.k] = { options: it[g.k].options || [], answer: (it[g.k].answer || []).slice() }; });
+        var e = validateItem(out); if (e) { errors.push('Case ' + (ci + 1) + ': ' + e); return null; } return out;
+      }).filter(Boolean);
+      var cc = { title: c.title || ('Case ' + (ci + 1)), source: c.source || '', kind: c.kind === 'standalone' ? 'standalone' : 'case', scenario: c.scenario || '', exhibits: c.exhibits || {}, items: items };
+      if (c.id) cc.id = c.id; if (c.origin) cc.origin = c.origin; if (c.group) cc.group = c.group;
+      return cc;
+    }).filter(function (c) { return c.items.length; });
+    return { cases: finalizeCases(cases), errors: errors };
+  }
+
+  /** Guided reading: split free text into exhibit tabs by common headings. */
+  function splitExhibits(text) {
+    var heads = [{ k: 'notes', re: /^\s*(nurse'?s'?\s*notes|nursing\s*notes|notes|history(?:\s+and\s+physical)?|assessment)\s*:?\s*$/i },
+      { k: 'vitals', re: /^\s*(vital\s*signs|vitals)\s*:?\s*$/i }, { k: 'labs', re: /^\s*(labs?|laboratory(?:\s*results)?|diagnostics?)\s*:?\s*$/i },
+      { k: 'orders', re: /^\s*(orders|provider\s*orders|prescriptions|medications)\s*:?\s*$/i }];
+    var ex = {}, cur = 'scenario', buf = { scenario: [] };
+    String(text || '').replace(/\r/g, '').split('\n').forEach(function (line) {
+      var clean = line.replace(/^#+\s*/, '').replace(/\*\*/g, '');
+      var h = heads.filter(function (x) { return x.re.test(clean); })[0];
+      if (h) { cur = h.k; buf[cur] = buf[cur] || []; return; }
+      buf[cur].push(line);
+    });
+    Object.keys(buf).forEach(function (k) { var t = buf[k].join('\n').trim(); if (t) ex[k] = t; });
+    return ex;
+  }
+
+  // ---------- Scoring (NGN-style) ----------
+  /** Returns {earned, max}. single: 0/1. sata & highlight: +/- (+1 correct, -1 incorrect, floor 0). matrix: 0/1 per row. cloze: 0/1 per blank. */
+  function scoreItem(it, resp) {
+    resp = resp || [];
+    if (it.noKey) return { earned: 0, max: 0, frac: 0, correct: false, unscored: true };
+    var e = 0, max = 1, rule = it.scoring || '';
+    function plusMinus(idx, sel, ans) { var x = 0; sel.forEach(function (r) { if (idx(r)) x += ans.indexOf(r) !== -1 ? 1 : -1; }); return Math.max(0, x); }
+    if (it.type === 'single') { e = resp.length === 1 && it.answer.indexOf(resp[0]) !== -1 ? 1 : 0; }
+    else if (it.type === 'sata') {
+      max = it.answer.length;
+      if (rule === '0/1') resp.forEach(function (r) { if (it.answer.indexOf(r) !== -1) e++; });
+      else if (it.groups && it.groups.length === it.options.length) { // +/- scored per category, each category floored at 0
+        var gs = []; it.groups.forEach(function (g) { if (gs.indexOf(g) === -1) gs.push(g); });
+        gs.forEach(function (g) { e += plusMinus(function (r) { return it.groups[r] === g; }, resp, it.answer); });
+      } else e = plusMinus(function () { return true; }, resp, it.answer);
+    }
+    else if (it.type === 'matrix' && it.multi) { // multiple-response grid: +/- per column (floor 0 per column) unless 0/1
+      max = 0; it.rows.forEach(function (r) { max += r.answer.length; });
+      it.columns.forEach(function (c, ci) {
+        var x = 0; it.rows.forEach(function (r, ri) { var sel = (resp[ri] || []).indexOf(ci) !== -1, ok = r.answer.indexOf(ci) !== -1; if (sel) x += ok ? 1 : (rule === '0/1' ? 0 : -1); });
+        e += Math.max(0, x);
+      });
+    }
+    else if (it.type === 'matrix') { max = it.rows.length; it.rows.forEach(function (r, i) { if (resp[i] === r.answer) e++; }); }
+    else if (it.type === 'ordered') { e = resp.length === it.answer.length && resp.every(function (v, i) { return v === it.answer[i]; }) ? 1 : 0; }
+    else if (it.type === 'cloze') {
+      var ok = it.blanks.map(function (b, i) { return resp[i] === b.answer; });
+      if (rule === 'rationale' && it.blanks.length === 2) { max = 1; e = ok[0] && ok[1] ? 1 : 0; } // dyad: both parts needed
+      else if (rule === 'rationale' && it.blanks.length === 3) { max = 2; e = (ok[0] && ok[1] ? 1 : 0) + (ok[0] && ok[2] ? 1 : 0); } // triad
+      else { max = it.blanks.length; ok.forEach(function (x) { if (x) e++; }); }
+    }
+    else if (it.type === 'highlight') {
+      var segs = it.segments || parseHighlight(it.text); max = segs.filter(function (s) { return s.correct; }).length;
+      resp.forEach(function (i) { if (segs[i] && segs[i].selectable) e += segs[i].correct ? 1 : (rule === '0/1' ? 0 : -1); }); e = Math.max(0, e);
+    }
+    else if (it.type === 'bowtie') { // 0/1: one point per correct choice (1 condition + 2 actions + 2 parameters)
+      max = 0; BOWTIE.forEach(function (g) { max += it[g.k].answer.length; });
+      resp.forEach(function (tok) { var p = String(tok).split(':'), grp = it[p[0]]; if (grp && grp.answer.indexOf(+p[1]) !== -1) e++; });
+    }
+    return { earned: e, max: max, frac: max ? e / max : 0, correct: e === max };
+  }
+  function isComplete(it, resp) {
+    resp = resp || [];
+    if (it.type === 'matrix' && it.multi) return resp.some(function (r) { return r && r.length; });
+    if (it.type === 'matrix') return it.rows.every(function (r, i) { return resp[i] != null; });
+    if (it.type === 'cloze') return it.blanks.every(function (b, i) { return resp[i] != null && resp[i] >= 0; });
+    if (it.type === 'ordered') return resp.length === it.options.length;
+    if (it.type === 'bowtie') return BOWTIE.every(function (g) { return resp.filter(function (t) { return String(t).split(':')[0] === g.k; }).length === g.n; });
+    return resp.length > 0;
+  }
+  function correctAnswerText(it) {
+    if (it.noKey) return 'No answer key in the source document - this item is not scored.';
+    var L = function (i) { return String(i + 1); }; // options are shown numbered 1, 2, 3... to match "option 2" in rationales
+    if (it.type === 'single' || it.type === 'sata') return it.answer.map(L).join(', ');
+    if (it.type === 'ordered') return it.answer.map(L).join(' \u2192 ');
+    if (it.type === 'matrix' && it.multi) return it.rows.map(function (r) { return r.label + ' = ' + (r.answer.length ? r.answer.map(function (a) { return it.columns[a]; }).join(' + ') : 'none'); }).join('; ');
+    if (it.type === 'matrix') return it.rows.map(function (r) { return r.label + ' = ' + it.columns[r.answer]; }).join('; ');
+    if (it.type === 'cloze') return it.blanks.map(function (b, i) { return '(' + (i + 1) + ') ' + b.options[b.answer]; }).join('; ');
+    if (it.type === 'bowtie') return BOWTIE.map(function (g) { return g.label + ': ' + it[g.k].answer.map(function (a) { return it[g.k].options[a]; }).join('; '); }).join(' | ');
+    return (it.segments || parseHighlight(it.text)).filter(function (s) { return s.correct; }).map(function (s) { return '"' + s.text + '"'; }).join(', ');
+  }
+  /** Human-readable scoring rule for the feedback panel. */
+  function ruleText(it) {
+    var r = it.scoring;
+    if (it.type === 'single') return '';
+    if (it.type === 'bowtie') return '0/1 scoring: 1 point per correct choice (1 condition, 2 actions, 2 parameters)';
+    if (it.type === 'cloze') return r === 'rationale' ? (it.blanks.length === 3 ? 'Rationale scoring: 1 point for each correct pair of answers' : 'Rationale scoring: 1 point only if both parts are correct') : '1 point per drop-down';
+    if (it.type === 'matrix' && it.multi) return r === '0/1' ? '0/1 scoring: 1 point per correct box' : '+/- scoring per column: +1 correct box, -1 incorrect box, each column never below 0';
+    if (it.type === 'matrix') return '1 point per row';
+    if (it.type === 'ordered') return 'exact order required';
+    if (r === '0/1') return '0/1 scoring: 1 point per correct choice, no penalty';
+    if (it.type === 'sata' && it.groups) return '+/- scoring per category: +1 correct, -1 incorrect, each category never below 0';
+    return '+/- scoring: +1 per correct choice, -1 per incorrect choice, never below 0';
+  }
+  /** Answer-switch stats from a list of {initialFrac, finalFrac, switched} */
+  function switchStats(log) {
+    var s = { items: log.length, switched: 0, wrongToRight: 0, rightToWrong: 0, wrongToWrong: 0, otherChanges: 0, totalChanges: 0 };
+    log.forEach(function (l) {
+      s.totalChanges += l.changes || 0;
+      if (!l.changes) return; s.switched++;
+      var a = l.initialFrac, b = l.finalFrac;
+      if (a < 1 && b === 1) s.wrongToRight++; else if (a === 1 && b < 1) s.rightToWrong++; else if (a < 1 && b < 1 && a === b) s.wrongToWrong++; else s.otherChanges++;
+    });
+    return s;
+  }
+
+  function accuracyByDomain(history) {
+    var acc = {};
+    (history || []).forEach(function (h) {
+      [h.area, h.step].forEach(function (k) {
+        if (!k) return; var a = acc[k] || (acc[k] = { attempted: 0, correct: 0, points: 0, pct: 0 });
+        a.attempted++; a.points += h.frac != null ? h.frac : (h.correct ? 1 : 0); if (h.correct) a.correct++;
+      });
+    });
+    Object.keys(acc).forEach(function (k) { acc[k].pct = acc[k].attempted ? acc[k].points / acc[k].attempted : 0; });
+    return acc;
+  }
+  /** Weakest-areas queue: item priority = 0.6*area score + 0.4*step score; includes items whose area OR step is a priority. */
+  function weakestQueue(cases, an, progress) {
+    var aS = {}, sS = {}, inc = {};
+    an.areas.forEach(function (a) { aS[a.area] = a.score; if (a.latest === 'Below' || a.score >= 30) inc[a.area] = 1; });
+    an.steps.forEach(function (a) { sS[a.area] = a.score; if (a.latest === 'Below' || a.score >= 30) inc[a.area] = 1; });
+    if (!Object.keys(inc).length) an.areas.slice(0, 3).forEach(function (a) { inc[a.area] = 1; });
+    var q = [];
+    cases.forEach(function (c, ci) { c.items.forEach(function (it, ii) { if ((it.area && inc[it.area]) || (it.step && inc[it.step])) q.push({ ci: ci, ii: ii, item: it, pri: 0.6 * (aS[it.area] || 0) + 0.4 * (sS[it.step] || 0) }); }); });
+    function miss(it) { var p = progress && progress[it.id]; return p && p.attempts ? 1 - p.points / p.attempts : 0.5; }
+    q.sort(function (a, b) { return b.pri - a.pri || miss(b.item) - miss(a.item) || a.ci - b.ci || a.ii - b.ii; });
+    return q;
+  }
+  function missedQueue(cases, progress) {
+    var q = [];
+    cases.forEach(function (c, ci) { c.items.forEach(function (it, ii) { var p = progress[it.id]; if (p && p.lastCorrect === false) q.push({ ci: ci, ii: ii, item: it }); }); });
+    return q;
+  }
+
+  // ---------- Mock NCLEX (CAT, Rasch model) ----------
+  function rng(seed) { var s = seed >>> 0 || 1; return function () { s ^= s << 13; s ^= s >>> 17; s ^= s << 5; return ((s >>> 0) % 1e6) / 1e6; }; }
+  function difficultyToB(d) { return ((+d || 3) - 3) * 1.0; } // 1..5 -> -2..+2 logits
+  var GRID = []; for (var g = -5; g <= 5.0001; g += 0.05) GRID.push(+g.toFixed(2));
+  /** EAP ability estimate with N(0, 1.5^2) prior; responses scored as fractions (partial credit) under the Rasch model. */
+  function estimateAbility(resps) {
+    var lp = GRID.map(function (t) { return -t * t / (2 * 2.25); });
+    resps.forEach(function (r) {
+      for (var i = 0; i < GRID.length; i++) { var p = 1 / (1 + Math.exp(-(GRID[i] - r.b))); lp[i] += r.x * Math.log(p) + (1 - r.x) * Math.log(1 - p); }
+    });
+    var mx = Math.max.apply(null, lp), w = lp.map(function (v) { return Math.exp(v - mx); }), sw = w.reduce(function (a, b) { return a + b; }, 0);
+    var m = 0; GRID.forEach(function (t, i) { m += t * w[i]; }); m /= sw;
+    var v = 0; GRID.forEach(function (t, i) { v += (t - m) * (t - m) * w[i]; }); v /= sw;
+    return { theta: +m.toFixed(3), se: +Math.sqrt(v).toFixed(3) };
+  }
+  var MOCK_PRESETS = { full: { minItems: 85, maxItems: 150, timeLimitMs: 5 * 3600 * 1000, unitAt: [10, 35, 60] }, mini: { minItems: 30, maxItems: 30, timeLimitMs: 60 * 60 * 1000, unitAt: [8] } };
+  /** Creates a CAT session. Items in case-kind cases with >=3 items are served as whole units; everything else is served adaptively. */
+  function createMock(cases, opts) {
+    opts = opts || {}; var cfg = Object.assign({}, MOCK_PRESETS[opts.preset || 'full'], opts), rand = rng(cfg.seed || Date.now());
+    var cut = cfg.passingStandard || 0;
+    var singles = [], units = [];
+    cases.forEach(function (c, ci) {
+      var refs = c.items.map(function (it, ii) { return { ci: ci, ii: ii, item: it, b: difficultyToB(it.difficulty) }; }).filter(function (r) { return !r.item.noKey; }); // no answer key -> never in a mock
+      if (!refs.length) return;
+      if (c.kind !== 'standalone' && refs.length >= 3) units.push({ ci: ci, refs: refs, b: mean(refs.map(function (r) { return r.b; })) });
+      else singles = singles.concat(refs);
+    });
+    var st = { cfg: cfg, cut: cut, resps: [], counts: {}, theta: 0, se: 1.5, trail: [], queue: [], done: false, reason: null, startedAt: cfg.now || 0, unitsUsed: 0,
+      poolSize: singles.length + units.reduce(function (s, u) { return s + u.refs.length; }, 0) };
+    AREAS.forEach(function (a) { st.counts[a] = 0; });
+    function pickArea(avail) {
+      var n = st.resps.length + 1, best = null, bestDef = -1e9;
+      AREAS.forEach(function (a) { if (!avail[a]) return; var def = TEST_PLAN[a] * n - st.counts[a]; if (def > bestDef) { bestDef = def; best = a; } });
+      return best;
+    }
+    function nextSingle() {
+      if (!singles.length) return null;
+      var avail = {}; singles.forEach(function (s) { avail[s.item.area || '_'] = 1; });
+      var area = pickArea(avail);
+      var pool = area ? singles.filter(function (s) { return s.item.area === area; }) : singles.slice();
+      pool.sort(function (a, b) { return Math.abs(a.b - st.theta) - Math.abs(b.b - st.theta); });
+      var pick = pool[Math.floor(rand() * Math.min(3, pool.length))];
+      singles.splice(singles.indexOf(pick), 1); return pick;
+    }
+    function takeUnit() {
+      if (!units.length) return false;
+      units.sort(function (a, b) { return Math.abs(a.b - st.theta) - Math.abs(b.b - st.theta); });
+      var u = units.shift(); st.queue = st.queue.concat(u.refs); st.unitsUsed++; return true;
+    }
+    st.next = function (now) {
+      if (st.done) return null;
+      if (now != null && now - st.startedAt >= cfg.timeLimitMs) { st.finish('time'); return null; }
+      if (st.resps.length >= cfg.maxItems) { st.finish('max'); return null; }
+      if (!st.queue.length) {
+        var n = st.resps.length;
+        if (cfg.unitAt.some(function (p) { return n >= p; }) && st.unitsUsed < cfg.unitAt.filter(function (p) { return n >= p; }).length) takeUnit();
+      }
+      var ref = st.queue.length ? st.queue.shift() : nextSingle();
+      if (!ref && takeUnit()) ref = st.queue.shift();
+      if (!ref) { st.finish('exhausted'); return null; }
+      st.current = ref; return ref;
+    };
+    st.record = function (frac, meta) {
+      var ref = st.current; if (!ref) return; st.current = null;
+      st.resps.push({ b: ref.b, x: Math.max(0, Math.min(1, frac)), id: ref.item.id, area: ref.item.area, step: ref.item.step, meta: meta || {} });
+      if (ref.item.area) st.counts[ref.item.area]++;
+      var est = estimateAbility(st.resps); st.theta = est.theta; st.se = est.se;
+      st.trail.push({ n: st.resps.length, theta: st.theta, lo: +(st.theta - 1.96 * st.se).toFixed(3), hi: +(st.theta + 1.96 * st.se).toFixed(3), x: frac });
+      var n = st.resps.length;
+      // Units are served whole, so stopping rules are only applied between units.
+      if (!st.queue.length && n >= cfg.minItems) {
+        if (st.theta - 1.96 * st.se > cut) return st.finish('ci-pass');
+        if (st.theta + 1.96 * st.se < cut) return st.finish('ci-fail');
+      }
+      if (n >= cfg.maxItems) st.finish('max');
+    };
+    st.finish = function (reason) {
+      if (st.done) return; st.done = true; st.reason = reason; st.current = null;
+      st.estimate = st.theta > cut ? 'pass' : 'fail';
+      st.confident = reason === 'ci-pass' || reason === 'ci-fail';
+      st.enough = st.resps.length >= cfg.minItems;
+    };
+    return st;
+  }
+  function mockReport(st) {
+    var by = {}, byStep = {};
+    st.resps.forEach(function (r) {
+      [[by, r.area || 'Untagged'], [byStep, r.step || 'Untagged']].forEach(function (p) { var o = p[0][p[1]] || (p[0][p[1]] = { n: 0, pts: 0 }); o.n++; o.pts += r.x; });
+    });
+    var labels = { 'ci-pass': 'the 95% confidence interval moved fully above the passing standard', 'ci-fail': 'the 95% confidence interval moved fully below the passing standard',
+      max: 'you reached the maximum number of items; the final ability estimate was used', time: 'time ran out; the final ability estimate was used',
+      exhausted: 'the question bank ran out of unused items', quit: 'you ended the mock early' };
+    return { estimate: st.estimate, confident: st.confident, enough: st.enough, reason: st.reason, reasonText: labels[st.reason] || st.reason, n: st.resps.length,
+      theta: st.theta, se: st.se, trail: st.trail, byArea: by, byStep: byStep, switches: switchStats(st.resps.map(function (r) { return r.meta; })) };
+  }
+
+
+  // ---------- External question bank shape: [{id,type,stem,options:[{key,text}],answer:[keys],rationale,area,step,difficulty,source,tagSource}] ----------
+  function isAutoTagged(ts) {
+    if (!ts) return false; if (typeof ts === 'string') return /infer|auto/i.test(ts);
+    return ['area', 'step', 'difficulty'].some(function (k) { return /infer|auto/i.test(String(ts[k] || '')); });
+  }
+  function looksLikeQbank(list) { return Array.isArray(list) && list.length && list.slice(0, 5).some(function (x) { return x && typeof x === 'object' && 'stem' in x; }); }
+  function mapQbankItem(it) {
+    var opts = (it.options || []).map(function (o, i) { return typeof o === 'string' ? { key: String.fromCharCode(65 + i), text: o } : { key: String(o.key != null ? o.key : String.fromCharCode(65 + i)), text: o.text != null ? o.text : (o.label || '') }; });
+    var keys = opts.map(function (o) { return norm(o.key); });
+    var ans = it.answer == null ? [] : (Array.isArray(it.answer) ? it.answer : [it.answer]);
+    ans = ans.map(function (a) { if (typeof a === 'number') return a; var k = keys.indexOf(norm(a)); return k !== -1 ? k : letterIdx(a); });
+    var t = String(it.type || '').toLowerCase().replace(/[^a-z]/g, '');
+    var type = /order|rank|drag/.test(t) ? 'ordered' : /matrix|grid/.test(t) ? 'matrix' : /cloze|drop/.test(t) ? 'cloze' : /highlight/.test(t) ? 'highlight' :
+      /sata|selectall|multipleresponse|multiresponse|multiselect|mr/.test(t) ? 'sata' : /single|mc|mcq|multiplechoice|sc/.test(t) ? 'single' : undefined;
+    if (type === 'single' && ans.length > 1) type = 'sata';
+    return { id: it.id != null ? String(it.id) : undefined, q: it.stem || it.q || it.question || '', options: opts.map(function (o) { return o.text; }), answer: ans,
+      rationale: it.rationale || '', area: it.area ? normalizeArea(it.area) : null, step: it.step ? normalizeStep(it.step) : null,
+      difficulty: +it.difficulty >= 1 && +it.difficulty <= 5 ? +it.difficulty : 3, rows: it.rows || [], columns: it.columns || [], blanks: it.blanks || [], text: it.text || '',
+      context: it.context || it.scenario || '', source: it.source || '', strategy: it.strategy || '', autoTagged: isAutoTagged(it.tagSource), type: type, _rawArea: it.area, _rawStep: it.step };
+  }
+  /** Maps the external item shape into stand-alone "cases" grouped by source. Efficient for thousands of items. */
+  function parseQbank(list) {
+    var groups = {}, order = [], errors = [], bad = 0, unknownArea = 0, unknownStep = 0;
+    var dups = 0;
+    for (var i = 0; i < list.length; i++) {
+      if (list[i] && list[i].duplicateOf) { dups++; continue; } // listed duplicates of another item are skipped
+      var it = mapQbankItem(list[i]);
+      if (it._rawArea && !it.area) unknownArea++; if (it._rawStep && !it.step) unknownStep++;
+      delete it._rawArea; delete it._rawStep;
+      var e = validateItem(it); if (e) { bad++; if (errors.length < 10) errors.push(e); continue; }
+      var src = it.source || 'Imported question bank';
+      if (!groups[src]) { groups[src] = { title: src, source: src, kind: 'standalone', scenario: '', exhibits: {}, items: [] }; order.push(src); }
+      groups[src].items.push(it);
+    }
+    if (dups) errors.push(dups + ' item(s) marked duplicateOf another item were skipped');
+    if (bad > 10) errors.push('...' + (bad - 10) + ' more invalid items skipped');
+    if (unknownArea) errors.push(unknownArea + ' item(s) had an unrecognized area (left untagged)');
+    if (unknownStep) errors.push(unknownStep + ' item(s) had an unrecognized step (left untagged)');
+    return { cases: finalizeCases(order.map(function (k) { return groups[k]; })), errors: errors, skipped: bad };
+  }
+
+  // ---------- Flashcards {id, class, front, back, tags, source} with Leitner boxes ----------
+  function parseFlashcards(data) {
+    if (typeof data === 'string') data = JSON.parse(data);
+    var list = flashList(data), deckName = (data && !Array.isArray(data) && data.deck) || '', errors = [], seen = {}, out = [];
+    list.forEach(function (c, i) {
+      if (!c || !c.front || !c.back) { if (errors.length < 10) errors.push('Card ' + (i + 1) + ' needs front and back'); return; }
+      var id = c.id != null ? String(c.id) : hashStr('fc|' + c.front + '|' + c.back);
+      if (seen[id]) return; seen[id] = 1;
+      var tags = Array.isArray(c.tags) ? c.tags.map(String) : (c.tags ? String(c.tags).split(/[,;]\s*/) : []);
+      out.push({ id: id, class: String(c['class'] || c._class || c.category || 'Unclassified').trim(), group: c.group || c._group || '', front: String(c.front), back: String(c.back), tags: tags,
+        source: (c.source || '') + (c.source_page ? ', p. ' + c.source_page : ''), note: c.flag_note || c.note || '', deck: deckName });
+    });
+    return { cards: out, errors: errors };
+  }
+  /** Accepts [cards], {cards:[...]}, {flashcards:[...]} or {classes:[{class, group, cards:[...]}]} */
+  function flashList(data) {
+    if (Array.isArray(data)) return data;
+    if (!data) return [];
+    if (Array.isArray(data.classes)) { var out = []; data.classes.forEach(function (k) { (k.cards || []).forEach(function (c) { out.push(Object.assign({ _class: k['class'] || k.name, _group: k.group }, c)); }); }); return out; }
+    return data.cards || data.flashcards || [];
+  }
+  function looksLikeFlashcards(data) { var l = flashList(data); return Array.isArray(l) && l.length && l.slice(0, 5).every(function (c) { return c && 'front' in c && 'back' in c; }); }
+  var LEITNER_DAYS = [0, 1, 3, 7, 14]; // box 1..5 review intervals
+  var DAY = 86400000;
+  function leitnerUpdate(st, known, now) {
+    st = Object.assign({ box: 0, due: 0, seen: 0, known: 0, unsure: 0 }, st || {});
+    st.seen++; if (known) { st.known++; st.box = Math.min(5, Math.max(1, st.box + 1)); } else { st.unsure++; st.box = 1; }
+    st.due = now + LEITNER_DAYS[st.box - 1] * DAY; st.last = now; return st;
+  }
+  function isDue(st, now) { return !st || !st.box || st.due <= now; }
+  function isPharmCard(c) { return /pharm|drug|medic|dose|antibiot|anticoag|insulin|blocker|inhibitor/i.test(c['class'] + ' ' + c.tags.join(' ') + ' ' + c.source + ' ' + (c.deck || '')); }
+  /** Build a study deck. opts: {cls, pharmDay, all, now, limit, newLimit} */
+  function buildDeck(cards, lt, opts) {
+    opts = opts || {}; var now = opts.now || Date.now(), limit = opts.limit || 50;
+    var pool = cards.filter(function (c) { return !opts.cls || c['class'] === opts.cls; });
+    if (opts.pharmDay) { var ph = pool.filter(isPharmCard); if (ph.length) pool = ph; }
+    var due = pool.filter(function (c) { var s = lt[c.id]; return s && s.box && s.due <= now; });
+    var fresh = pool.filter(function (c) { var s = lt[c.id]; return !s || !s.box; });
+    due.sort(function (a, b) { return lt[a.id].box - lt[b.id].box || lt[a.id].due - lt[b.id].due; });
+    var deck = due.slice(0, limit);
+    var newLimit = opts.newLimit != null ? opts.newLimit : (opts.pharmDay ? 20 : limit);
+    deck = deck.concat(fresh.slice(0, Math.max(0, Math.min(newLimit, limit - deck.length))));
+    if (opts.all && !deck.length) deck = pool.slice(0, limit);
+    if (opts.pharmDay) { // interleave classes so a Pharm day mixes drug classes
+      var byC = {}, keys = []; deck.forEach(function (c) { if (!byC[c['class']]) { byC[c['class']] = []; keys.push(c['class']); } byC[c['class']].push(c); });
+      var mixed = []; for (var r = 0; mixed.length < deck.length; r++) keys.forEach(function (k) { if (byC[k][r]) mixed.push(byC[k][r]); });
+      deck = mixed;
+    }
+    return deck;
+  }
+  function leitnerSummary(cards, lt, now) {
+    var boxes = [0, 0, 0, 0, 0, 0], due = 0;
+    cards.forEach(function (c) { var s = lt[c.id]; boxes[s && s.box ? s.box : 0]++; if (isDue(s, now)) due++; });
+    return { boxes: boxes, due: due, total: cards.length };
+  }
+
+  function pct(x) { return Math.round(x * 100) + '%'; }
+  var api = { AREAS: AREAS, STEPS: STEPS, CJ: CJ, DOMAINS: DOMAINS, SHORT: SHORT, RATINGS: RATINGS, SEV: SEV, TEST_PLAN: TEST_PLAN, STEP_PROMPTS: STEP_PROMPTS,
+    normalizeArea: normalizeArea, normalizeStep: normalizeStep, normalizeRating: normalizeRating, parseCprText: parseCprText, findDate: findDate, sortReports: sortReports,
+    analyzeReports: analyzeReports, recommend: recommend, parseTextBank: parseTextBank, parseJsonBank: parseJsonBank, parseHighlight: parseHighlight, splitExhibits: splitExhibits,
+    scoreItem: scoreItem, isComplete: isComplete, correctAnswerText: correctAnswerText, ruleText: ruleText, BOWTIE: BOWTIE, switchStats: switchStats,
+    accuracyByDomain: accuracyByDomain, accuracyByArea: accuracyByDomain, weakestQueue: weakestQueue, missedQueue: missedQueue,
+    estimateAbility: estimateAbility, difficultyToB: difficultyToB, createMock: createMock, mockReport: mockReport, MOCK_PRESETS: MOCK_PRESETS, hashStr: hashStr, pct: pct,
+    looksLikeQbank: looksLikeQbank, parseQbank: parseQbank, mapQbankItem: mapQbankItem, parseFlashcards: parseFlashcards, looksLikeFlashcards: looksLikeFlashcards,
+    leitnerUpdate: leitnerUpdate, isDue: isDue, buildDeck: buildDeck, leitnerSummary: leitnerSummary, isPharmCard: isPharmCard, LEITNER_DAYS: LEITNER_DAYS };
+  if (typeof module !== 'undefined' && module.exports) module.exports = api; else root.Core = api;
+})(this);
+
+</script>
+<script>/* data.js */
+/* generated by build-data.js */
+window.SAMPLE_TEXT = "CASE: Heart failure exacerbation\nSOURCE: Sample practice case written by Goji\nSCENARIO: A 71-year-old client with heart failure with reduced ejection fraction (EF 25%) and atrial fibrillation is admitted with 4 days of worsening shortness of breath.\nNOTES: 0700: Client sitting upright, states \"I had to sleep on three pillows all week.\" Alert and oriented x4. Crackles bilateral lower lobes to mid-fields. Jugular venous distention at 45 degrees. 3+ pitting edema bilateral ankles. Abdomen soft, liver edge palpable 3 cm below costal margin. Denies chest pain. Weight 84.3 kg (82.0 kg at last clinic visit). Ate 75% of breakfast.\nVITALS: Time | T | HR | RR | BP | SpO2\n0700 | 36.8 C | 108 irregular | 26 | 148/88 | 89% room air\nLABS: Test | Result | Reference\nPotassium | 3.2 mEq/L | 3.5-5.0\nSodium | 132 mEq/L | 135-145\nCreatinine | 1.4 mg/dL | 0.6-1.2\nBNP | 1,450 pg/mL | < 100\nDigoxin level | 1.1 ng/mL | 0.5-2.0\nORDERS: Oxygen to keep SpO2 >= 92%\nFurosemide 40 mg IV push now and every 12 hours\nDigoxin 0.125 mg PO daily\nPotassium chloride 20 mEq PO twice daily\nDaily weight, strict intake and output\n2 g sodium diet, 1.5 L/day fluid restriction\n\nQ: Click to highlight the findings in the nurses' note that require follow-up.\nTYPE: HIGHLIGHT\nAREA: Physiological Adaptation\nSTEP: Recognize Cues\nDIFFICULTY: 2\nTEXT: Client sitting upright, states [[\"I had to sleep on three pillows all week.\"]] [Alert and oriented x4.] [[Crackles bilateral lower lobes to mid-fields.]] [[Jugular venous distention at 45 degrees.]] [Denies chest pain.] [[Weight 84.3 kg (82.0 kg at last clinic visit).]] [Ate 75% of breakfast.]\nRATIONALE: Orthopnea, crackles, JVD and a 2.3 kg weight gain all point to fluid overload. Orientation, absence of chest pain and good intake are reassuring. Scoring is +/-: each correct highlight earns a point and each incorrect highlight costs one.\n\nQ: For each finding, indicate whether it is more consistent with left-sided or right-sided heart failure.\nTYPE: MATRIX\nAREA: Physiological Adaptation\nSTEP: Analyze Cues\nDIFFICULTY: 3\nCOLUMNS: Left-sided | Right-sided\nROW: Crackles in both lungs = Left-sided\nROW: Orthopnea = Left-sided\nROW: Jugular venous distention = Right-sided\nROW: Bilateral ankle edema = Right-sided\nROW: Enlarged liver edge = Right-sided\nRATIONALE: Left-sided failure backs fluid into the lungs (crackles, orthopnea). Right-sided failure backs fluid into the systemic venous system (JVD, peripheral edema, hepatomegaly). This client has both, which is common with a low ejection fraction.\n\nQ: Complete the sentence by choosing from the lists of options.\nTYPE: CLOZE\nAREA: Pharmacological and Parenteral Therapies\nSTEP: Prioritize Hypotheses\nDIFFICULTY: 4\nTEXT: Once IV furosemide is given, the client is at highest risk for {1} because of the {2}.\nBLANK 1: digoxin toxicity and dysrhythmias * | hypernatremia | fluid volume excess from the diuretic\nBLANK 2: potassium of 3.2 mEq/L * | BNP of 1,450 pg/mL | digoxin level of 1.1 ng/mL\nRATIONALE: Loop diuretics waste potassium, and hypokalemia increases the risk of digoxin toxicity and dysrhythmias even when the digoxin level is in range. The BNP reflects heart failure severity, not drug toxicity.\n\nQ: Which action should the nurse take first?\nAREA: Physiological Adaptation\nSTEP: Prioritize Hypotheses\nDIFFICULTY: 2\nA. Teach the client about the 2 g sodium diet\nB. Place the client in high Fowler's position and apply oxygen as prescribed\nC. Weigh the client again on a different scale\nD. Give the morning dose of digoxin\nANSWER: B\nRATIONALE: SpO2 89% with crackles is an airway/breathing problem, so it comes first. Teaching and weights matter but can wait. Digoxin should not be the first action with a low potassium.\n\nQ: Before giving digoxin 0.125 mg, which actions are appropriate? Select all that apply.\nAREA: Pharmacological and Parenteral Therapies\nSTEP: Generate Solutions\nDIFFICULTY: 3\nA. Count the apical pulse for 1 full minute\nB. Review the most recent potassium level\nC. Hold the dose and notify the provider if the apical pulse is below 60/min, per protocol\nD. Give the dose with an antacid to reduce nausea\nE. Ask about nausea, vomiting, or visual changes\nANSWER: A, B, C, E\nRATIONALE: Apical pulse, potassium and toxicity symptoms are checked before every dose; a pulse below 60 is a common hold parameter. Antacids reduce digoxin absorption.\n\nQ: Which finding 12 hours later best indicates that furosemide therapy has been effective?\nAREA: Pharmacological and Parenteral Therapies\nSTEP: Evaluate Outcomes\nDIFFICULTY: 3\nA. Potassium 3.0 mEq/L\nB. Crackles now only at the bases and weight down 1.4 kg\nC. Heart rate 110/min and irregular\nD. Urine specific gravity 1.035\nANSWER: B\nRATIONALE: Fewer crackles and weight loss show fluid removal. Falling potassium is an adverse effect to report, and a high specific gravity suggests concentrated urine rather than diuresis.\n\nCASE: Sepsis from pneumonia\nSOURCE: Sample practice case written by Goji\nSCENARIO: A 66-year-old client with type 2 diabetes comes to the emergency department with 3 days of productive cough and new confusion. Weight 80 kg.\nNOTES: 1400: Oriented to person only (baseline fully oriented per spouse). Skin warm and flushed. Coarse crackles right lower lobe, productive cough with rust-colored sputum. Capillary refill 4 seconds. Voided 60 mL dark urine over the past 4 hours.\nVITALS: Time | T | HR | RR | BP (MAP) | SpO2\n1400 | 38.8 C | 122 | 28 | 86/50 (62) | 91% on 2 L\nLABS: Test | Result | Reference\nWBC | 19,500/mm3 | 5,000-10,000\nLactate | 4.1 mmol/L | < 2.0\nGlucose | 210 mg/dL | 70-110\nSodium | 139 mEq/L | 135-145\nCreatinine | 1.9 mg/dL | 0.6-1.2\nORDERS: Blood cultures x 2 sets now\nLactate now and repeat in 2 hours\nPiperacillin-tazobactam 4.5 g IV every 6 hours, first dose now\nLactated Ringer's 30 mL/kg (2,400 mL) IV bolus\nNorepinephrine infusion to keep MAP >= 65 mm Hg if hypotension persists after fluids\n\nQ: For each finding, indicate whether it requires immediate follow-up or is not a priority right now.\nTYPE: MATRIX\nAREA: Physiological Adaptation\nSTEP: Recognize Cues\nDIFFICULTY: 2\nCOLUMNS: Requires immediate follow-up | Not a priority right now\nROW: Lactate 4.1 mmol/L = Requires immediate follow-up\nROW: MAP 62 mm Hg = Requires immediate follow-up\nROW: Urine output 60 mL over 4 hours = Requires immediate follow-up\nROW: Sodium 139 mEq/L = Not a priority right now\nROW: New confusion = Requires immediate follow-up\nRATIONALE: Lactate of 4 or more, MAP under 65, oliguria and new confusion signal hypoperfusion. A normal sodium needs no action.\n\nQ: Complete the sentence by choosing from the lists of options.\nTYPE: CLOZE\nAREA: Physiological Adaptation\nSTEP: Prioritize Hypotheses\nDIFFICULTY: 3\nTEXT: The client's priority problem is {1}, best supported by {2}.\nBLANK 1: inadequate tissue perfusion from sepsis * | hyperglycemia | ineffective airway clearance from sputum\nBLANK 2: MAP 62 mm Hg with lactate 4.1 mmol/L * | glucose 210 mg/dL | rust-colored sputum\nRATIONALE: Hypotension plus a high lactate means organs are not being perfused: septic shock physiology. Hyperglycemia and sputum are real problems but are not the most life-threatening.\n\nQ: The nurse is about to hang the first dose of piperacillin-tazobactam. Which action must be completed before the antibiotic is started?\nAREA: Pharmacological and Parenteral Therapies\nSTEP: Take Actions\nDIFFICULTY: 2\nA. Obtain the chest x-ray result\nB. Draw the two sets of blood cultures\nC. Wait for the repeat lactate\nD. Finish the full fluid bolus\nANSWER: B\nRATIONALE: Cultures are drawn before the first antibiotic dose so the organism can be identified, and the antibiotic should then start without delay. Fluids run at the same time through a separate line; they do not need to finish first.\n\nQ: Which interventions belong in this client's first hour of care? Select all that apply.\nAREA: Reduction of Risk Potential\nSTEP: Generate Solutions\nDIFFICULTY: 3\nA. Measure the lactate level\nB. Start the 30 mL/kg crystalloid bolus\nC. Hold the antibiotic until culture results return\nD. Give broad-spectrum antibiotics after cultures are drawn\nE. Begin a vasopressor if MAP stays below 65 mm Hg during or after fluids\nANSWER: A, B, D, E\nRATIONALE: These are the hour-1 sepsis bundle elements. Culture results take 24-72 hours; delaying antibiotics increases mortality.\n\nQ: Norepinephrine is infusing through a peripheral IV. The nurse finds the skin around the site cool, pale and blanched. Which action should the nurse take first?\nAREA: Pharmacological and Parenteral Therapies\nSTEP: Prioritize Hypotheses\nDIFFICULTY: 4\nA. Apply a warm compress and continue the infusion\nB. Stop the infusion at that site, leave the catheter in place, and notify the provider\nC. Remove the catheter immediately and apply pressure\nD. Increase the infusion rate to improve perfusion\nANSWER: B\nRATIONALE: Blanching suggests extravasation of a vesicant vasopressor. Stop it at that site; the catheter is usually left in so the provider can order an antidote such as phentolamine through it, and the infusion is restarted at another (ideally central) site per protocol.\n\nQ: Six hours later, for each finding, indicate whether it shows improvement or no improvement.\nTYPE: MATRIX\nAREA: Physiological Adaptation\nSTEP: Evaluate Outcomes\nDIFFICULTY: 3\nCOLUMNS: Improvement | No improvement\nROW: MAP 70 mm Hg on norepinephrine = Improvement\nROW: Lactate 2.1 mmol/L = Improvement\nROW: Urine output 40 mL/hour = Improvement\nROW: Oxygen increased to 5 L to keep SpO2 92% = No improvement\nROW: Still oriented to person only = No improvement\nRATIONALE: Perfusion markers are improving, but a rising oxygen requirement and persistent confusion still need follow-up.\n\nCASE: Post-operative complication after knee replacement\nSOURCE: Sample practice case written by Goji\nSCENARIO: A 69-year-old client with obstructive sleep apnea is on post-operative day 1 after a right total knee arthroplasty. Hydromorphone PCA is infusing. Enoxaparin 40 mg subcut daily started this morning.\nNOTES: 0200: Client difficult to arouse, responds briefly to loud voice then falls asleep mid-sentence. Respirations 8/min and shallow. SpO2 87% on room air. Pupils pinpoint. Has not used CPAP tonight. Right knee dressing dry and intact. Pedal pulses 2+ bilaterally. Last pain score 3/10 at 2200. Spouse says the client \"pressed the button a lot so it wouldn't hurt later.\"\nVITALS: Time | HR | RR | BP | SpO2 | Sedation (POSS)\n2200 | 82 | 16 | 132/78 | 95% RA | 2\n0200 | 64 | 8 | 118/70 | 87% RA | 4\nLABS: Test | Result | Reference\nHemoglobin | 10.9 g/dL | 12-16\nPlatelets | 210,000/mm3 | 150,000-400,000\nORDERS: Hydromorphone PCA 0.2 mg demand dose, 10-minute lockout, no basal rate\nNaloxone 0.04 mg IV every 2 minutes as needed for RR < 10 or POSS 4, titrate to effect\nContinuous pulse oximetry; CPAP at night\nEnoxaparin 40 mg subcut daily\n\nQ: Click to highlight the findings that require immediate follow-up.\nTYPE: HIGHLIGHT\nAREA: Pharmacological and Parenteral Therapies\nSTEP: Recognize Cues\nDIFFICULTY: 2\nTEXT: [[Client difficult to arouse, falls asleep mid-sentence.]] [[Respirations 8/min and shallow.]] [[SpO2 87% on room air.]] [[Pupils pinpoint.]] [Right knee dressing dry and intact.] [Pedal pulses 2+ bilaterally.] [Last pain score 3/10 at 2200.]\nRATIONALE: Sedation, slow shallow breathing, hypoxemia and pinpoint pupils point to opioid-induced respiratory depression. The surgical site and circulation findings are reassuring.\n\nQ: Complete the sentence by choosing from the lists of options.\nTYPE: CLOZE\nAREA: Pharmacological and Parenteral Therapies\nSTEP: Prioritize Hypotheses\nDIFFICULTY: 3\nTEXT: The client is most likely experiencing {1}, and the nurse's first action should be to {2}.\nBLANK 1: opioid-induced respiratory depression * | pulmonary embolism | hypovolemic shock\nBLANK 2: stop the PCA, stimulate the client, and support breathing * | increase the IV fluid rate | apply sequential compression devices\nRATIONALE: Risk factors (sleep apnea, frequent demand doses, no CPAP) plus POSS 4 and RR 8 fit opioid toxicity. Stopping the opioid and supporting ventilation come first; naloxone follows per the order.\n\nQ: Which method of giving the prescribed naloxone is correct?\nAREA: Pharmacological and Parenteral Therapies\nSTEP: Take Actions\nDIFFICULTY: 4\nA. Give 2 mg IV push rapidly to fully reverse the opioid\nB. Dilute 0.4 mg in 10 mL of saline and give 1 mL (0.04 mg) slowly every 2 minutes until respirations improve\nC. Give 0.4 mg subcut and recheck in 1 hour\nD. Hold naloxone until the provider arrives\nANSWER: B\nRATIONALE: Small titrated doses restore breathing without abrupt full reversal, which can cause severe pain, vomiting, and cardiovascular stress. The order specifies 0.04 mg every 2 minutes.\n\nQ: After naloxone, the client is awake with RR 14/min. Which statements about ongoing monitoring are correct? Select all that apply.\nAREA: Reduction of Risk Potential\nSTEP: Evaluate Outcomes\nDIFFICULTY: 4\nA. Sedation can return because naloxone may wear off before the opioid does\nB. Continuous pulse oximetry and frequent sedation scores should continue\nC. The PCA can be restarted at the same settings right away\nD. Pain should be reassessed and treated with a provider-adjusted plan\nE. Applying CPAP while sleeping lowers the risk of a repeat event\nANSWER: A, B, D, E\nRATIONALE: Naloxone's effect can be shorter than hydromorphone's, so re-sedation is possible. The PCA plan needs review with the provider before restarting.\n\nQ: For each POD 1 finding, indicate whether it is expected or requires follow-up.\nTYPE: MATRIX\nAREA: Reduction of Risk Potential\nSTEP: Analyze Cues\nDIFFICULTY: 3\nCOLUMNS: Expected | Requires follow-up\nROW: Small amount of serosanguineous drainage on the dressing = Expected\nROW: New swelling, warmth and tenderness of the left calf = Requires follow-up\nROW: Pain 4/10 with physical therapy = Expected\nROW: Platelets fall to 95,000/mm3 on day 5 of enoxaparin = Requires follow-up\nROW: Hemoglobin 10.9 g/dL after surgery = Expected\nRATIONALE: Unilateral calf swelling suggests DVT; a platelet drop of 50% or more after several days of heparin products suggests heparin-induced thrombocytopenia. Mild post-op anemia and some drainage are common (follow trends).\n\nQ: The nurse receives report on four clients. Which client should the nurse see first?\nAREA: Management of Care\nSTEP: Prioritize Hypotheses\nDIFFICULTY: 3\nA. This client, now awake after naloxone with RR 14/min and SpO2 95%\nB. A client 2 days after hip surgery with sudden shortness of breath, chest pain and SpO2 88%\nC. A client requesting pain medication for incisional pain 6/10\nD. A client with diabetes whose pre-lunch glucose is 182 mg/dL\nANSWER: B\nRATIONALE: Sudden dyspnea, chest pain and hypoxemia after surgery suggest a pulmonary embolism, an unstable situation. The naloxone client is now stable and still monitored.\n\nCASE: Diabetic ketoacidosis\nSOURCE: Sample practice case written by Goji\nSCENARIO: A 19-year-old client with type 1 diabetes is brought in with 2 days of vomiting and abdominal pain. The client stopped taking insulin because \"I wasn't eating.\"\nNOTES: 0900: Drowsy but answers questions. Deep, rapid respirations. Fruity odor to breath. Mucous membranes dry. Weight 60 kg.\nVITALS: Time | HR | RR | BP | T\n0900 | 128 | 32 | 96/58 | 37.2 C\nLABS: Test | Result | Reference\nGlucose | 520 mg/dL | 70-110\npH | 7.18 | 7.35-7.45\nBicarbonate | 10 mEq/L | 22-26\nPotassium | 5.6 mEq/L | 3.5-5.0\nAnion gap | 26 | 8-12\nSerum ketones | Large | Negative\nORDERS: 0.9% sodium chloride 1 L IV over 1 hour, then reassess\nRegular insulin IV infusion 0.1 unit/kg/hour once potassium is at least 3.3 mEq/L\nPotassium replacement per protocol when potassium is below 5.0 mEq/L and urine output is adequate\nCapillary glucose every hour; BMP every 2 hours\nChange IV fluid to D5 0.45% sodium chloride when glucose reaches 250 mg/dL\n\nQ: For each finding, indicate whether it is consistent with DKA.\nTYPE: MATRIX\nAREA: Physiological Adaptation\nSTEP: Analyze Cues\nDIFFICULTY: 2\nCOLUMNS: Consistent with DKA | Not consistent with DKA\nROW: Deep, rapid respirations = Consistent with DKA\nROW: Fruity breath odor = Consistent with DKA\nROW: Bicarbonate 10 mEq/L = Consistent with DKA\nROW: Heart rate 48/min = Not consistent with DKA\nROW: Large serum ketones = Consistent with DKA\nRATIONALE: Kussmaul respirations, ketones and a low bicarbonate are hallmarks of DKA. Dehydration causes tachycardia, not bradycardia.\n\nQ: Which prescription should the nurse implement first?\nAREA: Pharmacological and Parenteral Therapies\nSTEP: Prioritize Hypotheses\nDIFFICULTY: 3\nA. Regular insulin IV infusion\nB. 0.9% sodium chloride 1 L IV\nC. Potassium replacement\nD. Change fluids to D5 0.45% sodium chloride\nANSWER: B\nRATIONALE: Severe dehydration is corrected first. Insulin starts after fluids are running and potassium is known to be at least 3.3; potassium is not given while it is 5.6.\n\nQ: Complete the sentence by choosing from the lists of options.\nTYPE: CLOZE\nAREA: Reduction of Risk Potential\nSTEP: Generate Solutions\nDIFFICULTY: 4\nTEXT: Before and during the insulin infusion, the nurse closely monitors {1} because insulin causes {2}.\nBLANK 1: serum potassium * | serum sodium | hemoglobin A1C\nBLANK 2: potassium to shift into cells * | sodium retention | potassium to rise\nRATIONALE: Total body potassium is depleted in DKA even when the serum level looks high. Insulin drives potassium into cells, so levels can fall quickly and cause dysrhythmias.\n\nQ: Which actions are appropriate for the insulin infusion? Select all that apply.\nAREA: Pharmacological and Parenteral Therapies\nSTEP: Take Actions\nDIFFICULTY: 3\nA. Use regular insulin for the IV infusion\nB. Have a second nurse independently double-check the infusion\nC. Check capillary glucose every hour\nD. Use insulin glargine for the IV infusion\nE. Stop the infusion as soon as glucose falls below 250 mg/dL\nANSWER: A, B, C\nRATIONALE: Regular insulin is used IV; insulin is a high-alert drug that calls for an independent double check. The infusion continues until the acidosis (anion gap) resolves, with dextrose added when glucose reaches 250.\n\nQ: At 1300 the glucose is 238 mg/dL and the anion gap is 18. What should the nurse do?\nAREA: Reduction of Risk Potential\nSTEP: Take Actions\nDIFFICULTY: 4\nA. Stop the insulin infusion\nB. Change the IV fluid to D5 0.45% sodium chloride and continue the insulin infusion per protocol\nC. Give subcutaneous insulin glargine and stop the infusion\nD. Give a bolus of 50% dextrose\nANSWER: B\nRATIONALE: The gap is still open, so ketoacidosis persists. Dextrose prevents hypoglycemia while insulin keeps clearing ketones, as ordered.\n\nQ: For each finding the next morning, indicate whether it shows DKA is resolving.\nTYPE: MATRIX\nAREA: Physiological Adaptation\nSTEP: Evaluate Outcomes\nDIFFICULTY: 3\nCOLUMNS: DKA resolving | Not resolving / new concern\nROW: Anion gap 10 = DKA resolving\nROW: pH 7.34 = DKA resolving\nROW: Bicarbonate 19 mEq/L = DKA resolving\nROW: Potassium 3.1 mEq/L = Not resolving / new concern\nROW: Still has deep, rapid respirations = Not resolving / new concern\nRATIONALE: Gap closure, pH 7.3 or more and bicarbonate 18 or more indicate resolution. Hypokalemia is a new problem to treat; persistent Kussmaul breathing suggests ongoing acidosis.\n\nCASE: Older adult on several high-alert medications\nSOURCE: Sample practice case written by Goji\nSCENARIO: An 80-year-old client with atrial fibrillation, heart failure and type 2 diabetes is admitted with 3 days of nausea and poor appetite. Home medications: digoxin 0.25 mg daily, warfarin 5 mg daily, insulin glargine 20 units at bedtime, insulin lispro with meals, metoprolol succinate 50 mg daily. Amiodarone was added 2 weeks ago.\nNOTES: 0730: Client says \"everything has a yellow tinge.\" Apical pulse 52 and irregular. Diaphoretic and shaky, asks for juice. Alert and oriented x4, swallowing without difficulty. Lungs clear. Small bruise on left forearm, no other bleeding noted. Voiding clear yellow urine. Ate nothing last evening.\nVITALS: Time | HR | RR | BP | SpO2\n0730 | 52 irregular | 18 | 112/68 | 96% RA\nLABS: Test | Result | Reference\nCapillary glucose (0730) | 58 mg/dL | 70-110\nDigoxin level | 2.8 ng/mL | 0.5-2.0\nPotassium | 3.1 mEq/L | 3.5-5.0\nINR | 4.2 | goal 2.0-3.0\nCreatinine | 1.6 mg/dL | 0.6-1.2\nORDERS: Hypoglycemia protocol\nNotify provider of critical lab values\nMorning medications due at 0800: digoxin, warfarin, insulin lispro with breakfast, metoprolol succinate, atorvastatin\n\nQ: Click to highlight the findings that require follow-up.\nTYPE: HIGHLIGHT\nAREA: Pharmacological and Parenteral Therapies\nSTEP: Recognize Cues\nDIFFICULTY: 2\nTEXT: Client says [[\"everything has a yellow tinge.\"]] [[Apical pulse 52 and irregular.]] [[Diaphoretic and shaky, asks for juice.]] [Alert and oriented x4, swallowing without difficulty.] [Lungs clear.] [Voiding clear yellow urine.] [[Ate nothing last evening.]]\nRATIONALE: Yellow vision and bradycardia suggest digoxin toxicity; diaphoresis and shakiness suggest hypoglycemia, and not eating after bedtime glargine explains it. Being alert and able to swallow matters for treatment, but is not itself a problem.\n\nQ: Complete the sentence by choosing from the lists of options.\nTYPE: CLOZE\nAREA: Pharmacological and Parenteral Therapies\nSTEP: Prioritize Hypotheses\nDIFFICULTY: 4\nTEXT: The nurse should first address the client's {1} by {2}.\nBLANK 1: hypoglycemia * | elevated INR | digoxin level\nBLANK 2: giving 15 g of fast-acting carbohydrate and rechecking glucose in 15 minutes * | giving vitamin K | giving the scheduled digoxin with food\nRATIONALE: A glucose of 58 with symptoms can worsen within minutes and is quickly reversible; because the client is alert and can swallow, oral carbohydrate is used. The provider is then notified about the digoxin level and INR.\n\nQ: For each 0800 medication, indicate the appropriate action.\nTYPE: MATRIX\nAREA: Pharmacological and Parenteral Therapies\nSTEP: Take Actions\nDIFFICULTY: 4\nCOLUMNS: Give as scheduled | Hold and notify the provider\nROW: Digoxin = Hold and notify the provider\nROW: Warfarin = Hold and notify the provider\nROW: Insulin lispro with breakfast = Hold and notify the provider\nROW: Metoprolol succinate = Hold and notify the provider\nROW: Atorvastatin = Give as scheduled\nRATIONALE: Digoxin level 2.8 with symptoms, INR 4.2, hypoglycemia with poor intake, and HR 52 are all reasons to hold and clarify. The statin has no related concern today.\n\nQ: Which factors increase this client's risk for digoxin toxicity? Select all that apply.\nAREA: Reduction of Risk Potential\nSTEP: Analyze Cues\nDIFFICULTY: 3\nA. Potassium 3.1 mEq/L\nB. Creatinine 1.6 mg/dL\nC. Amiodarone added 2 weeks ago\nD. Age 80\nE. SpO2 96%\nANSWER: A, B, C, D\nRATIONALE: Hypokalemia, reduced kidney function, older age, and amiodarone (which raises digoxin levels) all increase risk. Amiodarone also increases the effect of warfarin, which fits the high INR.\n\nQ: Fifteen minutes after 4 oz of juice, the glucose is 64 mg/dL and the client is still shaky. What should the nurse do next?\nAREA: Physiological Adaptation\nSTEP: Evaluate Outcomes\nDIFFICULTY: 2\nA. Give another 15 g of fast-acting carbohydrate and recheck in 15 minutes\nB. Give the scheduled insulin lispro\nC. Wait 1 hour and recheck\nD. Give glucagon IM even though the client can swallow\nANSWER: A\nRATIONALE: The rule of 15 repeats treatment until glucose is above 70, then a snack or meal follows. IM glucagon is for clients who cannot take oral carbohydrate safely.\n\nQ: Which statement by the client shows a need for more teaching about warfarin?\nAREA: Pharmacological and Parenteral Therapies\nSTEP: Evaluate Outcomes\nDIFFICULTY: 3\nA. \"I will keep my INR blood test appointments.\"\nB. \"I can take aspirin for my headaches.\"\nC. \"I will use a soft toothbrush and electric razor.\"\nD. \"I will tell every provider that I take warfarin.\"\nANSWER: B\nRATIONALE: Aspirin adds antiplatelet effect and raises bleeding risk with warfarin. The other statements are correct.\n\nCASE: Stand-alone practice items\nSOURCE: Sample practice items written by Goji\nKIND: standalone\n\nQ: The nurse is making assignments. Which task can be delegated to assistive personnel (AP)?\nCONTEXT: Medical-surgical unit, day shift.\nAREA: Management of Care\nSTEP: Generate Solutions\nDIFFICULTY: 2\nA. Assess a new admission's skin\nB. Help a stable post-op client walk in the hall\nC. Teach a client to use an incentive spirometer\nD. Evaluate a client's response to pain medication\nANSWER: B\nRATIONALE: Ambulating a stable client is within AP scope. Assessment, teaching and evaluation stay with the RN.\n\nQ: Which client should the nurse assess first after receiving report?\nAREA: Management of Care\nSTEP: Prioritize Hypotheses\nDIFFICULTY: 3\nA. A client with COPD whose SpO2 is 90% on 2 L\nB. A client with new restlessness and SpO2 85% after a blood transfusion started 10 minutes ago\nC. A client 1 day post appendectomy requesting pain medication\nD. A client with a glucose of 160 mg/dL before breakfast\nANSWER: B\nRATIONALE: Acute hypoxemia and restlessness early in a transfusion suggest a reaction; stop the transfusion and assess. A COPD client at 90% may be at baseline.\n\nQ: Which action best prevents falls for an older adult with new confusion?\nAREA: Safety and Infection Control\nSTEP: Take Actions\nDIFFICULTY: 2\nA. Keep all four side rails up\nB. Keep the bed in the lowest position with the call light within reach and offer toileting on a schedule\nC. Keep the room dark at night\nD. Apply wrist restraints\nANSWER: B\nRATIONALE: Low bed, reachable call light and scheduled toileting reduce falls. Four rails and restraints count as restraints and can increase injury.\n\nQ: A client has Clostridioides difficile. Which precautions should the nurse use? Select all that apply.\nAREA: Safety and Infection Control\nSTEP: Generate Solutions\nDIFFICULTY: 3\nA. Gown and gloves when entering the room\nB. Wash hands with soap and water after care\nC. Rely on alcohol-based hand rub alone\nD. Clean equipment with a bleach-based (sporicidal) product\nE. Dedicate equipment such as a stethoscope to the room\nANSWER: A, B, D, E\nRATIONALE: C. difficile spores are not reliably killed by alcohol; contact precautions, soap and water, and sporicidal cleaning are used.\n\nQ: Which statement by a client with heart failure shows understanding of discharge teaching?\nAREA: Health Promotion and Maintenance\nSTEP: Evaluate Outcomes\nDIFFICULTY: 2\nA. \"I will weigh myself only when my ankles swell.\"\nB. \"I will weigh myself every morning after urinating and call if I gain more than 2 pounds in a day or 5 pounds in a week.\"\nC. \"I can use salt substitute as much as I want.\"\nD. \"I will take my water pill at bedtime.\"\nANSWER: B\nRATIONALE: Daily morning weights with clear call parameters catch fluid retention early. Most salt substitutes contain potassium, and evening diuretics disrupt sleep.\n\nQ: For each recommendation, indicate whether it is appropriate for a healthy 52-year-old.\nTYPE: MATRIX\nAREA: Health Promotion and Maintenance\nSTEP: Generate Solutions\nDIFFICULTY: 3\nCOLUMNS: Appropriate | Not appropriate\nROW: Colorectal cancer screening = Appropriate\nROW: Annual influenza vaccine = Appropriate\nROW: Routine screening with a full-body CT scan = Not appropriate\nROW: Blood pressure check at least yearly = Appropriate\nRATIONALE: Colorectal screening starts at 45, flu vaccine is yearly, and blood pressure is checked regularly. Full-body CT screening is not recommended.\n\nQ: A client says, \"I'm scared I'll end up back in the hospital.\" Which response by the nurse is best?\nAREA: Psychosocial Integrity\nSTEP: Take Actions\nDIFFICULTY: 2\nA. \"Don't worry, you will be fine.\"\nB. \"Tell me more about what worries you most about going home.\"\nC. \"Most people with your condition come back.\"\nD. \"You should think about a nursing home.\"\nANSWER: B\nRATIONALE: An open-ended response explores the feeling. False reassurance and advice shut the conversation down.\n\nQ: A client with major depression suddenly seems calm and is giving away belongings. What is the nurse's priority?\nAREA: Psychosocial Integrity\nSTEP: Prioritize Hypotheses\nDIFFICULTY: 3\nA. Praise the client's improved mood\nB. Ask directly whether the client is thinking about suicide\nC. Encourage the client to join group activities\nD. Document the change at the end of the shift\nANSWER: B\nRATIONALE: Sudden calm and giving things away can signal a suicide plan. Ask directly and keep the client safe.\n\nQ: Which intervention is most appropriate for a client on bed rest with a Braden score of 13?\nAREA: Basic Care and Comfort\nSTEP: Generate Solutions\nDIFFICULTY: 2\nA. Massage reddened bony prominences\nB. Reposition at least every 2 hours and use a pressure-redistribution surface\nC. Keep the head of the bed at 60 degrees at all times\nD. Use a donut-shaped cushion\nANSWER: B\nRATIONALE: Repositioning and pressure redistribution prevent pressure injuries. Massage, high head-of-bed angles and donut cushions increase tissue damage.\n\nQ: Which assessment finding should the nurse report before giving the next dose of IV vancomycin?\nAREA: Pharmacological and Parenteral Therapies\nSTEP: Recognize Cues\nDIFFICULTY: 3\nA. Creatinine rising from 0.9 to 1.8 mg/dL\nB. Temperature 37.4 C\nC. Mild itching at the IV site that resolved\nD. Heart rate 84/min\nANSWER: A\nRATIONALE: Vancomycin can be nephrotoxic; a doubled creatinine needs provider review (often with a trough or level) before the next dose.\n\nQ: A client is 6 hours post thyroidectomy. Which finding requires immediate action?\nAREA: Reduction of Risk Potential\nSTEP: Prioritize Hypotheses\nDIFFICULTY: 4\nA. Hoarse voice\nB. Tingling around the mouth and a positive Chvostek sign\nC. Incisional pain 4/10\nD. Small amount of serous drainage\nANSWER: B\nRATIONALE: Perioral tingling and Chvostek sign suggest hypocalcemia from parathyroid injury, which can progress to tetany and laryngospasm. Mild hoarseness is common.\n\nQ: A client with a potassium of 6.8 mEq/L has peaked T waves. Which prescription should the nurse give first?\nAREA: Physiological Adaptation\nSTEP: Prioritize Hypotheses\nDIFFICULTY: 4\nA. Sodium polystyrene sulfonate orally\nB. Calcium gluconate IV\nC. Furosemide IV\nD. Regular insulin IV with dextrose\nANSWER: B\nRATIONALE: IV calcium stabilizes the cardiac membrane within minutes and protects against dysrhythmias. Insulin with dextrose and other measures then lower the potassium.\n";
+window.MY_CPR_HISTORY = [];
+window.SAMPLE_FLASHCARDS = [{"id":"gz-bb-1","class":"Beta blockers","front":"Metoprolol: what do you check before giving it, and when do you hold?","back":"Apical pulse and BP. Hold and notify per parameters, commonly HR < 60/min or SBP < 90-100 mm Hg. Watch for bronchospasm, fatigue, and masked hypoglycemia.","tags":["pharm","cardiac"],"source":"Sample card written by Goji"},{"id":"gz-dig-1","class":"Cardiac glycosides","front":"Digoxin: early signs of toxicity?","back":"Nausea, vomiting, anorexia, visual changes (yellow-green halos), bradycardia or new dysrhythmias. Risk rises with low potassium, kidney impairment, older age, and amiodarone.","tags":["pharm","cardiac","high-alert"],"source":"Sample card written by Goji"},{"id":"gz-dig-2","class":"Cardiac glycosides","front":"Digoxin: usual therapeutic serum level?","back":"About 0.5-2.0 ng/mL (many heart-failure targets are lower, 0.5-0.9). Symptoms matter more than the number.","tags":["pharm","labs"],"source":"Sample card written by Goji"},{"id":"gz-war-1","class":"Anticoagulants","front":"Warfarin: lab to monitor and usual goal?","back":"INR, usually 2.0-3.0 for atrial fibrillation or VTE (higher for some mechanical valves). Reversal agent: vitamin K.","tags":["pharm","anticoagulant","labs"],"source":"Sample card written by Goji"},{"id":"gz-hep-1","class":"Anticoagulants","front":"Heparin / enoxaparin: which platelet change is a red flag?","back":"A drop of 50% or more (often 5-10 days in) suggests heparin-induced thrombocytopenia. Stop heparin products and notify the provider.","tags":["pharm","anticoagulant"],"source":"Sample card written by Goji"},{"id":"gz-ins-1","class":"Insulins","front":"Which insulin can be given IV?","back":"Regular insulin. It is a high-alert drug: independent double check, hourly glucose, and potassium monitoring.","tags":["pharm","insulin","high-alert"],"source":"Sample card written by Goji"},{"id":"gz-ins-2","class":"Insulins","front":"Insulin lispro: onset and when to give?","back":"Rapid-acting, onset about 15 minutes. Give within about 15 minutes of a meal; hold and clarify if the client is not eating or is hypoglycemic.","tags":["pharm","insulin"],"source":"Sample card written by Goji"},{"id":"gz-lasix-1","class":"Loop diuretics","front":"Furosemide: key electrolyte to watch?","back":"Potassium (hypokalemia), also sodium and magnesium. Monitor weight, intake and output, BP, and hearing with high IV doses.","tags":["pharm","cardiac","electrolytes"],"source":"Sample card written by Goji"}];
+
+</script>
+<script>/* app.js */
+(function () {
+  'use strict';
+  var C = window.Core, A = C.AREAS, S = C.STEPS;
+  var K = { reports: 'nclexcs.cprReports.v1', progress: 'nclexcs.progress.v1', history: 'nclexcs.history.v1', theme: 'nclexcs.theme', lastMock: 'nclexcs.lastMock.v1',
+    leitner: 'nclexcs.leitner.v1', notes: 'nclexcs.readingNotes.v1', legacyBank: 'nclexcs.bank.v1' };
+  function load(k, d) { try { var v = localStorage.getItem(k); return v ? JSON.parse(v) : d; } catch (e) { return d; } }
+  function save(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); return true; } catch (e) { console.warn('save failed', k, e); return false; } }
+  function $(id) { return document.getElementById(id); }
+  function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
+  function uid() { return 'r' + Date.now().toString(36) + Math.random().toString(36).slice(2, 7); }
+  function msg(el, text, kind) { $(el).innerHTML = text ? '<div class="notice ' + (kind || '') + '">' + text + '</div>' : ''; }
+  var clockOffset = 0; function now() { return Date.now() + clockOffset; }
+
+  // ---------- big-data store: IndexedDB with localStorage fallback ----------
+  var store = (function () {
+    var dbp = null;
+    function db() {
+      if (dbp) return dbp;
+      dbp = new Promise(function (res) {
+        try {
+          var r = indexedDB.open('nclex-case-study-trainer', 1);
+          r.onupgradeneeded = function () { r.result.createObjectStore('kv'); };
+          r.onsuccess = function () { res(r.result); }; r.onerror = function () { res(null); };
+        } catch (e) { res(null); }
+      });
+      return dbp;
+    }
+    return {
+      get: function (k) {
+        return db().then(function (d) {
+          if (!d) return load('nclexcs.idbfallback.' + k, undefined);
+          return new Promise(function (res) { var t = d.transaction('kv').objectStore('kv').get(k); t.onsuccess = function () { res(t.result); }; t.onerror = function () { res(undefined); }; });
+        });
+      },
+      set: function (k, v) {
+        return db().then(function (d) {
+          if (!d) { if (!save('nclexcs.idbfallback.' + k, v)) throw new Error('Storage is full on this device'); return; }
+          return new Promise(function (res, rej) { var tx = d.transaction('kv', 'readwrite'); tx.objectStore('kv').put(v, k); tx.oncomplete = function () { res(); }; tx.onerror = function () { rej(tx.error); }; });
+        });
+      }
+    };
+  })();
+
+  var bank = [], readings = [], cards = [];
+  var reports = load(K.reports, []), progress = load(K.progress, {}), history = load(K.history, []), leitner = load(K.leitner, {}), rnotes = load(K.notes, {});
+  function sampleBank() { return C.parseTextBank(window.SAMPLE_TEXT).cases; }
+  function saveBank() { return store.set('bank', bank).catch(function (e) { alert('Could not save the question bank: ' + e.message); }); }
+  function saveReadings() { return store.set('readings', readings); }
+  function saveCards() { return store.set('flashcards', cards); }
+
+  // ---------- theme ----------
+  function applyTheme(t) { document.documentElement.setAttribute('data-theme', t); $('themeBtn').innerHTML = t === 'dark' ? '&#9728; Light' : '&#9790; Dark'; }
+  applyTheme(load(K.theme, (window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light'));
+  $('themeBtn').onclick = function () { var t = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'; save(K.theme, t); applyTheme(t); };
+
+  // ---------- tabs ----------
+  var TABS = ['practice', 'mock', 'cpr', 'cards', 'bank'];
+  document.querySelectorAll('nav button').forEach(function (b) { b.onclick = function () { if (session && !confirm('Leave the current session?')) return; endSession(true); closeReading(); showTab(b.dataset.tab); }; });
+  function showTab(t) {
+    document.querySelectorAll('nav button').forEach(function (b) { b.classList.toggle('active', b.dataset.tab === t); });
+    TABS.forEach(function (x) { $('tab-' + x).classList.toggle('hidden', x !== t); });
+    $('summary').classList.add('hidden');
+    ({ practice: renderPracticeSetup, mock: renderMockSetup, cpr: renderCpr, cards: renderCards, bank: renderBank })[t]();
+  }
+  function hideTabs() { TABS.forEach(function (x) { $('tab-' + x).classList.add('hidden'); }); }
+
+  // ---------- analysis helpers ----------
+  function analysis() { return C.analyzeReports(reports, C.accuracyByDomain(history)); }
+  function pill(r) { return '<span class="pill r-' + (r || 'none') + '">' + (r || '-') + '</span>'; }
+  function accText(a) { return a ? Math.round(a.pct * 100) + '% <span class="mute small">(' + a.attempted + ' item' + (a.attempted === 1 ? '' : 's') + ')</span>' : '<span class="mute small">no practice yet</span>'; }
+  var TREND = { improving: '&#8599; improving', slipping: '&#8600; dipped recently', stuck: '&#8594; stuck', steady: '&#10003; steady', mixed: '&#8596; mixed', none: '-' };
+  function latestRating(d) { if (!d) return null; var rs = C.sortReports(reports); for (var i = rs.length - 1; i >= 0; i--) if (rs[i].ratings[d]) return rs[i].ratings[d]; return null; }
+
+  // ================= CPR =================
+  var editing = null, pending = [];
+  function nextAttempt() { return reports.reduce(function (m, r) { return Math.max(m, +r.attempt || 0); }, 0) + 1; }
+  function selRow(d, v) {
+    return '<div class="areasel"><span>' + esc(d) + '</span><select data-d="' + esc(d) + '"><option value="">- not rated -</option>' +
+      C.RATINGS.map(function (r) { return '<option value="' + r + '"' + (v === r ? ' selected' : '') + '>' + r + ' the passing standard</option>'; }).join('') + '</select></div>';
+  }
+  function openEditor(data, title, note) {
+    editing = data; $('editor').classList.remove('hidden'); $('editorTitle').textContent = title || 'Report details';
+    $('edAttempt').value = data.attempt || ''; $('edDate').value = data.date || '';
+    var r = data.ratings || {};
+    $('edAreas').innerHTML = A.map(function (d) { return selRow(d, r[d]); }).join('');
+    $('edSteps').innerHTML = [C.CJ].concat(S).map(function (d) { return selRow(d, r[d]); }).join('');
+    if (note) msg('cprMsg', note.text, note.kind);
+    $('editor').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+  $('manualBtn').onclick = function () { msg('cprMsg', ''); openEditor({ id: null, ratings: {}, attempt: nextAttempt(), date: '', source: 'manual entry' }, 'New report (manual entry)'); };
+  $('pasteBtn').onclick = function () { $('pasteBox').classList.toggle('hidden'); };
+  $('parsePaste').onclick = function () { var t = $('pasteText').value; $('pasteText').value = ''; fromText(t, 'pasted text'); };
+  $('edCancel').onclick = function () { editing = null; pending = []; msg('cprMsg', ''); $('editor').classList.add('hidden'); };
+  $('edSave').onclick = function () {
+    if (!editing) return;
+    var ratings = {};
+    document.querySelectorAll('#editor select[data-d]').forEach(function (s) { if (s.value) ratings[s.dataset.d] = s.value; });
+    var attempt = parseInt($('edAttempt').value, 10);
+    if (!Object.keys(ratings).length) return msg('cprMsg', 'Pick a rating for at least one area so there is something to work with.', 'warn');
+    if (!(attempt >= 1)) return msg('cprMsg', 'Please add the attempt number (1 for your first exam, 2 for your second, and so on).', 'warn');
+    var dup = reports.filter(function (r) { return +r.attempt === attempt && r.id !== editing.id; });
+    var rec = { id: editing.id || uid(), attempt: attempt, date: $('edDate').value || '', ratings: ratings, source: editing.source || 'manual entry', savedAt: new Date().toISOString() };
+    if (editing.id) reports = reports.map(function (r) { return r.id === rec.id ? rec : r; }); else reports.push(rec);
+    save(K.reports, reports); editing = null; $('editor').classList.add('hidden');
+    msg('cprMsg', 'Saved attempt #' + attempt + '. Nice work adding it - every report sharpens the plan.' + (dup.length ? ' Heads up: more than one report is now marked attempt #' + attempt + '; edit one if that was a typo.' : ''), dup.length ? 'warn' : '');
+    renderCpr();
+    if (pending.length) setTimeout(processNextFile, 50);
+  };
+  function fromText(text, source) {
+    var p = C.parseCprText(text); text = null; // raw text (may contain name/candidate number) is not kept
+    var attempt = p.attempt || nextAttempt(), n = C.DOMAINS.length, note;
+    if (p.found === n) note = { text: 'Read all ' + n + ' ratings (8 Client Needs + Clinical Judgment and its 6 steps) from the ' + esc(source) + '. Please double-check them and the attempt number, then save.' };
+    else if (p.found > 0) note = { text: 'Read ' + p.found + ' of ' + n + ' ratings from the ' + esc(source) + '. Please fill in the rest (missing: ' + p.missing.map(esc).join(', ') + ') and save.', kind: 'warn' };
+    else note = { text: 'Could not find the ratings automatically in the ' + esc(source) + '. No problem - pick them from the dropdowns below while you look at the report.', kind: 'warn' };
+    if (!p.date && p.found) { note.text += ' <b>The exam date could not be read - please type it in.</b>'; note.kind = 'warn'; }
+    openEditor({ id: null, ratings: p.ratings, attempt: attempt, date: p.date, source: source }, 'New report - attempt #' + attempt, note);
+    return p;
+  }
+  $('cprFile').onchange = function (e) { pending = Array.prototype.slice.call(e.target.files || []); e.target.value = ''; processNextFile(); };
+  async function processNextFile() {
+    var f = pending.shift(); if (!f) return;
+    var isImg = /^image\//.test(f.type) || /\.(jpe?g|png|webp|bmp|gif)$/i.test(f.name), label = isImg ? 'image (OCR)' : /\.txt$/i.test(f.name) ? 'text file' : 'PDF';
+    try {
+      msg('cprMsg', isImg ? 'Reading the image... (text recognition runs on this device and can take 10-40 seconds)' : 'Reading the file...');
+      var text = isImg ? await ocrImage(f, function (p) { msg('cprMsg', 'Reading the image... ' + Math.round(p * 100) + '%'); }) : /\.(txt|json)$/i.test(f.name) || /^(text|application\/json)/.test(f.type) ? await f.text() : await pdfText(f);
+      var jd = isImg ? undefined : readJsonText(text);
+      if (jd !== undefined) { var jr = importJson(jd, f.name); msg('cprMsg', jr.kind === 'backup' ? 'Loaded ' + reports.length + ' CPR reports from ' + esc(f.name) + '.' : esc(f.name) + ' is not CPR data; it was imported as ' + (jr.kind === 'cards' ? 'flashcards' : 'questions') + '.'); renderCpr(); renderBank(); processNextFile(); return; }
+      fromText(text, label + (pending.length ? ' (' + pending.length + ' more queued)' : ''));
+    } catch (err) {
+      openEditor({ id: null, ratings: {}, attempt: nextAttempt(), date: '', source: label }, 'New report (manual entry)',
+        { text: 'Could not read that ' + label + ' (' + esc(err.message || err) + '). You can enter the ratings below while looking at the report instead.', kind: 'warn' });
+    }
+  }
+  function loadScript(src) { return new Promise(function (res, rej) { var s = document.createElement('script'); s.src = src; s.onload = res; s.onerror = function () { rej(new Error('could not load ' + src.split('/')[2] + ' - are you offline?')); }; document.head.appendChild(s); }); }
+  var pdfReady = null;
+  function getPdfjs() {
+    if (window.pdfjsLib) return Promise.resolve(window.pdfjsLib);
+    if (!pdfReady) {
+      var cdn = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/';
+      var local = window.__SINGLE_FILE ? Promise.reject() : loadScript('vendor/pdf.min.js').then(function () { pdfjsLib.GlobalWorkerOptions.workerSrc = 'vendor/pdf.worker.min.js'; });
+      pdfReady = local.catch(function () { return loadScript(cdn + 'pdf.min.js').then(function () { pdfjsLib.GlobalWorkerOptions.workerSrc = cdn + 'pdf.worker.min.js'; }); })
+        .then(function () { return window.pdfjsLib; }, function (e) { pdfReady = null; throw e; });
+    }
+    return pdfReady;
+  }
+  async function pdfText(file) {
+    var lib = await getPdfjs();
+    var doc = await lib.getDocument({ data: new Uint8Array(await file.arrayBuffer()) }).promise, out = [];
+    for (var p = 1; p <= doc.numPages; p++) { var tc = await (await doc.getPage(p)).getTextContent(); out.push(tc.items.map(function (it) { return it.str + (it.hasEOL ? '\n' : ' '); }).join('')); }
+    return out.join('\n');
+  }
+  var tessReady = null;
+  async function ocrImage(file, onProgress) {
+    if (!window.Tesseract) { if (!tessReady) tessReady = loadScript('https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js').catch(function (e) { tessReady = null; throw e; }); await tessReady; }
+    var bmp = await createImageBitmap(file), scale = Math.max(1, Math.min(4, Math.round(2000 / bmp.width)));
+    var cv = document.createElement('canvas'); cv.width = bmp.width * scale; cv.height = bmp.height * scale;
+    var g = cv.getContext('2d'); g.fillStyle = '#fff'; g.fillRect(0, 0, cv.width, cv.height); g.imageSmoothingQuality = 'high'; g.drawImage(bmp, 0, 0, cv.width, cv.height);
+    var res = await Tesseract.recognize(cv, 'eng', { logger: function (m) { if (m.status === 'recognizing text' && onProgress) onProgress(m.progress); } });
+    return res.data.text;
+  }
+  window.__pdfText = pdfText; window.__ocrImage = ocrImage;
+  $('loadHistoryFile').onchange = async function (e) {
+    var f = e.target.files[0]; e.target.value = ''; if (!f) return; var hist;
+    try { var d = JSON.parse((await f.text()).replace(/^\uFEFF/, '')); hist = Array.isArray(d) ? d : d && d.cprReports;
+      if (!Array.isArray(hist) || !hist.length || !hist.some(function (h) { return h && h.ratings; })) { loadLibrary([f], 'cprMsg'); return; }
+      hist = hist.filter(function (h) { return h && h.attempt != null && h.ratings && typeof h.ratings === 'object'; });
+      if (!hist.length) throw new Error('no valid CPR reports found in this file');
+    } catch (err) { msg('cprMsg', 'Could not read that file: ' + esc(err.message), 'warn'); return; }
+    var overlap = hist.filter(function (h) { return reports.some(function (r) { return +r.attempt === +h.attempt; }); });
+    if (overlap.length && !confirm('Load your ' + hist.length + '-attempt CPR history? Saved reports with the same attempt numbers (' + overlap.map(function (h) { return '#' + h.attempt; }).join(', ') + ') will be replaced.')) return;
+    var byAtt = {}; hist.forEach(function (h) { byAtt[h.attempt] = 1; });
+    reports = reports.filter(function (r) { return !byAtt[r.attempt]; }).concat(JSON.parse(JSON.stringify(hist)));
+    save(K.reports, reports); msg('cprMsg', 'Loaded ' + hist.length + ' reports. Your start-here plan is above.'); renderCpr();
+  };
+  function heatTable(list, rs, extra) {
+    var head = '<tr><th>#</th><th>Area</th>' + rs.map(function (r) { return '<th style="text-align:center">Att. ' + esc(r.attempt) + (r.date ? '<br><span style="text-transform:none;font-weight:400">' + esc(r.date.slice(2)) + '</span>' : '') + '</th>'; }).join('') +
+      '<th>Priority</th><th>Trend</th><th>Your accuracy</th></tr>';
+    var row = function (a, rank) {
+      return '<tr><td>' + rank + '</td><td>' + esc(a.area) + '</td>' + a.series.map(function (v) { return '<td class="cell ' + (v || 'none') + '" title="' + (v ? v + ' the passing standard' : 'not rated') + '">' + (v || '-') + '</td>'; }).join('') +
+        '<td><span class="scorebar"><i style="width:' + a.score + '%"></i></span>' + a.score + '</td><td class="trend">' + TREND[a.trend] + '<br><span class="mute small">Below ' + a.belowCount + '/' + a.n + '</span></td><td>' + accText(a.accuracy) + '</td></tr>';
+    };
+    return '<table class="heat">' + head + (extra ? row(extra, '') : '') + list.map(function (a) { return row(a, a.rank); }).join('') + '</table>';
+  }
+  function renderCpr() {
+    var an = analysis(), rec = C.recommend(an), rs = an.reports, sh = $('startHere');
+    if (!rec) sh.innerHTML = '<h2>Start here</h2><p>Add your CPRs below - or press <b>Import my CPR history</b> and pick your CPR backup file (.json). Once at least one is in, this box will name the 1-2 areas to work on first, so studying feels less scattered.</p>';
+    else {
+      sh.innerHTML = '<h2>' + esc(rec.headline) + '</h2>' + rec.lines.map(function (l) { return '<p>' + esc(l) + '</p>'; }).join('') +
+        '<h3>This week</h3><ol style="margin:0;padding-left:20px">' + rec.plan.map(function (l) { return '<li>' + esc(l) + '</li>'; }).join('') + '</ol>' +
+        '<div class="row" style="margin-top:12px"><button class="btn" id="goWeak">Study my weakest areas now</button><span class="mute small">Based on ' + rs.length + ' report' + (rs.length === 1 ? '' : 's') + '. You know where your gaps are now, and that is the hardest part.</span></div>';
+      $('goWeak').onclick = function () { startWeak(); };
+    }
+    $('trend').innerHTML = rs.length ? heatTable(an.areas, rs) : '<p class="mute">No reports yet.</p>';
+    $('trendCJ').innerHTML = rs.length ? heatTable(an.steps, rs, an.cj) : '<p class="mute">No reports yet.</p>';
+    $('reportList').innerHTML = rs.length ? '<table><tr><th>Attempt</th><th>Date</th><th>Client Needs</th><th>Clinical Judgment</th><th></th></tr>' + rs.map(function (r) {
+      function cnt(list) { var c = { Above: 0, Near: 0, Below: 0 }; list.forEach(function (k) { if (r.ratings[k]) c[r.ratings[k]]++; }); return pill('Above') + ' ' + c.Above + ' ' + pill('Near') + ' ' + c.Near + ' ' + pill('Below') + ' ' + c.Below; }
+      return '<tr><td>#' + esc(r.attempt) + '</td><td>' + esc(r.date || '-') + '</td><td>' + cnt(A) + '</td><td>' + (r.ratings[C.CJ] ? 'Overall ' + pill(r.ratings[C.CJ]) + ' &nbsp;' : '') + cnt(S) +
+        '</td><td style="white-space:nowrap"><button class="btn sec" data-edit="' + r.id + '">Edit</button> <button class="btn danger" data-del="' + r.id + '">Delete</button></td></tr>';
+    }).join('') + '</table>' : '<p class="mute">Nothing saved yet.</p>';
+    document.querySelectorAll('[data-edit]').forEach(function (b) { b.onclick = function () { var r = reports.find(function (x) { return x.id === b.dataset.edit; }); msg('cprMsg', ''); openEditor(JSON.parse(JSON.stringify(r)), 'Edit attempt #' + r.attempt); }; });
+    document.querySelectorAll('[data-del]').forEach(function (b) {
+      b.onclick = function () { var r = reports.find(function (x) { return x.id === b.dataset.del; }); if (!confirm('Delete the report for attempt #' + r.attempt + '?')) return; reports = reports.filter(function (x) { return x.id !== r.id; }); save(K.reports, reports); renderCpr(); };
+    });
+  }
+
+  // ================= exam player (practice + mock) =================
+  var session = null, cur = null, exTab = 'scenario', lastCase = -1, timerId = null;
+  var EXN = { scenario: 'Case', notes: "Nurses' Notes", vitals: 'Vitals', labs: 'Labs', orders: 'Orders' };
+  function exhibitHtml(text) {
+    var lines = String(text || '').split('\n');
+    if (lines.filter(function (l) { return l.indexOf('|') !== -1; }).length >= 2) {
+      var out = [], tbl = [];
+      function flush() { if (tbl.length) { out.push('<table>' + tbl.map(function (r, i) { var c = r.split('|').map(function (x) { return x.trim(); }); return '<tr>' + c.map(function (x) { return i === 0 ? '<th>' + esc(x) + '</th>' : '<td>' + esc(x) + '</td>'; }).join('') + '</tr>'; }).join('') + '</table>'); tbl = []; } }
+      lines.forEach(function (l) { if (l.indexOf('|') !== -1) tbl.push(l); else { flush(); if (l.trim()) out.push('<div>' + esc(l) + '</div>'); } }); flush();
+      return out.join('');
+    }
+    return esc(text);
+  }
+  function renderTabs(tabsEl, bodyEl, ex, keepTab) {
+    var std = ['scenario', 'notes', 'vitals', 'labs', 'orders'];
+    var keys = std.filter(function (k) { return ex[k]; }).concat(Object.keys(ex).filter(function (k) { return std.indexOf(k) === -1 && ex[k]; }));
+    if (keys.indexOf(keepTab) === -1) keepTab = keys[0];
+    tabsEl.innerHTML = keys.map(function (k) { return '<button data-k="' + esc(k) + '" class="' + (k === keepTab ? 'on' : '') + '">' + esc(EXN[k] || k) + '</button>'; }).join('');
+    bodyEl.innerHTML = exhibitHtml(ex[keepTab]);
+    tabsEl.querySelectorAll('button').forEach(function (b) { b.onclick = function () { exTab = b.dataset.k; renderTabs(tabsEl, bodyEl, ex, exTab); }; });
+    return keepTab;
+  }
+  function startSession(cfg) {
+    session = Object.assign({ i: 0, results: [], switchLog: [] }, cfg);
+    hideTabs(); $('summary').classList.add('hidden'); $('player').classList.remove('hidden'); lastCase = -1;
+    $('pTitle').textContent = cfg.title; $('pTimer').textContent = '';
+    if (cfg.mode === 'mock') { timerId = setInterval(tick, 1000); tick(); }
+    nextItem();
+  }
+  function tick() {
+    if (!session || session.mode !== 'mock') return;
+    var left = session.mock.cfg.timeLimitMs - (now() - session.mock.startedAt);
+    if (left <= 0) { session.mock.finish('time'); return finishMock(); }
+    var h = Math.floor(left / 3600000), m = Math.floor(left / 60000) % 60, s = Math.floor(left / 1000) % 60;
+    $('pTimer').textContent = 'Time left ' + h + ':' + (m < 10 ? '0' : '') + m + ':' + (s < 10 ? '0' : '') + s;
+  }
+  function nextItem() {
+    var ref = session.mode === 'mock' ? session.mock.next(now()) : session.queue[session.i];
+    if (!ref) return session.mode === 'mock' ? finishMock() : endSession();
+    var c = bank[ref.ci], it = ref.item;
+    cur = { ref: ref, item: it, resp: [], changes: 0, initial: null, locked: false };
+    $('pPos').textContent = session.mode === 'mock' ? 'Item ' + (session.mock.resps.length + 1) + (session.mock.queue.length || (c.kind !== 'standalone' && c.items.length >= 3) ? ' - case study' : '') : 'Question ' + (session.i + 1) + ' of ' + session.queue.length;
+    var ex = Object.assign({}, c.exhibits || {}, it.exhibits || {});
+    ex.scenario = (c.title ? c.title + '\n\n' : '') + (c.scenario || '') + (it.context ? (c.scenario ? '\n\n' : '') + it.context : '') + (c.source ? '\n\n(' + c.source + ')' : '') + (it.source && it.source !== c.source ? '\n\nSource: ' + it.source : '');
+    var solo = !c.scenario && !it.context && !Object.keys(c.exhibits || {}).length && !Object.keys(it.exhibits || {}).length; // stand-alone item: no case panel
+    document.querySelector('#player .exam').classList.toggle('solo', solo); document.querySelector('#player .exam .left').classList.toggle('hidden', solo);
+    if (ref.ci !== lastCase || !ex[exTab]) exTab = ex.notes ? 'notes' : 'scenario';
+    lastCase = ref.ci; renderTabs($('exTabs'), $('exBody'), ex, exTab);
+    var meta = [];
+    if (session.mode !== 'mock') {
+      if (it.area) meta.push('Client Needs: <b>' + esc(it.area) + '</b> ' + (latestRating(it.area) ? pill(latestRating(it.area)) : ''));
+      if (it.step) meta.push('Step: <b>' + esc(it.step) + '</b> ' + (latestRating(it.step) ? pill(latestRating(it.step)) : ''));
+    }
+    meta.push('<span class="badge">' + (it.type === 'matrix' && it.multi ? 'Matrix (multiple response)' : it.type === 'cloze' && it.dragdrop ? 'Drag and drop' : ({ single: 'Multiple choice', sata: it.selectN ? 'Select ' + it.selectN : 'Select all that apply', matrix: 'Matrix', cloze: 'Drop-down', highlight: 'Highlight', ordered: 'Ordered response', bowtie: 'Bowtie' })[it.type]) + '</span>');
+    if (it.noKey && session.mode !== 'mock') meta.push('<span class="badge nokey" title="The source document has no answer key for this item, so it is shown for practice but never scored.">no answer key - not scored</span>');
+    if (it.autoTagged && session.mode !== 'mock') meta.push('<span class="badge auto" title="Client Needs area, step and difficulty for this item were inferred automatically (roughly 70-80% accurate), not assigned by the source.">auto-tagged</span>');
+    $('qMeta').innerHTML = meta.join(' &nbsp; ');
+    $('qStem').textContent = it.q + (it.type === 'sata' && !it.selectN && !/select all|apply/i.test(it.q) ? ' Select all that apply.' : '');
+    $('qFeedback').innerHTML = ''; $('lockBtn').classList.remove('hidden'); $('lockBtn').disabled = true; $('nextBtn').classList.add('hidden');
+    renderBody();
+  }
+  function setResp(newResp, replaced) {
+    if (cur.locked) return;
+    if (replaced) { if (!cur.changes) cur.initial = JSON.parse(JSON.stringify(cur.resp)); cur.changes++; }
+    cur.resp = newResp; $('lockBtn').disabled = !C.isComplete(cur.item, cur.resp);
+  }
+  function renderBody() {
+    var it = cur.item, b = $('qBody'), L = function (i) { return String(i + 1); }; // numbered like the real exam and the rationales ("option 2")
+    if (it.type === 'single' || it.type === 'sata') {
+      var typ = it.type === 'sata' ? 'checkbox' : 'radio', lastG = null;
+      b.innerHTML = (it.selectN ? '<p class="mute small">Choose ' + it.selectN + '.</p>' : '') + it.options.map(function (o, i) {
+        var head = it.groups && it.groups[i] !== lastG ? '<div class="ghead">' + esc(it.groups[i]) + '</div>' : ''; if (it.groups) lastG = it.groups[i];
+        return head + '<label class="opt" data-i="' + i + '"><input type="' + typ + '" name="opt" value="' + i + '">' + L(i) + '. ' + esc(o) + '</label>';
+      }).join('');
+      b.querySelectorAll('input').forEach(function (inp) {
+        inp.onchange = function () {
+          var v = +inp.value, r = cur.resp.slice(), replaced;
+          if (typ === 'radio') { replaced = r.length > 0 && r[0] !== v; r = [v]; }
+          else if (inp.checked) { if (it.selectN && r.length >= it.selectN) { inp.checked = false; return; } replaced = false; r.push(v); } else { replaced = true; r.splice(r.indexOf(v), 1); }
+          setResp(r, replaced);
+        };
+      });
+    } else if (it.type === 'bowtie') {
+      var BT = C.BOWTIE, pick = function (k) { return cur.resp.filter(function (t) { return t.split(':')[0] === k; }).map(function (t) { return +t.split(':')[1]; }); };
+      var drawBow = function () {
+        var slots = function (g) { var p = pick(g.k), out = []; for (var i = 0; i < g.n; i++) out.push('<div class="bslot' + (p[i] != null ? ' full' : '') + '">' + (p[i] != null ? esc(it[g.k].options[p[i]]) : '<span class="mute">' + esc(g.label) + '</span>') + '</div>'); return out.join(''); };
+        b.innerHTML = '<div class="bowtie"><div class="bcol">' + slots(BT[0]) + '</div><div class="bcol mid">' + slots(BT[1]) + '</div><div class="bcol">' + slots(BT[2]) + '</div></div>' +
+          '<div class="bchoices">' + BT.map(function (g) {
+            return '<div class="bgroup"><div class="ghead">' + esc(g.label) + ' <span class="mute small">(choose ' + g.n + ')</span></div>' + it[g.k].options.map(function (o, i) {
+              var on = pick(g.k).indexOf(i) !== -1; return '<label class="opt' + (on ? ' sel' : '') + '" data-tok="' + g.k + ':' + i + '"><input type="checkbox" value="' + g.k + ':' + i + '"' + (on ? ' checked' : '') + (cur.locked ? ' disabled' : '') + '>' + esc(o) + '</label>';
+            }).join('') + '</div>';
+          }).join('') + '</div>';
+        b.querySelectorAll('input').forEach(function (inp) {
+          inp.onchange = function () {
+            var tok = inp.value, k = tok.split(':')[0], g = BT.filter(function (x) { return x.k === k; })[0], r = cur.resp.slice(), at = r.indexOf(tok);
+            if (inp.checked) { if (pick(k).length >= g.n) { inp.checked = false; return; } r.push(tok); setResp(r, false); }
+            else { r.splice(at, 1); setResp(r, true); }
+            drawBow();
+          };
+        });
+      };
+      drawBow();
+    } else if (it.type === 'ordered') {
+      if (!cur.resp.length) cur.resp = it.options.map(function (o, i) { return i; });
+      $('lockBtn').disabled = false;
+      var drawOrdered = function () {
+        b.innerHTML = '<p class="mute small">Drag the options into order (first at the top), or use the arrows.</p><ol class="ordlist">' + cur.resp.map(function (oi, pos) {
+          return '<li class="ord" draggable="true" data-pos="' + pos + '" data-o="' + oi + '"><span class="grip">&#8801;</span><span class="otext">' + L(oi) + '. ' + esc(it.options[oi]) + '</span>' +
+            '<span class="arrows"><button class="btn sec mv" data-d="-1" aria-label="Move up"' + (pos === 0 ? ' disabled' : '') + '>&#8593;</button><button class="btn sec mv" data-d="1" aria-label="Move down"' + (pos === cur.resp.length - 1 ? ' disabled' : '') + '>&#8595;</button></span></li>';
+        }).join('') + '</ol>';
+        var move = function (from, to) { if (cur.locked || to < 0 || to >= cur.resp.length || from === to) return; var r = cur.resp.slice(), x = r.splice(from, 1)[0]; r.splice(to, 0, x); setResp(r, false); drawOrdered(); };
+        b.querySelectorAll('.ord').forEach(function (li) {
+          var pos = +li.dataset.pos;
+          li.querySelectorAll('.mv').forEach(function (btn) { btn.onclick = function (e) { e.preventDefault(); move(pos, pos + (+btn.dataset.d)); }; });
+          li.ondragstart = function (e) { e.dataTransfer.setData('text/plain', String(pos)); li.classList.add('dragging'); };
+          li.ondragend = function () { li.classList.remove('dragging'); };
+          li.ondragover = function (e) { e.preventDefault(); };
+          li.ondrop = function (e) { e.preventDefault(); move(+e.dataTransfer.getData('text/plain'), pos); };
+        });
+      };
+      drawOrdered();
+    } else if (it.type === 'matrix' && it.multi) {
+      b.innerHTML = '<p class="mute small">Select every column that applies for each row.</p><table class="matrix"><tr><th></th>' + it.columns.map(function (c) { return '<th>' + esc(c) + '</th>'; }).join('') + '</tr>' +
+        it.rows.map(function (r, ri) { return '<tr data-r="' + ri + '"><td>' + esc(r.label) + '</td>' + it.columns.map(function (c, ci) { return '<td><input type="checkbox" data-r="' + ri + '" value="' + ci + '" aria-label="' + esc(r.label + ': ' + c) + '"></td>'; }).join('') + '</tr>'; }).join('') + '</table>';
+      b.querySelectorAll('input').forEach(function (inp) {
+        inp.onchange = function () { var ri = +inp.dataset.r, ci = +inp.value, r = cur.resp.slice(), row = (r[ri] || []).slice(); if (inp.checked) row.push(ci); else row.splice(row.indexOf(ci), 1); r[ri] = row; setResp(r, !inp.checked); };
+      });
+    } else if (it.type === 'matrix') {
+      b.innerHTML = '<table class="matrix"><tr><th></th>' + it.columns.map(function (c) { return '<th>' + esc(c) + '</th>'; }).join('') + '</tr>' +
+        it.rows.map(function (r, ri) { return '<tr data-r="' + ri + '"><td>' + esc(r.label) + '</td>' + it.columns.map(function (c, ci) { return '<td><input type="radio" name="row' + ri + '" value="' + ci + '" aria-label="' + esc(r.label + ': ' + c) + '"></td>'; }).join('') + '</tr>'; }).join('') + '</table>';
+      b.querySelectorAll('input').forEach(function (inp) {
+        inp.onchange = function () { var ri = +inp.name.slice(3), r = cur.resp.slice(); var replaced = r[ri] != null && r[ri] !== +inp.value; r[ri] = +inp.value; setResp(r, replaced); };
+      });
+    } else if (it.type === 'cloze') {
+      var html = esc(it.text).replace(/\{(\d+)\}/g, function (m, n) {
+        var bl = it.blanks[+n - 1]; return '<select data-b="' + (+n - 1) + '"><option value="">Select...</option>' + bl.options.map(function (o, i) { return '<option value="' + i + '">' + esc(o) + '</option>'; }).join('') + '</select>';
+      });
+      b.innerHTML = '<div class="cloze">' + html + '</div>';
+      b.querySelectorAll('select').forEach(function (s) {
+        s.onchange = function () { var bi = +s.dataset.b, r = cur.resp.slice(); var v = s.value === '' ? null : +s.value; var replaced = r[bi] != null; r[bi] = v; setResp(r, replaced); };
+      });
+    } else if (it.type === 'highlight') {
+      var segs = it.segments || C.parseHighlight(it.text);
+      b.innerHTML = '<div class="hltext">' + segs.map(function (sg, i) { return sg.selectable ? '<span class="hl" role="button" tabindex="0" data-s="' + i + '">' + esc(sg.text) + '</span>' : esc(sg.text); }).join('') + '</div><p class="mute small">Click a phrase to highlight it; click again to remove.</p>';
+      b.querySelectorAll('.hl').forEach(function (sp) {
+        sp.onclick = function () {
+          if (cur.locked) return; var i = +sp.dataset.s, r = cur.resp.slice(), k = r.indexOf(i), replaced = k !== -1;
+          if (k === -1) r.push(i); else r.splice(k, 1); sp.classList.toggle('sel', k === -1); setResp(r, replaced);
+        };
+        sp.onkeydown = function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); sp.onclick(); } };
+      });
+    }
+  }
+  $('lockBtn').onclick = function () {
+    if (!cur || cur.locked || !C.isComplete(cur.item, cur.resp)) return;
+    cur.locked = true;
+    var it = cur.item, sc = C.scoreItem(it, cur.resp);
+    if (it.noKey) { // no key in the source: show the rationale, record nothing
+      document.querySelectorAll('#qBody input, #qBody select').forEach(function (x) { x.disabled = true; });
+      if (session.mode === 'mock') { session.i++; return nextItem(); }
+      $('qFeedback').innerHTML = '<div class="notice warn"><b>No answer key in the source document</b> - this item is for practice only and is not scored or counted in your stats.' + (it.rationale ? '<br><b>Rationale (from the source):</b> ' + esc(it.rationale) : '') + (it.keyNote ? '<br><span class="mute small">' + esc(it.keyNote) + '</span>' : '') + '</div>';
+      $('lockBtn').classList.add('hidden'); $('nextBtn').classList.remove('hidden'); $('nextBtn').textContent = session.i + 1 < session.queue.length ? 'Next' : 'See summary';
+      return;
+    }
+    var meta = { changes: cur.changes, initialFrac: cur.changes ? C.scoreItem(it, cur.initial).frac : sc.frac, finalFrac: sc.frac };
+    document.querySelectorAll('#qBody input, #qBody select').forEach(function (x) { x.disabled = true; });
+    var p = progress[it.id] || { attempts: 0, points: 0 }; p.attempts++; p.points += sc.frac; p.lastCorrect = sc.correct; p.last = now(); progress[it.id] = p; save(K.progress, progress);
+    history.push({ itemId: it.id, area: it.area || null, step: it.step || null, frac: sc.frac, correct: sc.correct, ts: now(), mode: session.mode });
+    if (history.length > 20000) history = history.slice(-20000);
+    save(K.history, history);
+    session.results.push({ area: it.area, step: it.step, frac: sc.frac, correct: sc.correct }); session.switchLog.push(meta);
+    if (session.mode === 'mock') { session.mock.record(sc.frac, meta); session.i++; if (session.mock.done) return finishMock(); return nextItem(); }
+    showFeedback(it, sc);
+    $('lockBtn').classList.add('hidden'); $('nextBtn').classList.remove('hidden');
+    $('nextBtn').textContent = session.i + 1 < session.queue.length ? 'Next' : 'See summary';
+  };
+  function showFeedback(it, sc) {
+    if (it.type === 'single' || it.type === 'sata') document.querySelectorAll('#qBody .opt').forEach(function (l) { var i = +l.dataset.i; if (it.answer.indexOf(i) !== -1) l.classList.add('correct'); else if (cur.resp.indexOf(i) !== -1) l.classList.add('wrong'); });
+    if (it.type === 'matrix' && it.multi) document.querySelectorAll('#qBody tr[data-r]').forEach(function (tr) {
+      var ri = +tr.dataset.r, tds = tr.querySelectorAll('td'), sel = cur.resp[ri] || [];
+      it.columns.forEach(function (c, ci) { var ok = it.rows[ri].answer.indexOf(ci) !== -1; if (ok) tds[ci + 1].classList.add('correct'); else if (sel.indexOf(ci) !== -1) tds[ci + 1].classList.add('wrong'); });
+    });
+    else if (it.type === 'matrix') document.querySelectorAll('#qBody tr[data-r]').forEach(function (tr) {
+      var ri = +tr.dataset.r; tr.querySelectorAll('td')[it.rows[ri].answer + 1].classList.add('correct'); if (cur.resp[ri] !== it.rows[ri].answer) tr.querySelectorAll('td')[cur.resp[ri] + 1].classList.add('wrong');
+    });
+    if (it.type === 'ordered') { document.querySelectorAll('#qBody .ord').forEach(function (li) { li.classList.add(+li.dataset.o === it.answer[+li.dataset.pos] ? 'correct' : 'wrong'); li.draggable = false; }); document.querySelectorAll('#qBody .mv').forEach(function (x) { x.disabled = true; }); }
+    if (it.type === 'cloze') document.querySelectorAll('#qBody select').forEach(function (s) { s.classList.add(+s.value === it.blanks[+s.dataset.b].answer ? 'correct' : 'wrong'); });
+    if (it.type === 'highlight') { var segs = it.segments || C.parseHighlight(it.text); document.querySelectorAll('#qBody .hl').forEach(function (sp) { var sg = segs[+sp.dataset.s], sel = cur.resp.indexOf(+sp.dataset.s) !== -1; if (sg.correct) sp.classList.add('correct'); else if (sel) sp.classList.add('wrong'); }); }
+    if (it.type === 'bowtie') document.querySelectorAll('#qBody .opt[data-tok]').forEach(function (l) { var p = l.dataset.tok.split(':'), ok = it[p[0]].answer.indexOf(+p[1]) !== -1; if (ok) l.classList.add('correct'); else if (cur.resp.indexOf(l.dataset.tok) !== -1) l.classList.add('wrong'); l.querySelector('input').disabled = true; });
+    var rule = C.ruleText(it); rule = rule ? ' (' + rule + ')' : '';
+    $('qFeedback').innerHTML = '<div class="notice ' + (sc.correct ? '' : 'warn') + '"><b>' + (sc.correct ? 'Full credit!' : sc.earned ? 'Partial credit - good progress.' : 'Not this time - a good one to learn from.') + '</b> Score: <span id="scoreVal">' + sc.earned + ' / ' + sc.max + '</span>' + esc(rule) +
+      '<br><b>Answer:</b> ' + esc(C.correctAnswerText(it)) + (it.type === 'ordered' ? ' (option numbers, first to last)' : '') + (it.rationale ? '<br><b>Rationale:</b> ' + esc(it.rationale) : '') + (it.strategy ? '<br><b>Strategy:</b> ' + esc(it.strategy) : '') + (it.keyNote ? '<br><span class="mute small"><b>Key note:</b> ' + esc(it.keyNote) + '</span>' : '') + (it.autoTagged ? '<br><span class="mute small">Area/step tags on this item were inferred automatically and may be off.</span>' : '') + (cur.changes ? '<br><span class="mute small">You changed your answer ' + cur.changes + ' time' + (cur.changes === 1 ? '' : 's') + ' before locking it in.</span>' : '') + '</div>';
+  }
+  $('nextBtn').onclick = function () { session.i++; if (session.i < session.queue.length) nextItem(); else endSession(); };
+  $('pQuit').onclick = function () { if (!session) return; if (session.mode === 'mock') { if (!confirm('End the mock now? You will get a report based on the items answered so far.')) return; session.mock.finish('quit'); return finishMock(); } endSession(); };
+  function stopPlayer() { clearInterval(timerId); timerId = null; $('player').classList.add('hidden'); }
+  function endSession(silent) {
+    if (!session) return; var s = session; session = null; stopPlayer();
+    if (silent || s.mode === 'mock') return;
+    var by = {}; s.results.forEach(function (r) { [r.area || 'Untagged area', r.step || 'Untagged step'].forEach(function (k) { by[k] = by[k] || { n: 0, p: 0 }; by[k].n++; by[k].p += r.frac; }); });
+    var pts = s.results.reduce(function (a, r) { return a + r.frac; }, 0), sw = C.switchStats(s.switchLog);
+    $('tab-practice').classList.remove('hidden');
+    $('summary').classList.remove('hidden');
+    $('summary').innerHTML = '<h2>Session done - ' + s.results.filter(function (r) { return r.correct; }).length + ' of ' + s.results.length + ' full credit (' + (s.results.length ? Math.round(100 * pts / s.results.length) : 0) + '% of points)</h2>' +
+      '<p class="mute">Showing up and doing the reps is what moves the needle. Here is how it broke down:</p><table><tr><th>Area / step</th><th>Items</th><th>Points</th><th>Latest CPR</th></tr>' +
+      Object.keys(by).map(function (k) { return '<tr><td>' + esc(k) + '</td><td>' + by[k].n + '</td><td>' + Math.round(100 * by[k].p / by[k].n) + '%</td><td>' + pill(latestRating(k)) + '</td></tr>'; }).join('') + '</table>' +
+      '<p class="small">Answer changes: ' + sw.switched + ' item(s) changed; wrong to right ' + sw.wrongToRight + ', right to wrong ' + sw.rightToWrong + '.</p>';
+    renderPracticeSetup();
+  }
+
+  // ---------- practice setup ----------
+  function allQueue() { var q = []; bank.forEach(function (c, ci) { c.items.forEach(function (it, ii) { q.push({ ci: ci, ii: ii, item: it }); }); }); return q; }
+  function renderPracticeSetup() {
+    var af = $('areaFilter'), sf = $('stepFilter');
+    if (af.options.length === 1) { A.forEach(function (a) { af.add(new Option(a, a)); }); S.forEach(function (a) { sf.add(new Option(a, a)); }); }
+    var an = analysis(), missed = C.missedQueue(bank, progress).length;
+    $('startMissed').textContent = 'Review missed (' + missed + ')';
+    var cs = $('caseSel'), keep = cs.value, groups = { case: [], standalone: [] };
+    bank.forEach(function (c, ci) { (c.kind === 'standalone' ? groups.standalone : groups.case).push('<option value="' + ci + '">' + esc(c.title) + (c.kind === 'standalone' ? '' : ' (' + c.items.length + ' items)') + (c.items.some(function (it) { return it.noKey; }) ? ' *' : '') + '</option>'); });
+    cs.innerHTML = '<option value="">Practice a specific case... (' + bank.length + ')</option>' + (groups.case.length ? '<optgroup label="Case studies">' + groups.case.join('') + '</optgroup>' : '') + (groups.standalone.length ? '<optgroup label="Stand-alone items (bowtie, trend, single)">' + groups.standalone.join('') + '</optgroup>' : '');
+    cs.value = keep;
+    $('weakNote').textContent = reports.length ? 'Weakest-first order from your CPRs: ' + an.areas.slice(0, 4).map(function (a) { return a.short; }).join(' > ') + ' | steps: ' + an.steps.slice(0, 3).map(function (a) { return a.short; }).join(' > ') + '. ' + bank.length + ' cases / ' + allQueue().length + ' items in the bank.'
+      : 'Tip: add your CPRs under "My CPR" so "Study my weakest areas" can line up questions from your lowest-rated areas and steps first.';
+    $('readingList').innerHTML = readings.length ? '<h3>Guided reading cases</h3>' + readings.map(function (r, i) { var n = Object.keys(rnotes[r.id] || {}).filter(function (k) { return (rnotes[r.id][k] || '').trim(); }).length; return '<div class="row" style="margin:4px 0"><button class="btn sec" data-read="' + i + '">Open</button> ' + esc(r.title) + ' <span class="mute small">' + n + '/6 steps noted</span> <button class="btn danger" data-rdel="' + i + '">Remove</button></div>'; }).join('') : '';
+    document.querySelectorAll('[data-read]').forEach(function (b) { b.onclick = function () { openReading(readings[+b.dataset.read]); }; });
+    document.querySelectorAll('[data-rdel]').forEach(function (b) { b.onclick = function () { if (!confirm('Remove this reading case?')) return; readings.splice(+b.dataset.rdel, 1); saveReadings(); renderPracticeSetup(); }; });
+  }
+  function startWeak() {
+    if (!reports.length) { alert('Add at least one CPR under "My CPR" first - then this mode knows where to aim.'); return showTab('cpr'); }
+    var q = C.weakestQueue(bank, analysis(), progress); if (!q.length) return alert('No tagged questions match your priority areas yet.');
+    startSession({ mode: 'practice', title: 'Study my weakest areas', queue: q.slice(0, 40) });
+  }
+  $('startWeak').onclick = startWeak;
+  function startCase(ci) { var c = bank[ci]; if (!c) return; startSession({ mode: 'practice', title: c.title, queue: c.items.map(function (it, ii) { return { ci: ci, ii: ii, item: it }; }) }); }
+  $('startCase').onclick = function () { var v = $('caseSel').value; if (v === '') return alert('Pick a case first.'); startCase(+v); };
+  $('startAll').onclick = function () { startSession({ mode: 'practice', title: 'All case studies', queue: allQueue() }); };
+  $('startMissed').onclick = function () { var q = C.missedQueue(bank, progress); if (!q.length) return alert('Nothing to review - no missed items yet. Nice!'); startSession({ mode: 'practice', title: 'Review missed', queue: q }); };
+  $('startFilter').onclick = function () {
+    var a = $('areaFilter').value, s = $('stepFilter').value; if (!a && !s) return alert('Pick an area and/or a step.');
+    var q = allQueue().filter(function (x) { return (!a || x.item.area === a) && (!s || x.item.step === s); });
+    if (!q.length) return alert('No items match that filter yet.'); startSession({ mode: 'practice', title: [a, s].filter(Boolean).join(' + '), queue: q });
+  };
+
+  // ---------- guided reading ----------
+  var reading = null;
+  function openReading(r) {
+    reading = r; hideTabs(); $('reading').classList.remove('hidden'); $('rTitle').textContent = r.title;
+    renderTabs($('rTabs'), $('rBody'), r.exhibits, 'scenario');
+    var n = rnotes[r.id] || {};
+    $('rSteps').innerHTML = '<h3>Clinical judgment notes</h3><div class="steps">' + S.map(function (s, i) {
+      return '<p><b>' + (i + 1) + '. ' + esc(s) + '</b>' + (latestRating(s) ? ' ' + pill(latestRating(s)) : '') + '<br><span class="mute small">' + esc(C.STEP_PROMPTS[s]) + '</span></p><textarea data-step="' + esc(s) + '">' + esc(n[s] || '') + '</textarea>';
+    }).join('') + '</div>';
+    $('rSteps').querySelectorAll('textarea').forEach(function (t) { t.oninput = function () { rnotes[r.id] = rnotes[r.id] || {}; rnotes[r.id][t.dataset.step] = t.value; save(K.notes, rnotes); }; });
+  }
+  function closeReading() { if (!reading) return; reading = null; $('reading').classList.add('hidden'); }
+  $('rClose').onclick = function () { closeReading(); showTab('practice'); };
+
+  // ================= Mock NCLEX =================
+  function bankCounts() {
+    var singles = 0, unitItems = 0, units = 0;
+    bank.forEach(function (c) { var n = c.items.filter(function (it) { return !it.noKey; }).length; if (c.kind !== 'standalone' && n >= 3) { units++; unitItems += n; } else singles += n; });
+    return { singles: singles, units: units, unitItems: unitItems, total: singles + unitItems };
+  }
+  function renderMockSetup() {
+    var bc = bankCounts(), w = [];
+    w.push('Your bank: <b>' + bc.total + '</b> items (' + bc.singles + ' stand-alone, ' + bc.units + ' case-study units with ' + bc.unitItems + ' items).');
+    if (bc.total < 85) w.push('<b>Heads up:</b> a full mock needs at least 85 items and ideally 150 or more, so a full mock would run out early. Try the <b>mini mock</b> for now and add more questions in the Question bank tab.');
+    else if (bc.total < 150) w.push('A full mock can run, but the bank may run out before 150 items. If it does, the mock ends gracefully and uses your ability estimate so far.');
+    if (bc.total < 30) w.push('<b>Even the mini mock needs 30 items</b> - it will end early when the bank runs out.');
+    $('mockBankInfo').innerHTML = '<div class="notice ' + (bc.total < 85 ? 'warn' : '') + '">' + w.join('<br>') + '</div>';
+    var lm = load(K.lastMock, null);
+    $('mockLast').innerHTML = lm ? '<p class="small mute">Last mock (' + esc(lm.when) + '): ' + lm.n + ' items, estimate ' + (lm.estimate === 'pass' ? 'above' : 'below') + ' the passing standard' + (lm.confident ? '' : ' (low confidence)') + '.</p>' : '';
+  }
+  function startMock(preset) {
+    var bc = bankCounts();
+    if (preset === 'full' && bc.total < 85 && !confirm('Your bank has only ' + bc.total + ' items, fewer than the 85-item minimum. The mock will end when the bank runs out. Start anyway?')) return;
+    var mock = C.createMock(bank, { preset: preset, now: now(), seed: window.__mockSeed || undefined });
+    startSession({ mode: 'mock', title: preset === 'full' ? 'Mock NCLEX (adaptive)' : 'Mini mock (adaptive)', mock: mock, preset: preset });
+  }
+  $('mockFull').onclick = function () { startMock('full'); };
+  $('mockMini').onclick = function () { startMock('mini'); };
+  function chartSvg(trail, cut) {
+    var W = 640, H = 220, P = 34, n = Math.max(trail.length, 2), lo = -3, hi = 3;
+    var x = function (i) { return P + (W - 2 * P) * (i / (n - 1 || 1)); }, y = function (v) { v = Math.max(lo, Math.min(hi, v)); return H - P - (H - 2 * P) * (v - lo) / (hi - lo); };
+    var band = trail.map(function (t, i) { return x(i) + ',' + y(t.hi); }).concat(trail.slice().reverse().map(function (t, i) { return x(trail.length - 1 - i) + ',' + y(t.lo); })).join(' ');
+    var line = trail.map(function (t, i) { return x(i) + ',' + y(t.theta); }).join(' ');
+    var dots = trail.map(function (t, i) { return '<circle cx="' + x(i) + '" cy="' + y(t.theta) + '" r="2.4" fill="' + (t.x >= 1 ? '#1f9d55' : t.x > 0 ? '#d69e2e' : '#c53030') + '"/>'; }).join('');
+    var ticks = [-2, -1, 0, 1, 2].map(function (v) { return '<text x="4" y="' + (y(v) + 4) + '" font-size="10" fill="currentColor">' + (v > 0 ? '+' : '') + v + '</text>'; }).join('');
+    return '<svg class="chart" viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="Ability estimate after each item">' + ticks +
+      '<polygon points="' + band + '" fill="#3157d5" opacity="0.15"/><line x1="' + P + '" x2="' + (W - P) + '" y1="' + y(cut) + '" y2="' + y(cut) + '" stroke="#c53030" stroke-dasharray="5 4"/>' +
+      '<text x="' + (W - P) + '" y="' + (y(cut) - 5) + '" font-size="11" text-anchor="end" fill="#c53030">passing standard</text>' +
+      '<polyline points="' + line + '" fill="none" stroke="#3157d5" stroke-width="2"/>' + dots +
+      '<text x="' + (W / 2) + '" y="' + (H - 6) + '" font-size="11" text-anchor="middle" fill="currentColor">item number (1-' + trail.length + '); shaded band = 95% confidence interval</text></svg>';
+  }
+  function finishMock() {
+    var s = session; if (!s) return; session = null; stopPlayer();
+    var r = C.mockReport(s.mock);
+    save(K.lastMock, { when: new Date(now()).toLocaleString(), n: r.n, estimate: r.estimate, confident: r.confident, theta: r.theta });
+    $('tab-mock').classList.remove('hidden'); $('mockSetup').classList.add('hidden');
+    var verdict = r.n === 0 ? 'No items were answered.' : (r.estimate === 'pass' ? 'Estimate: likely ABOVE the passing standard' : 'Estimate: likely BELOW the passing standard');
+    var conf = r.confident ? 'The 95% confidence interval ended fully on one side of the passing standard.' : (r.enough ? 'The confidence interval still overlapped the passing standard, so this is a closer call.' : 'Fewer than the minimum number of items were answered, so treat this estimate as rough.');
+    function tbl(o, title, order) {
+      var keys = order.filter(function (k) { return o[k]; }).concat(Object.keys(o).filter(function (k) { return order.indexOf(k) === -1; }));
+      return '<h3>' + title + '</h3><table><tr><th>' + title + '</th><th>Items</th><th>Points</th><th>Latest CPR</th></tr>' + keys.map(function (k) { return '<tr><td>' + esc(k) + '</td><td>' + o[k].n + '</td><td>' + Math.round(100 * o[k].pts / o[k].n) + '%</td><td>' + pill(latestRating(k)) + '</td></tr>'; }).join('') + '</table>';
+    }
+    var sw = r.switches;
+    $('mockReport').classList.remove('hidden');
+    $('mockReport').innerHTML = '<h2>Mock NCLEX report</h2><p class="big">' + verdict + '</p>' +
+      '<p class="notice warn small"><b>This is an estimate from practice questions, not a prediction of your real NCLEX result.</b> Item difficulties here are approximate' + (bankCounts().total < 1000 ? ', and the bank is much smaller than the real item pool' : ' (many were assigned automatically)') + '. Points per area look lower than in practice because an adaptive test keeps raising the difficulty while you are doing well.</p>' +
+      '<p>' + r.n + ' items answered. The mock stopped because ' + esc(r.reasonText) + '. ' + conf + ' Final ability estimate: ' + (r.theta > 0 ? '+' : '') + r.theta.toFixed(2) + ' logits (passing standard 0.00, standard error ' + r.se.toFixed(2) + ').' + (r.reason === 'exhausted' ? ' Add more questions to the bank for a full-length mock.' : '') + '</p>' +
+      '<h3>Ability estimate over the exam</h3>' + chartSvg(r.trail, 0) +
+      tbl(r.byArea, 'Client Needs area', A) + tbl(r.byStep, 'Clinical judgment step', S) +
+      '<h3>Answer changes</h3><p>You changed your answer on <b>' + sw.switched + '</b> of ' + sw.items + ' items (' + sw.totalChanges + ' changes in total). Wrong to right: <b>' + sw.wrongToRight + '</b>; right to wrong: <b>' + sw.rightToWrong + '</b>; wrong to a different wrong: ' + sw.wrongToWrong + '; partial-credit changes: ' + sw.otherChanges + '.' +
+      (sw.rightToWrong > sw.wrongToRight ? ' Changing answers cost you more than it helped this time - trust your first well-reasoned choice unless you find a specific cue you missed.' : sw.switched ? ' Your changes helped at least as often as they hurt.' : '') + '</p>' +
+      '<div class="row"><button class="btn" id="mockAgain">Back to mock setup</button><button class="btn sec" id="mockWeak">Study my weakest areas</button></div>';
+    $('mockAgain').onclick = function () { $('mockReport').classList.add('hidden'); $('mockSetup').classList.remove('hidden'); renderMockSetup(); };
+    $('mockWeak').onclick = startWeak;
+    window.__lastMockReport = r;
+  }
+
+  // ================= Flashcards =================
+  var deck = null;
+  function renderCards() {
+    var sel = $('fcClass'), classes = {}, t = now();
+    cards.forEach(function (c) { var k = c['class']; classes[k] = classes[k] || { n: 0, due: 0 }; classes[k].n++; if (C.isDue(leitner[c.id], t)) classes[k].due++; });
+    var prev = sel.value, groups = {}, gorder = [];
+    cards.forEach(function (c) { var g = c.group || 'Other'; if (!groups[g]) { groups[g] = []; gorder.push(g); } if (groups[g].indexOf(c['class']) === -1) groups[g].push(c['class']); });
+    var opt = function (k) { return '<option value="' + esc(k) + '">' + esc(k) + ' (' + classes[k].due + ' due / ' + classes[k].n + ')</option>'; };
+    sel.innerHTML = gorder.length > 1 || (gorder[0] && gorder[0] !== 'Other') ? gorder.map(function (g) { return '<optgroup label="' + esc(g) + '">' + groups[g].map(opt).join('') + '</optgroup>'; }).join('') : Object.keys(classes).sort().map(opt).join('');
+    if (prev && classes[prev]) sel.value = prev;
+    var sm = C.leitnerSummary(cards, leitner, t);
+    $('fcStats').innerHTML = cards.length ? '<div class="boxes"><span>New: ' + sm.boxes[0] + '</span>' + [1, 2, 3, 4, 5].map(function (b) { return '<span>Box ' + b + ': ' + sm.boxes[b] + '</span>'; }).join('') + '<span><b>' + sm.due + ' due now</b> of ' + sm.total + '</span></div>' : 'No cards yet - import a JSON deck.';
+  }
+  function startDeck(title, d) {
+    if (!d.length) return msg('fcMsg', 'Nothing due right now - you are caught up. Come back tomorrow, or pick another class.', '');
+    msg('fcMsg', ''); deck = { title: title, cards: d, i: 0, known: 0, unsure: 0, retry: {} };
+    $('fcSetup').classList.add('hidden'); $('fcStudy').classList.remove('hidden'); $('fcTitle').textContent = title; showCard();
+  }
+  function showCard(flipped) {
+    var c = deck.cards[deck.i]; if (!c) return endDeck();
+    var st = leitner[c.id];
+    $('fcPos').textContent = 'Card ' + (deck.i + 1) + ' of ' + deck.cards.length + ' - ' + (st && st.box ? 'box ' + st.box : 'new');
+    var outdated = c.note || c.tags.some(function (x) { return /outdated/i.test(x); });
+    $('fcCard').innerHTML = (outdated ? '<div class="warnb" title="' + esc(c.note || 'possibly outdated') + '">&#9888; Possibly outdated' + (c.note ? ': ' + esc(c.note) : '') + '</div>' : '') + '<div class="cls">' + (c.group ? esc(c.group) + ' &rsaquo; ' : '') + esc(c['class']) + (c.tags.length ? ' &middot; ' + c.tags.map(esc).join(', ') : '') + '</div><div class="front">' + esc(c.front) + '</div>' +
+      (flipped ? '<div class="back">' + esc(c.back) + '</div>' +  (c.source ? '<div class="cls" style="margin-top:10px">' + esc(c.source) + '</div>' : '') : '<div class="cls" style="margin-top:14px">tap or press space to flip</div>');
+    deck.flipped = !!flipped;
+    $('fcKnown').classList.toggle('hidden', !flipped); $('fcUnsure').classList.toggle('hidden', !flipped); $('fcFlip').classList.toggle('hidden', !!flipped);
+  }
+  function flip() { if (deck && !deck.flipped) showCard(true); }
+  function mark(known) {
+    if (!deck || !deck.flipped) return; var c = deck.cards[deck.i];
+    leitner[c.id] = C.leitnerUpdate(leitner[c.id], known, now()); save(K.leitner, leitner);
+    if (known) deck.known++; else { deck.unsure++; if (!deck.retry[c.id]) { deck.retry[c.id] = 1; deck.cards.push(c); } } // unsure cards come back once at the end
+    deck.i++; showCard();
+  }
+  function endDeck() {
+    var d = deck; deck = null; $('fcStudy').classList.add('hidden'); $('fcSetup').classList.remove('hidden');
+    if (d) msg('fcMsg', 'Done with "' + esc(d.title) + '": ' + d.known + ' known, ' + d.unsure + ' unsure. Unsure cards come back first next time.' + (/Pharm day/.test(d.title) ? ' <button class="btn sec" id="fcToPharmQ">Now try 10 pharm questions</button>' : ''));
+    var b = $('fcToPharmQ'); if (b) b.onclick = function () { var q = allQueue().filter(function (x) { return x.item.area === 'Pharmacological and Parenteral Therapies'; }).sort(function () { return Math.random() - 0.5; }).slice(0, 10); if (q.length) startSession({ mode: 'practice', title: 'Pharm questions', queue: q }); };
+    renderCards();
+  }
+  $('fcCard').onclick = flip; $('fcFlip').onclick = flip;
+  $('fcKnown').onclick = function () { mark(true); }; $('fcUnsure').onclick = function () { mark(false); };
+  $('fcEnd').onclick = endDeck;
+  document.addEventListener('keydown', function (e) {
+    if (!deck || /INPUT|TEXTAREA|SELECT/.test((e.target || {}).tagName)) return;
+    if (e.key === ' ') { e.preventDefault(); flip(); } else if (e.key === 'k' || e.key === 'ArrowRight') mark(true); else if (e.key === 'u' || e.key === 'ArrowLeft') mark(false);
+  });
+  $('fcPharmDay').onclick = function () { startDeck('Pharm day - ' + new Date(now()).toLocaleDateString(), C.buildDeck(cards, leitner, { pharmDay: true, now: now(), limit: 60, newLimit: 20 })); };
+  $('fcStudyClass').onclick = function () { var k = $('fcClass').value; if (!k) return; startDeck(k, C.buildDeck(cards, leitner, { cls: k, now: now(), limit: 60, all: true })); };
+  $('fcStudyDue').onclick = function () { startDeck('All due cards', C.buildDeck(cards, leitner, { now: now(), limit: 100, newLimit: 20 })); };
+  function importCards(data, label) {
+    var r = C.parseFlashcards(data); if (!r.cards.length) return msg('fcMsg', 'No valid cards found in ' + esc(label) + '. ' + esc(r.errors.join(' ')), 'err');
+    var byId = {}; cards.forEach(function (c, i) { byId[c.id] = i; }); var added = 0, updated = 0;
+    r.cards.forEach(function (c) { if (byId[c.id] != null) { cards[byId[c.id]] = c; updated++; } else { cards.push(c); added++; } });
+    saveCards(); msg('fcMsg', 'Imported ' + added + ' new card(s)' + (updated ? ', updated ' + updated : '') + ' from ' + esc(label) + '. Your Leitner progress is kept.' + (r.errors.length ? '<br>' + r.errors.map(esc).join('<br>') : ''), r.errors.length ? 'warn' : '');
+    renderCards();
+  }
+  $('fcFile').onchange = async function (e) { var f = e.target.files[0]; e.target.value = ''; if (!f) return; try { var d = await readJsonFile(f); if (C.looksLikeFlashcards(d)) importCards(d, f.name); else loadLibrary([f], 'fcMsg'); } catch (err) { msg('fcMsg', 'Could not read ' + esc(f.name) + ': ' + esc(err.message), 'err'); } };
+
+  // ================= Bank =================
+  function addCases(newCases, replace) {
+    if (replace) { bank = newCases; return { added: newCases.reduce(function (s, c) { return s + c.items.length; }, 0), dup: 0 }; }
+    var ids = new Set(); bank.forEach(function (c) { c.items.forEach(function (it) { ids.add(it.id); }); });
+    var added = 0, dup = 0, byTitle = {}; bank.forEach(function (c, i) { if (c.kind === 'standalone') byTitle[c.title] = i; });
+    newCases.forEach(function (c) {
+      c.items = c.items.filter(function (it) { if (ids.has(it.id)) { dup++; return false; } ids.add(it.id); added++; return true; });
+      if (!c.items.length) return;
+      if (c.kind === 'standalone' && byTitle[c.title] != null) bank[byTitle[c.title]].items = bank[byTitle[c.title]].items.concat(c.items); else bank.push(c);
+    });
+    return { added: added, dup: dup };
+  }
+  /** Routes any JSON: flashcards, backup, external qbank shape, or native bank. */
+  // JSON detection by content, not by file name (Android chat apps may save .json as .txt)
+  function readJsonText(text) { var t = String(text || '').replace(/^\uFEFF/, '').trim(); if (!/^[\[{]/.test(t)) return undefined; try { return JSON.parse(t); } catch (e) { return undefined; } }
+  async function readJsonFile(f) { var t = (await f.text()).replace(/^\uFEFF/, ''); try { return JSON.parse(t); } catch (e) { throw new Error('this file is not valid JSON (' + e.message + ')'); } }
+  function looksLikeCprList(d) { return Array.isArray(d) && d.length > 0 && d.slice(0, 5).every(function (x) { return x && typeof x === 'object' && x.attempt != null && x.ratings && typeof x.ratings === 'object'; }); }
+  function importJson(data, label, replace) {
+    if (looksLikeCprList(data)) data = { cprReports: data };
+    if (C.looksLikeFlashcards(data)) { importCards(data, label); return { kind: 'cards' }; }
+    if (data && !Array.isArray(data) && (data.cprReports || data.format === 'nclex-case-study-trainer-backup')) { restoreBackup(data); return { kind: 'backup' }; }
+    var list = Array.isArray(data) ? data : (data.items || data.questions || null);
+    var t0 = performance.now(), r = list && C.looksLikeQbank(list) ? C.parseQbank(list) : C.parseJsonBank(data);
+    var res = addCases(r.cases, replace); saveBank();
+    return { kind: 'bank', added: res.added, dup: res.dup, errors: r.errors, ms: Math.round(performance.now() - t0) };
+  }
+  function restoreBackup(d) {
+    if (d.bank) { bank = C.parseJsonBank(d.bank).cases; saveBank(); }
+    if (Array.isArray(d.cprReports)) { reports = d.cprReports; save(K.reports, reports); }
+    if (d.progress) { progress = d.progress; save(K.progress, progress); }
+    if (Array.isArray(d.history)) { history = d.history; save(K.history, history); }
+    if (d.leitner) { leitner = d.leitner; save(K.leitner, leitner); }
+    if (Array.isArray(d.flashcards)) { cards = C.parseFlashcards(d.flashcards).cards; saveCards(); }
+    msg('bankMsg', 'Backup restored' + (d.cprReports ? ' (' + d.cprReports.length + ' CPR reports)' : '') + '.');
+    if (Array.isArray(d.cprReports)) try { renderCpr(); } catch (e) {}
+  }
+  function reportImport(r, label) {
+    if (r.kind !== 'bank') return;
+    msg('bankMsg', 'Added ' + r.added + ' item(s) from ' + esc(label) + (r.dup ? ' (' + r.dup + ' already in the bank, skipped)' : '') + ' in ' + r.ms + ' ms.' + (r.errors.length ? '<br>Notes: ' + r.errors.map(esc).join('<br>') : ''), r.errors.length ? 'warn' : '');
+  }
+  function importText(text, label, replace) {
+    var r = C.parseTextBank(text);
+    if (r.cases.length) { var res = addCases(r.cases, replace); saveBank(); msg('bankMsg', 'Added ' + res.added + ' item(s) from ' + esc(label) + '.' + (r.errors.length ? '<br>Notes: ' + r.errors.map(esc).join('<br>') : ''), r.errors.length ? 'warn' : ''); return true; }
+    return false;
+  }
+  function addReading(text, title) {
+    var ex = C.splitExhibits(text); if (!Object.keys(ex).length) return null;
+    if (!ex.scenario) ex.scenario = title;
+    var r = { id: C.hashStr('read|' + title + '|' + text.slice(0, 500)), title: title, exhibits: ex };
+    readings = readings.filter(function (x) { return x.id !== r.id; }).concat([r]); saveReadings(); return r;
+  }
+  function onBankInput(replace) {
+    var t = $('bankText').value.trim(); if (!t) return msg('bankMsg', 'Nothing to import.', 'err');
+    if (/^[\[{]/.test(t)) { try { var r = importJson(JSON.parse(t), 'pasted JSON', replace); reportImport(r, 'pasted JSON'); } catch (e) { return msg('bankMsg', 'JSON error: ' + esc(e.message), 'err'); } }
+    else if (!importText(t, 'pasted text', replace)) { var rd = addReading(t, 'Pasted case'); msg('bankMsg', 'No questions found in the text, so it was saved as a guided reading case.' + (rd ? '' : ''), 'warn'); if (rd) openReading(rd); return; }
+    renderBank();
+  }
+  $('addBank').onclick = function () { onBankInput(false); };
+  $('replaceBank').onclick = function () { if (confirm('Replace the whole question bank?')) onBankInput(true); };
+  $('bankFile').onchange = async function (e) {
+    var files = Array.prototype.slice.call(e.target.files || []); e.target.value = ''; var lastReading = null, notes = [];
+    for (var i = 0; i < files.length; i++) {
+      var f = files[i], label = f.name;
+      try {
+        var isPdf = /\.pdf$/i.test(f.name) || f.type === 'application/pdf';
+        var text = isPdf ? await pdfText(f) : await f.text(), jd = isPdf ? undefined : readJsonText(text);
+        if (jd === undefined && /\.json$/i.test(f.name)) jd = JSON.parse(text.replace(/^\uFEFF/, ''));
+        if (jd !== undefined) { msg('bankMsg', 'Importing ' + esc(label) + '...'); var r = importJson(jd, label); reportImport(r, label); notes.push(r.kind === 'bank' ? $('bankMsg').innerHTML : '<div class="notice">' + esc(label) + ': ' + (r.kind === 'cards' ? 'flashcards imported (' + cards.length + ' cards in the deck now)' : 'CPR history / backup loaded') + '.</div>'); continue; }
+        if (importText(text, label)) { notes.push($('bankMsg').innerHTML); continue; }
+        var rd = addReading(text, label.replace(/\.[a-z0-9]+$/i, ''));
+        if (rd) { lastReading = rd; notes.push('<div class="notice warn">No questions found in ' + esc(label) + ' - opened it in guided reading mode.</div>'); }
+        else notes.push('<div class="notice err">' + esc(label) + ' looks empty.</div>');
+      } catch (err) { notes.push('<div class="notice err">Could not read ' + esc(label) + ': ' + esc(err.message) + '</div>'); }
+    }
+    $('bankMsg').innerHTML = notes.join(''); renderBank();
+    if (lastReading) openReading(lastReading);
+  };
+  $('loadSample').onclick = function () { if (!confirm('Replace the bank with the sample cases?')) return; bank = sampleBank(); saveBank(); renderBank(); };
+  $('exportData').onclick = function () {
+    var blob = new Blob([JSON.stringify({ format: 'nclex-case-study-trainer-backup', version: 2, bank: { cases: bank }, cprReports: reports, progress: progress, history: history, leitner: leitner, flashcards: cards }, null, 1)], { type: 'application/json' });
+    var a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'nclex-trainer-backup.json'; a.click();
+  };
+  $('importData').onchange = async function (e) { var f = e.target.files[0]; e.target.value = ''; if (!f) return; loadLibrary([f], 'bankMsg'); };
+  function renderBank() {
+    var items = allQueue(), acc = C.accuracyByDomain(history), ca = {}, cs = {}, ty = {};
+    items.forEach(function (x) { var it = x.item; ca[it.area || 'Untagged'] = (ca[it.area || 'Untagged'] || 0) + 1; cs[it.step || 'Untagged'] = (cs[it.step || 'Untagged'] || 0) + 1; ty[it.type] = (ty[it.type] || 0) + 1; });
+    $('bankStats').textContent = bank.length + ' cases/groups, ' + items.length + ' items (' + Object.keys(ty).map(function (k) { return ty[k] + ' ' + k; }).join(', ') + ').';
+    function t(list, counts, title) { return '<table><tr><th>' + title + '</th><th>Items</th><th>Your accuracy</th><th>Latest CPR</th></tr>' + list.concat(['Untagged']).map(function (a) { return '<tr><td>' + esc(a) + '</td><td>' + (counts[a] || 0) + '</td><td>' + (a === 'Untagged' ? '' : accText(acc[a])) + '</td><td>' + (a === 'Untagged' ? '' : pill(latestRating(a))) + '</td></tr>'; }).join('') + '</table>'; }
+    $('bankAreas').innerHTML = '<div class="grid2">' + t(A, ca, 'Client Needs area') + t(S, cs, 'Clinical judgment step') + '</div>';
+  }
+
+  // ---------- one-pick library import (question bank + flashcards JSON files) ----------
+  async function loadLibrary(files, msgEl) {
+    var notes = [];
+    for (var i = 0; i < files.length; i++) {
+      var f = files[i];
+      try {
+        msg(msgEl, 'Importing ' + esc(f.name) + ' (' + Math.round(f.size / 1048576 * 10) / 10 + ' MB)...');
+        var t0 = performance.now(), data = await readJsonFile(f), r = importJson(data, f.name);
+        if (r.kind === 'cards') notes.push('Flashcards from ' + esc(f.name) + ': ' + cards.length + ' cards in the deck now.');
+        else if (r.kind === 'bank') notes.push(esc(f.name) + ': added ' + r.added + ' questions' + (r.dup ? ' (' + r.dup + ' already present)' : '') + ' in ' + Math.round(performance.now() - t0) + ' ms.' + (r.errors.length ? ' Notes: ' + r.errors.map(esc).join('; ') : ''));
+        else notes.push(esc(f.name) + ': ' + (data.bank || data.progress || data.flashcards ? 'backup restored' : 'CPR history loaded') + (function (l) { return Array.isArray(l) ? ' (' + l.length + ' CPR reports)' : ''; })(Array.isArray(data) ? data : data.cprReports) + '.');
+      } catch (err) { notes.push('<b>Could not import ' + esc(f.name) + ':</b> ' + esc(err.message)); }
+    }
+    msg(msgEl, notes.join('<br>') || 'No files selected.'); renderBank(); renderCards();
+  }
+  ['libFile', 'libFile2'].forEach(function (id) { var el = $(id); if (el) el.onchange = function (e) { var fs = Array.prototype.slice.call(e.target.files || []); e.target.value = ''; loadLibrary(fs, id === 'libFile' ? 'bankMsg' : 'fcMsg'); }; });
+
+  // ================= init =================
+  var ready = (async function () {
+    var b = await store.get('bank');
+    if (!b) { var legacy = load(K.legacyBank, null); b = legacy && legacy.length ? legacy : sampleBank(); await store.set('bank', b).catch(function () {}); }
+    bank = b; readings = (await store.get('readings')) || [];
+    cards = await store.get('flashcards'); if (!cards) { cards = C.parseFlashcards(window.SAMPLE_FLASHCARDS || []).cards; saveCards(); }
+    showTab('practice');
+  })();
+  window.__app = { ready: ready, get reports() { return reports; }, get bank() { return bank; }, get cards() { return cards; }, get leitner() { return leitner; }, get session() { return session; }, get cur() { return cur; }, get progress() { return progress; }, C: C,
+    startWeak: startWeak, startCase: startCase, showTab: showTab, setClockOffset: function (ms) { clockOffset = ms; }, importJson: importJson, fromText: fromText, loadLibrary: loadLibrary };
+})();
+
+</script>
+</body>
+</html>
