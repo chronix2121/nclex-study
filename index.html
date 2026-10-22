@@ -792,17 +792,71 @@ KIND: standalone   (on a CASE line block: items are served one by one, not as a 
     Object.keys(acc).forEach(function (k) { acc[k].pct = acc[k].attempted ? acc[k].points / acc[k].attempted : 0; });
     return acc;
   }
-  /** Weakest-areas queue: item priority = 0.6*area score + 0.4*step score; includes items whose area OR step is a priority. */
-  function weakestQueue(cases, an, progress) {
+  var RECENT_MS = 3 * 86400000; // answered within ~3 days = "recent" (progress[id].last is a Date.now()-style ms timestamp)
+  /** Fisher-Yates shuffle (copy) with a seedable rand() from rng(seed). */
+  function shuffle(arr, rand) { var a = arr.slice(); for (var i = a.length - 1; i > 0; i--) { var j = Math.floor(rand() * (i + 1)); var t = a[i]; a[i] = a[j]; a[j] = t; } return a; }
+  /** Freshness of one item: 'unseen' (never answered), 'old' (answered > recentMs ago, or no timestamp), 'recent'. */
+  function freshness(it, progress, now, recentMs) {
+    var p = progress && progress[it.id];
+    if (!p || !p.attempts) return 'unseen';
+    return p.last != null && now - p.last < recentMs ? 'recent' : 'old';
+  }
+  /**
+   * Orders refs ({ci, ii, item, pri?}) into a practice queue that varies between sessions.
+   * - Items of a multi-question case (kind !== 'standalone') form one unit, kept consecutive in original item order.
+   * - Sort key: recently answered units last; then priority band (unit's mean pri bucketed by opts.band points below the top, if pri given);
+   *   then unseen before older-answered; random (seeded) order inside each group.
+   * - Older missed items are capped at opts.missedFrac (default 20%) of the first opts.limit (default 40) items; extras move behind
+   *   the other not-recent items. ("Review missed" is the mode for those.)
+   * - opts.limit: if set, the queue is cut at a unit boundary to at most that many items (a single oversized case is still served whole).
+   * opts: { seed, now, recentMs, band, limit, missedFrac }
+   */
+  function sessionQueue(cases, refs, progress, opts) {
+    opts = opts || {}; var rand = rng(opts.seed != null ? opts.seed : Date.now()), now = opts.now != null ? opts.now : Date.now();
+    var recentMs = opts.recentMs || RECENT_MS, bandW = opts.band || 5, limit = opts.limit || 0, window_ = limit || 40;
+    var maxMissed = Math.floor(window_ * (opts.missedFrac != null ? opts.missedFrac : 0.2));
+    var units = [], byCase = {};
+    refs.forEach(function (r) {
+      var c = cases[r.ci], multi = c && c.kind !== 'standalone' && c.items.length > 1;
+      if (multi && byCase[r.ci]) { byCase[r.ci].refs.push(r); return; }
+      var u = { refs: [r] }; units.push(u); if (multi) byCase[r.ci] = u;
+    });
+    var hasPri = refs.some(function (r) { return r.pri != null; }), top = -Infinity;
+    units.forEach(function (u) {
+      u.refs.sort(function (a, b) { return a.ii - b.ii; });
+      u.pri = mean(u.refs.map(function (r) { return r.pri || 0; })); if (u.pri > top) top = u.pri; // case unit: average priority of its items
+      var f = u.refs.map(function (r) { return freshness(r.item, progress, now, recentMs); });
+      u.fresh = f.indexOf('recent') >= 0 ? 'recent' : f.indexOf('unseen') >= 0 ? 'unseen' : 'old';
+      u.missed = u.fresh === 'old' && u.refs.some(function (r) { var p = progress && progress[r.item.id]; return p && p.lastCorrect === false; });
+    });
+    units.forEach(function (u) { u.band = hasPri ? Math.floor((top - u.pri) / bandW) : 0; u.rnd = rand(); });
+    var G = { unseen: 0, old: 1, recent: 0 };
+    units.sort(function (a, b) { return (a.fresh === 'recent') - (b.fresh === 'recent') || a.band - b.band || G[a.fresh] - G[b.fresh] || a.rnd - b.rnd; });
+    // cap older missed units inside the first window_ items
+    var out = [], deferred = [], n = 0, nMissed = 0;
+    units.forEach(function (u) {
+      if (u.fresh === 'recent') { if (deferred.length) { out = out.concat(deferred); deferred = []; } out.push(u); return; }
+      if (u.missed && n < window_ && nMissed + u.refs.length > maxMissed) { deferred.push(u); return; }
+      if (u.missed && n < window_) nMissed += u.refs.length;
+      out.push(u); n += u.refs.length;
+    });
+    out = out.concat(deferred);
+    var q = []; out.forEach(function (u) {
+      if (limit && q.length && q.length + u.refs.length > limit) return;
+      u.refs.forEach(function (r) { r.band = u.band; r.fresh = u.fresh; q.push(r); });
+    });
+    return q;
+  }
+  /** Weakest-areas queue: item priority = 0.6*area score + 0.4*step score; includes items whose area OR step is a priority.
+   *  Ordered by sessionQueue (priority bands, unseen first, recently answered last, shuffled, cases kept whole). */
+  function weakestQueue(cases, an, progress, opts) {
     var aS = {}, sS = {}, inc = {};
     an.areas.forEach(function (a) { aS[a.area] = a.score; if (a.latest === 'Below' || a.score >= 30) inc[a.area] = 1; });
     an.steps.forEach(function (a) { sS[a.area] = a.score; if (a.latest === 'Below' || a.score >= 30) inc[a.area] = 1; });
     if (!Object.keys(inc).length) an.areas.slice(0, 3).forEach(function (a) { inc[a.area] = 1; });
     var q = [];
     cases.forEach(function (c, ci) { c.items.forEach(function (it, ii) { if ((it.area && inc[it.area]) || (it.step && inc[it.step])) q.push({ ci: ci, ii: ii, item: it, pri: 0.6 * (aS[it.area] || 0) + 0.4 * (sS[it.step] || 0) }); }); });
-    function miss(it) { var p = progress && progress[it.id]; return p && p.attempts ? 1 - p.points / p.attempts : 0.5; }
-    q.sort(function (a, b) { return b.pri - a.pri || miss(b.item) - miss(a.item) || a.ci - b.ci || a.ii - b.ii; });
-    return q;
+    return sessionQueue(cases, q, progress, opts);
   }
   function missedQueue(cases, progress) {
     var q = [];
@@ -1009,7 +1063,7 @@ KIND: standalone   (on a CASE line block: items are served one by one, not as a 
     normalizeArea: normalizeArea, normalizeStep: normalizeStep, normalizeRating: normalizeRating, parseCprText: parseCprText, findDate: findDate, sortReports: sortReports,
     analyzeReports: analyzeReports, recommend: recommend, parseTextBank: parseTextBank, parseJsonBank: parseJsonBank, parseHighlight: parseHighlight, splitExhibits: splitExhibits,
     scoreItem: scoreItem, isComplete: isComplete, correctAnswerText: correctAnswerText, ruleText: ruleText, BOWTIE: BOWTIE, switchStats: switchStats,
-    accuracyByDomain: accuracyByDomain, accuracyByArea: accuracyByDomain, weakestQueue: weakestQueue, missedQueue: missedQueue,
+    accuracyByDomain: accuracyByDomain, accuracyByArea: accuracyByDomain, weakestQueue: weakestQueue, missedQueue: missedQueue, sessionQueue: sessionQueue, shuffle: shuffle, rng: rng, RECENT_MS: RECENT_MS,
     estimateAbility: estimateAbility, difficultyToB: difficultyToB, createMock: createMock, mockReport: mockReport, MOCK_PRESETS: MOCK_PRESETS, hashStr: hashStr, pct: pct,
     looksLikeQbank: looksLikeQbank, parseQbank: parseQbank, mapQbankItem: mapQbankItem, parseFlashcards: parseFlashcards, looksLikeFlashcards: looksLikeFlashcards,
     leitnerUpdate: leitnerUpdate, isDue: isDue, buildDeck: buildDeck, leitnerSummary: leitnerSummary, isPharmCard: isPharmCard, LEITNER_DAYS: LEITNER_DAYS };
@@ -1459,18 +1513,20 @@ window.SAMPLE_FLASHCARDS = [{"id":"gz-bb-1","class":"Beta blockers","front":"Met
   }
   function startWeak() {
     if (!reports.length) { alert('Add at least one CPR under "My CPR" first - then this mode knows where to aim.'); return showTab('cpr'); }
-    var q = C.weakestQueue(bank, analysis(), progress); if (!q.length) return alert('No tagged questions match your priority areas yet.');
-    startSession({ mode: 'practice', title: 'Study my weakest areas', queue: q.slice(0, 40) });
+    var q = C.weakestQueue(bank, analysis(), progress, { now: now(), seed: seed(), limit: 40 }); if (!q.length) return alert('No tagged questions match your priority areas yet.');
+    startSession({ mode: 'practice', title: 'Study my weakest areas', queue: q });
   }
   $('startWeak').onclick = startWeak;
   function startCase(ci) { var c = bank[ci]; if (!c) return; startSession({ mode: 'practice', title: c.title, queue: c.items.map(function (it, ii) { return { ci: ci, ii: ii, item: it }; }) }); }
   $('startCase').onclick = function () { var v = $('caseSel').value; if (v === '') return alert('Pick a case first.'); startCase(+v); };
-  $('startAll').onclick = function () { startSession({ mode: 'practice', title: 'All case studies', queue: allQueue() }); };
+  function mixed(q) { return C.sessionQueue(bank, q, progress, { now: now(), seed: seed() }); } // unseen first, recently answered last, shuffled, cases kept whole
+  function seed() { return (Date.now() ^ Math.floor(Math.random() * 4294967296)) >>> 0; }
+  $('startAll').onclick = function () { startSession({ mode: 'practice', title: 'All case studies', queue: mixed(allQueue()) }); };
   $('startMissed').onclick = function () { var q = C.missedQueue(bank, progress); if (!q.length) return alert('Nothing to review - no missed items yet. Nice!'); startSession({ mode: 'practice', title: 'Review missed', queue: q }); };
   $('startFilter').onclick = function () {
     var a = $('areaFilter').value, s = $('stepFilter').value; if (!a && !s) return alert('Pick an area and/or a step.');
     var q = allQueue().filter(function (x) { return (!a || x.item.area === a) && (!s || x.item.step === s); });
-    if (!q.length) return alert('No items match that filter yet.'); startSession({ mode: 'practice', title: [a, s].filter(Boolean).join(' + '), queue: q });
+    if (!q.length) return alert('No items match that filter yet.'); startSession({ mode: 'practice', title: [a, s].filter(Boolean).join(' + '), queue: mixed(q) });
   };
 
   // ---------- guided reading ----------
