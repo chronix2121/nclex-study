@@ -1517,7 +1517,7 @@ window.SAMPLE_FLASHCARDS = [{"id":"gz-bb-1","class":"Beta blockers","front":"Met
     startSession({ mode: 'practice', title: 'Study my weakest areas', queue: q });
   }
   $('startWeak').onclick = startWeak;
-  function startCase(ci) { var c = bank[ci]; if (!c) return; startSession({ mode: 'practice', title: c.title, queue: c.items.map(function (it, ii) { return { ci: ci, ii: ii, item: it }; }) }); }
+  function startCase(ci) { var c = bank[ci]; if (!c) return; var q = c.items.map(function (it, ii) { return { ci: ci, ii: ii, item: it }; }); if (c.kind === 'standalone') q = mixed(q).slice(0, 40); startSession({ mode: 'practice', title: c.title, queue: q }); }
   $('startCase').onclick = function () { var v = $('caseSel').value; if (v === '') return alert('Pick a case first.'); startCase(+v); };
   function mixed(q) { return C.sessionQueue(bank, q, progress, { now: now(), seed: seed() }); } // unseen first, recently answered last, shuffled, cases kept whole
   function seed() { return (Date.now() ^ Math.floor(Math.random() * 4294967296)) >>> 0; }
