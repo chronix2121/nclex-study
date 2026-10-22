@@ -104,6 +104,8 @@ mark.kw-neg{background:var(--badbg);color:var(--bad);font-weight:700;box-shadow:
 .kwnote{margin:8px 0;padding:8px 12px;border:1px dashed var(--line);border-radius:8px;overflow-wrap:anywhere}
 .kwnote ul{margin:4px 0 0;padding-left:18px}.kwnote li{margin:2px 0}
 .kwtoggle{display:inline-flex;align-items:center;gap:6px;margin-top:8px;cursor:pointer}.kwtoggle input{margin:0}
+.anxflag{background:var(--nearbg);color:var(--ink);border:1px solid var(--near);border-left:5px solid var(--near);border-radius:8px;padding:10px 12px;margin:8px 0;font-weight:500}
+.anxflag b{color:var(--near)}.anxflag ol{margin:6px 0 0;padding-left:20px;font-weight:400}.anxflag li{margin:4px 0}
 
 </style>
 </head>
@@ -778,11 +780,17 @@ KIND: standalone   (on a CASE line block: items are served one by one, not as a 
     if (it.type === 'sata' && it.groups) return '+/- scoring per category: +1 correct, -1 incorrect, each category never below 0';
     return '+/- scoring: +1 per correct choice, -1 per incorrect choice, never below 0';
   }
-  /** Answer-switch stats from a list of {initialFrac, finalFrac, switched} */
+  /** Testing Anxiety Flag: the answer held before the first change (the "initial choice") was complete and scored full credit,
+   *  but the submitted answer did not. initial is null/undefined when the answer was never changed. Uses the normal scoring rules for every type. */
+  function anxietyFlag(it, initial, final) {
+    if (!it || it.noKey || initial == null || !isComplete(it, initial)) return false;
+    return scoreItem(it, initial).frac === 1 && scoreItem(it, final).frac < 1;
+  }
+  /** Answer-switch stats from a list of {initialFrac, finalFrac, changes, anxiety} */
   function switchStats(log) {
-    var s = { items: log.length, switched: 0, wrongToRight: 0, rightToWrong: 0, wrongToWrong: 0, otherChanges: 0, totalChanges: 0 };
+    var s = { items: log.length, switched: 0, wrongToRight: 0, rightToWrong: 0, wrongToWrong: 0, otherChanges: 0, totalChanges: 0, anxietyFlags: 0 };
     log.forEach(function (l) {
-      s.totalChanges += l.changes || 0;
+      s.totalChanges += l.changes || 0; if (l.anxiety) s.anxietyFlags++;
       if (!l.changes) return; s.switched++;
       var a = l.initialFrac, b = l.finalFrac;
       if (a < 1 && b === 1) s.wrongToRight++; else if (a === 1 && b < 1) s.rightToWrong++; else if (a < 1 && b < 1 && a === b) s.wrongToWrong++; else s.otherChanges++;
@@ -1170,7 +1178,7 @@ KIND: standalone   (on a CASE line block: items are served one by one, not as a 
   var api = { AREAS: AREAS, STEPS: STEPS, CJ: CJ, DOMAINS: DOMAINS, SHORT: SHORT, RATINGS: RATINGS, SEV: SEV, TEST_PLAN: TEST_PLAN, STEP_PROMPTS: STEP_PROMPTS,
     normalizeArea: normalizeArea, normalizeStep: normalizeStep, normalizeRating: normalizeRating, parseCprText: parseCprText, findDate: findDate, sortReports: sortReports,
     analyzeReports: analyzeReports, recommend: recommend, parseTextBank: parseTextBank, parseJsonBank: parseJsonBank, parseHighlight: parseHighlight, splitExhibits: splitExhibits,
-    scoreItem: scoreItem, isComplete: isComplete, correctAnswerText: correctAnswerText, ruleText: ruleText, BOWTIE: BOWTIE, switchStats: switchStats,
+    scoreItem: scoreItem, isComplete: isComplete, correctAnswerText: correctAnswerText, ruleText: ruleText, BOWTIE: BOWTIE, switchStats: switchStats, anxietyFlag: anxietyFlag,
     accuracyByDomain: accuracyByDomain, accuracyByArea: accuracyByDomain, weakestQueue: weakestQueue, missedQueue: missedQueue, sessionQueue: sessionQueue, shuffle: shuffle, rng: rng, RECENT_MS: RECENT_MS,
     estimateAbility: estimateAbility, difficultyToB: difficultyToB, createMock: createMock, mockReport: mockReport, MOCK_PRESETS: MOCK_PRESETS, hashStr: hashStr, pct: pct,
     looksLikeQbank: looksLikeQbank, parseQbank: parseQbank, mapQbankItem: mapQbankItem, parseFlashcards: parseFlashcards, looksLikeFlashcards: looksLikeFlashcards,
@@ -1421,7 +1429,7 @@ window.SAMPLE_FLASHCARDS = [{"id":"gz-bb-1","class":"Beta blockers","front":"Met
     return keepTab;
   }
   function startSession(cfg) {
-    session = Object.assign({ i: 0, results: [], switchLog: [] }, cfg);
+    session = Object.assign({ i: 0, results: [], switchLog: [], anxietyItems: [] }, cfg);
     hideTabs(); $('summary').classList.add('hidden'); $('player').classList.remove('hidden'); lastCase = -1;
     $('pTitle').textContent = cfg.title; $('pTimer').textContent = '';
     if (cfg.mode === 'mock') { timerId = setInterval(tick, 1000); tick(); }
@@ -1565,12 +1573,14 @@ window.SAMPLE_FLASHCARDS = [{"id":"gz-bb-1","class":"Beta blockers","front":"Met
       return;
     }
     var meta = { changes: cur.changes, initialFrac: cur.changes ? C.scoreItem(it, cur.initial).frac : sc.frac, finalFrac: sc.frac };
+    meta.anxiety = cur.anxiety = C.anxietyFlag(it, cur.changes ? cur.initial : null, cur.resp); // Testing Anxiety Flag: first answer right, changed to wrong
     document.querySelectorAll('#qBody input, #qBody select').forEach(function (x) { x.disabled = true; });
-    var p = progress[it.id] || { attempts: 0, points: 0 }; p.attempts++; p.points += sc.frac; p.lastCorrect = sc.correct; p.last = now(); progress[it.id] = p; save(K.progress, progress);
-    history.push({ itemId: it.id, area: it.area || null, step: it.step || null, frac: sc.frac, correct: sc.correct, ts: now(), mode: session.mode });
+    var p = progress[it.id] || { attempts: 0, points: 0 }; p.attempts++; p.points += sc.frac; p.lastCorrect = sc.correct; p.last = now(); p.lastAnxiety = meta.anxiety; if (meta.anxiety) p.anxiety = (p.anxiety || 0) + 1; progress[it.id] = p; save(K.progress, progress);
+    history.push({ itemId: it.id, area: it.area || null, step: it.step || null, frac: sc.frac, correct: sc.correct, ts: now(), mode: session.mode, anxiety: meta.anxiety || undefined });
     if (history.length > 20000) history = history.slice(-20000);
     save(K.history, history);
     session.results.push({ area: it.area, step: it.step, frac: sc.frac, correct: sc.correct }); session.switchLog.push(meta);
+    if (meta.anxiety) session.anxietyItems.push({ q: cur.stem, answer: C.correctAnswerText(it), area: it.area, step: it.step }); // shown only after the mock ends
     if (session.mode === 'mock') { session.mock.record(sc.frac, meta); session.i++; if (session.mock.done) return finishMock(); return nextItem(); }
     showFeedback(it, sc);
     $('lockBtn').classList.add('hidden'); $('nextBtn').classList.remove('hidden');
@@ -1590,10 +1600,12 @@ window.SAMPLE_FLASHCARDS = [{"id":"gz-bb-1","class":"Beta blockers","front":"Met
     if (it.type === 'highlight') { var segs = it.segments || C.parseHighlight(it.text); document.querySelectorAll('#qBody .hl').forEach(function (sp) { var sg = segs[+sp.dataset.s], sel = cur.resp.indexOf(+sp.dataset.s) !== -1; if (sg.correct) sp.classList.add('correct'); else if (sel) sp.classList.add('wrong'); }); }
     if (it.type === 'bowtie') document.querySelectorAll('#qBody .opt[data-tok]').forEach(function (l) { var p = l.dataset.tok.split(':'), ok = it[p[0]].answer.indexOf(+p[1]) !== -1; if (ok) l.classList.add('correct'); else if (cur.resp.indexOf(l.dataset.tok) !== -1) l.classList.add('wrong'); l.querySelector('input').disabled = true; });
     var rule = C.ruleText(it); rule = rule ? ' (' + rule + ')' : '';
-    $('qFeedback').innerHTML = '<div class="notice ' + (sc.correct ? '' : 'warn') + '"><b>' + (sc.correct ? 'Full credit!' : sc.earned ? 'Partial credit - good progress.' : 'Not this time - a good one to learn from.') + '</b> Score: <span id="scoreVal">' + sc.earned + ' / ' + sc.max + '</span>' + esc(rule) +
+    $('qFeedback').innerHTML = (cur.anxiety ? ANXIETY_HTML : '') + '<div class="notice ' + (sc.correct ? '' : 'warn') + '"><b>' + (sc.correct ? 'Full credit!' : sc.earned ? 'Partial credit - good progress.' : 'Not this time - a good one to learn from.') + '</b> Score: <span id="scoreVal">' + sc.earned + ' / ' + sc.max + '</span>' + esc(rule) +
       '<br><b>Answer:</b> ' + esc(C.correctAnswerText(it)) + (it.type === 'ordered' ? ' (option numbers, first to last)' : '') + (it.rationale ? '<br><b>Rationale:</b> ' + esc(it.rationale) : '') + (it.strategy ? '<br><b>Strategy:</b> ' + esc(it.strategy) : '') + (it.keyNote ? '<br><span class="mute small"><b>Key note:</b> ' + esc(it.keyNote) + '</span>' : '') + (it.autoTagged ? '<br><span class="mute small">Area/step tags on this item were inferred automatically and may be off.</span>' : '') + (cur.changes ? '<br><span class="mute small">You changed your answer ' + cur.changes + ' time' + (cur.changes === 1 ? '' : 's') + ' before locking it in.</span>' : '') + '</div>';
     showKeyWords();
   }
+  var ANXIETY_MSG = 'You originally chose the correct answer but changed it. Trust your gut!';
+  var ANXIETY_HTML = '<div class="anxflag" id="anxFlag" role="status"><b>&#9888;&#65039; Testing Anxiety Flag:</b> ' + ANXIETY_MSG + '</div>';
   // ---------- key words to catch: only after an answer is locked in, never in the mock (it has no item review) ----------
   function kwActive() { return kwOn && session && session.mode !== 'mock' && cur && cur.locked; }
   function showKeyWords() {
@@ -1754,6 +1766,9 @@ window.SAMPLE_FLASHCARDS = [{"id":"gz-bb-1","class":"Beta blockers","front":"Met
       tbl(r.byArea, 'Client Needs area', A) + tbl(r.byStep, 'Clinical judgment step', S) +
       '<h3>Answer changes</h3><p>You changed your answer on <b>' + sw.switched + '</b> of ' + sw.items + ' items (' + sw.totalChanges + ' changes in total). Wrong to right: <b>' + sw.wrongToRight + '</b>; right to wrong: <b>' + sw.rightToWrong + '</b>; wrong to a different wrong: ' + sw.wrongToWrong + '; partial-credit changes: ' + sw.otherChanges + '.' +
       (sw.rightToWrong > sw.wrongToRight ? ' Changing answers cost you more than it helped this time - trust your first well-reasoned choice unless you find a specific cue you missed.' : sw.switched ? ' Your changes helped at least as often as they hurt.' : '') + '</p>' +
+      '<p id="anxCount">Changed from right to wrong: <b>' + sw.anxietyFlags + '</b></p>' +
+      (s.anxietyItems.length ? '<div class="anxflag"><b>&#9888;&#65039; Testing Anxiety Flag</b> on ' + s.anxietyItems.length + ' item' + (s.anxietyItems.length === 1 ? '' : 's') + ': ' + ANXIETY_MSG +
+        '<ol class="small">' + s.anxietyItems.map(function (x) { return '<li>' + esc(x.q.length > 160 ? x.q.slice(0, 157) + '...' : x.q) + '<br><span class="mute">Correct answer: ' + esc(x.answer) + (x.area ? ' &middot; ' + esc(x.area) : '') + '</span></li>'; }).join('') + '</ol></div>' : '') +
       '<div class="row"><button class="btn" id="mockAgain">Back to mock setup</button><button class="btn sec" id="mockWeak">Study my weakest areas</button></div>';
     $('mockAgain').onclick = function () { $('mockReport').classList.add('hidden'); $('mockSetup').classList.remove('hidden'); renderMockSetup(); };
     $('mockWeak').onclick = startWeak;
