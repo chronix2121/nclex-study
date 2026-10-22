@@ -97,6 +97,14 @@ th{font-size:12px;color:var(--mute);text-transform:uppercase;letter-spacing:.03e
 select,input,textarea{max-width:100%}.row>select{min-width:0;flex:1 1 auto}pre{max-width:100%;overflow-x:auto}
 #reportList{overflow-x:auto;max-width:100%}code{overflow-wrap:anywhere}
 
+/* key words to catch (after answering) */
+mark.kw{background:var(--hl);color:inherit;border-radius:3px;padding:0 2px;box-decoration-break:clone;-webkit-box-decoration-break:clone}
+mark.kw-prio{box-shadow:inset 0 -2px 0 var(--pri)}
+mark.kw-neg{background:var(--badbg);color:var(--bad);font-weight:700;box-shadow:inset 0 -2px 0 var(--bad)}
+.kwnote{margin:8px 0;padding:8px 12px;border:1px dashed var(--line);border-radius:8px;overflow-wrap:anywhere}
+.kwnote ul{margin:4px 0 0;padding-left:18px}.kwnote li{margin:2px 0}
+.kwtoggle{display:inline-flex;align-items:center;gap:6px;margin-top:8px;cursor:pointer}.kwtoggle input{margin:0}
+
 </style>
 </head>
 <body>
@@ -128,6 +136,7 @@ select,input,textarea{max-width:100%}.row>select{min-width:0;flex:1 1 auto}pre{m
       </div>
       <div class="row"><select id="caseSel" aria-label="Pick a case study"><option value="">Practice a specific case...</option></select>
         <button class="btn sec" id="startCase">Start this case</button></div>
+      <label class="small kwtoggle"><input type="checkbox" id="kwToggle" checked> Highlight key words after answering</label>
       <p class="mute small" id="weakNote"></p>
       <div id="readingList"></div>
     </div>
@@ -1058,6 +1067,105 @@ KIND: standalone   (on a CASE line block: items are served one by one, not as a 
     return { boxes: boxes, due: due, total: cards.length };
   }
 
+  // ---------- Key words to catch (heuristic; shown only AFTER an answer is locked in) ----------
+  // Conservative rule set: exception/negative and priority wording (question sentence only), source-flagged critical words,
+  // clinical values with units, timing/change cues, population words, and a few stem words echoed in the correct answer.
+  var KW_WHY = {
+    neg: 'exception wording: choose the wrong or unsafe option', teach: 'choose the client statement that is wrong',
+    follow: 'choose the abnormal or unexpected finding', prio: 'priority cue: rank by ABCs, safety, acuity',
+    src: 'critical word named by the question source', value: 'clinical value: compare with the normal range',
+    time: 'timing/change cue: new or acute changes come first', pop: 'population cue: norms and risks differ',
+    lab: 'named lab/vital: check whether it is in range', link: 'echoed in the correct answer'
+  };
+  var KW_RANK = { neg: 0, teach: 0, follow: 0, prio: 1, src: 2, value: 3, time: 4, pop: 5, lab: 6, link: 7 };
+  var KW_TYPE_CAP = { src: 2, value: 2, time: 1, pop: 1, lab: 1, link: 2 }; // keeps it light: at most this many of each lower-tier cue
+  var KW_CLASS = { neg: 'neg', teach: 'neg', follow: 'neg', prio: 'prio', src: 'cue', value: 'cue', time: 'cue', pop: 'cue', lab: 'cue', link: 'cue' };
+  var KW_LABS = 'potassium|sodium|calcium|magnesium|phosphorus|phosphate|chloride|glucose|blood sugar|hemoglobin A1c|HbA1c|A1C|hemoglobin|Hgb|hematocrit|Hct|platelets?(?: count)?|WBC|white blood cells?(?: count)?|INR|aPTT|PTT|creatinine|BUN|troponin|BNP|PaCO2|PaO2|HCO3|bicarbonate|lithium(?: level)?|digoxin level|albumin|bilirubin|ammonia|lactate|ANC|CD4(?: count)?|specific gravity|osmolality|ferritin|TSH';
+  var KW_VITALS = 'oxygen saturation|O2 sat(?:uration)?|SpO2|SaO2|pulse oximetry(?: reading)?|heart rate|apical pulse|pulse|HR|respiratory rate|respirations|RR|temperature|temp|blood pressure|BP|urine output|CVP|ICP|weight|pH|fetal heart rate|FHR';
+  var KW_NUM = '\\d+(?:,\\d{3})*(?:\\.\\d+)?(?:\\s?(?:/|-|to)\\s?\\d+(?:\\.\\d+)?)?';
+  var KW_GAP = '(?:\\s*(?:levels?|counts?|values?|reading|results?|is|was|are|of|=|:|at|now|measured|(?:has )?(?:dropped|decreased|increased|risen|rose|fallen|fell) to)){0,4}\\s*';
+  var KW_UNIT = '(?:mEq/L|mmol/L|mg/dL|g/dL|ng/mL|pg/mL|mcg/mL|units?/L|U/L|mm ?Hg|beats?/min(?:ute)?|breaths?/min(?:ute)?|bpm|/min(?:ute)?|mL/hr?|mL/kg(?:/hr?)?|mg/kg(?:/day)?|mcg/kg/min|L/min|cells/mm3|/mm3|mEq|mmol|mL|kg|lbs?|pounds|°\\s?[CF]|degrees? ?[CF]?|%|mcg|mg|g|units?|cm|seconds)(?![A-Za-z0-9])';
+  var KW_RULES = [
+    // [regex, type, scope: q = question sentence only, a = anywhere in the stem]
+    [/\b(?:NOT|EXCEPT|LEAST|NEVER)\b/g, 'neg', 'a'],
+    [/\b(?:(?:needs?|requires?|indicates? (?:a|the) need for|need for|in need of) (?:further|additional|more) (?:teaching|instructions?|education|information|clarification)|indicates? (?:a|the) need for (?:teaching|instruction|education|clarification)|(?:needs?|requires?) (?:re-?teaching|clarification|correction)|further (?:teaching|instruction|education)|misunderstanding|misunderstood|lack of understanding)\b/gi, 'teach', 'q'],
+    [/\b(?:(?:requires?|needs?|warrants?) (?:immediate |prompt |further )?follow[- ]?up|unexpected)\b/gi, 'follow', 'q'],
+    [/\b(?:except|least|avoid(?:s|ed|ing)?|contraindicat(?:ed|ions?)|incorrect|inaccurate|inappropriate|unsafe|untrue|false|unacceptable|(?:would|should|does|do|is|are|was|were|could|will|did|can|must) not|(?:question|clarify) (?:the |this |which )?(?:order|prescription)s?)\b/gi, 'neg', 'q'],
+    [/\b(?:highest priority|top priority|priority|prioritize|first|initial(?:ly)?|immediate(?:ly)?|best|next|before|most (?:important|appropriate|essential|critical|urgent|helpful|effective|likely|concerned|concerning|significant|serious|indicative|reliable)|(?:most|greatest) concern|(?:highest|greatest|increased|high) risk)\b/gi, 'prio', 'q'],
+    [new RegExp('\\b(?:serum |blood |arterial |capillary )?(?:' + KW_LABS + '|' + KW_VITALS + ')\\b' + KW_GAP + KW_NUM + '(?:\\s?' + KW_UNIT + '|\\s?°?\\s?[CF](?![A-Za-z0-9]))?', 'gi'), 'value', 'a'],
+    [new RegExp('\\b' + KW_NUM + '\\s?' + KW_UNIT, 'gi'), 'value', 'a'],
+    [/\b\d{2,3}(?:\.\d)?\s?°?\s?[CF]\b/g, 'value', 'a'],
+    [/\b(?:new[- ]onset|sudden(?:ly)?|abrupt(?:ly)?|acute(?:ly)?(?! (?:respiratory syndrome|lympho|myelo|myeloid))|worsening|post-?op(?:erative)?(?:ly)? day \d+|(?:\d+|one|two|three|four|five|six|eight|ten|twelve|fifteen|twenty|thirty|forty-eight|several) (?:hours?|hrs?|days?|minutes?|weeks?) (?:after|ago|post-?op(?:eratively)?|following)|within (?:the (?:first|past|last) )?\d* ?(?:hours?|minutes?|days?|weeks?)|during (?:the )?(?:first |initial )?(?:transfusion|infusion|labor|delivery|surgery|procedure|administration|dialysis|hemodialysis|insertion))\b/gi, 'time', 'a'],
+    [/\b(?:\d{1,3}-(?:year|month|week|day)-old|older adults?|elderly|geriatric|infants?|newborns?|neonates?|toddlers?|preschool(?:ers?|-age)?|school-age(?:d)?|adolescents?|teen(?:ager)?s?|child(?:ren)?|pregnant|pregnancy|primigravida|multigravida|postpartum|breast-?feeding|lactating|preterm|premature|\d+ weeks'? (?:gestation|pregnant))\b/gi, 'pop', 'a'],
+    [new RegExp('\\b(?:' + KW_LABS + ')\\b', 'gi'), 'lab', 'a']
+  ];
+  var KW_STOP = {};
+  ('which would should could client clients nurse nurses nursing patient patients following about after before their there these those being other while where whose admitted assessing assesses assessment caring cares provides providing statement statements action actions indicates indicate indicated appropriate priority first response respond responds understanding understands teaching instructions instruction health provider providers healthcare likely important select apply finding findings family today hospital receiving received prescribed prescription ordered scheduled reports reported states stated history diagnosed diagnosis condition information regarding explain expect expected during medication medications intervention interventions planning plans include includes including correct further additional immediately initial question unit floor years months taking takes given giving develop developed developing problem problems client\'s nurse\'s patient\'s best most minutes hours seconds every daily weekly times level levels amount change changes signs symptoms effects effect side increase increased decrease decreased normal value values result results child children mother father parent parents infant infants').split(' ').forEach(function (w) { KW_STOP[w] = 1; });
+  function kwStem(w) { w = w.toLowerCase(); return w.length > 6 ? w.replace(/(?:ing|ed|es|s|ly|al)$/, '') : w; }
+  function kwQuestionRange(s) { // from the start of the first question sentence (or the last sentence) to the end
+    var q = s.indexOf('?'), end = q === -1 ? s.replace(/[\s.:]+$/, '').length : q + 1;
+    var start = 0, re = /[.!?:]\s+/g, m; while ((m = re.exec(s)) && m.index < end - 1) start = m.index + m[0].length;
+    return [start, s.length];
+  }
+  function kwSourceWords(strategy) {
+    var out = [], re = /critical (?:words?|phrases?)\s*(?:in (?:the )?(?:stem of the )?question\s*)?(?:(?:is|are)\s+)?([^.]{2,140})/gi, m;
+    while ((m = re.exec(String(strategy || '')))) {
+      var cap = m[1].split(/\s(?:in the|in this|helps?|which|that|indicates?|tells?|suggests?|means?|should)\b/i)[0];
+      cap.split(/\s*,\s*(?:and\s+)?|\s+and\s+/i).forEach(function (p) { p = p.replace(/[“”"‘’]/g, '').replace(/^(?:the|a|an)\s+/i, '').trim(); if (p.length >= 3 && p.split(/\s+/).length <= 5) out.push(p); });
+    }
+    return out;
+  }
+  function kwEscRe(s) { return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); }
+  /** keyWords(stem, {answers: [correct option texts], strategy, max}) -> {spans:[{s,e,text,type,cls}], notes:[{text,type,why}]} */
+  function keyWords(stem, opts) {
+    stem = String(stem || ''); opts = opts || {}; var max = opts.max || 4, cands = [], q = kwQuestionRange(stem), m;
+    KW_RULES.forEach(function (r) {
+      r[0].lastIndex = 0;
+      while ((m = r[0].exec(stem))) {
+        var s = m.index, e = s + m[0].replace(/\s+$/, '').length; if (e <= s) { r[0].lastIndex++; continue; }
+        if (r[2] === 'q' && (s < q[0] || e > q[1])) continue;
+        if (r[1] === 'neg' && / not$/i.test(m[0].slice(0, e - s))) s = e - 3; // highlight just "not", not "is not"
+        if (r[1] === 'value' && /(?:sodium|potassium|calcium|magnesium)\s$/i.test(stem.slice(Math.max(0, s - 10), s))) s += m[0].search(/\d/); // "potassium chloride 20 mEq": a dose, keep just the number
+        if (r[1] === 'lab' && (/^\s(?:chloride|phosphate|gluconate|carbonate|citrate|bicarbonate|sulfate|polystyrene|supplement)/i.test(stem.slice(e, e + 14)) || /(?:sodium|potassium|calcium|magnesium)\s$/i.test(stem.slice(Math.max(0, s - 10), s)))) continue; // salts/drugs, not lab values
+        if (r[1] === 'pop') { var age = /^(\d+)-year-old$/i.exec(m[0]); if (age && +age[1] >= 18 && +age[1] < 65) continue; } // adult ages are not a population cue
+        cands.push({ s: s, e: e, type: r[1] });
+      }
+    });
+    kwSourceWords(opts.strategy).forEach(function (p) {
+      var mm = new RegExp('\\b' + kwEscRe(p) + '\\b', 'i').exec(stem); if (mm) cands.push({ s: mm.index, e: mm.index + mm[0].length, type: 'src' });
+    });
+    var ans = {}; (opts.answers || []).join(' ').replace(/[A-Za-z][A-Za-z-]{4,}/g, function (w) { if (!KW_STOP[w.toLowerCase()]) ans[kwStem(w)] = 1; return w; });
+    var links = [], wre = /[A-Za-z][A-Za-z-]{4,}/g;
+    while ((m = wre.exec(stem))) { var lw = m[0].toLowerCase(); if (!KW_STOP[lw] && ans[kwStem(m[0])]) links.push({ s: m.index, e: m.index + m[0].length, type: 'link' }); }
+    links.sort(function (a, b) { return (b.e - b.s) - (a.e - a.s); }); cands = cands.concat(links.slice(0, 2));
+    cands.sort(function (a, b) { return KW_RANK[a.type] - KW_RANK[b.type] || (b.e - b.s) - (a.e - a.s) || a.s - b.s; });
+    var picked = [], seen = {}, per = {};
+    for (var i = 0; i < cands.length && picked.length < max; i++) {
+      var c = cands[i], txt = stem.slice(c.s, c.e), key = txt.toLowerCase();
+      if (seen[key] || (KW_TYPE_CAP[c.type] && (per[c.type] || 0) >= KW_TYPE_CAP[c.type]) || picked.some(function (p) { return c.s < p.e && p.s < c.e; })) continue;
+      seen[key] = 1; per[c.type] = (per[c.type] || 0) + 1; picked.push({ s: c.s, e: c.e, text: txt, type: c.type, cls: KW_CLASS[c.type] });
+    }
+    var notes = picked.map(function (p) { return { text: p.text, type: p.type, cls: p.cls, why: KW_WHY[p.type] }; });
+    picked.sort(function (a, b) { return a.s - b.s; });
+    return { spans: picked, notes: notes };
+  }
+  function kwEsc(s) { return String(s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
+  /** Escaped HTML of text with spans wrapped in <mark>. Works on plain text, so it can never land inside a tag. */
+  function keyWordsHtml(text, spans) {
+    text = String(text || ''); var out = '', at = 0;
+    (spans || []).slice().sort(function (a, b) { return a.s - b.s; }).forEach(function (p) {
+      if (p.s < at || p.e > text.length) return;
+      out += kwEsc(text.slice(at, p.s)) + '<mark class="kw kw-' + (p.cls || 'cue') + '" title="' + kwEsc(KW_WHY[p.type] || '') + '">' + kwEsc(text.slice(p.s, p.e)) + '</mark>'; at = p.e;
+    });
+    return out + kwEsc(text.slice(at));
+  }
+  /** Key words for an app item; stem is the text exactly as displayed. */
+  function itemKeyWords(it, stem, max) {
+    var answers = [];
+    if ((it.type === 'single' || it.type === 'sata') && it.options) answers = (it.answer || []).map(function (i) { return it.options[i] || ''; });
+    else if (it.type === 'ordered' && it.options && it.answer && it.answer.length) answers = [it.options[it.answer[0]] || ''];
+    return keyWords(stem == null ? it.q : stem, { answers: answers, strategy: it.strategy, max: max });
+  }
   function pct(x) { return Math.round(x * 100) + '%'; }
   var api = { AREAS: AREAS, STEPS: STEPS, CJ: CJ, DOMAINS: DOMAINS, SHORT: SHORT, RATINGS: RATINGS, SEV: SEV, TEST_PLAN: TEST_PLAN, STEP_PROMPTS: STEP_PROMPTS,
     normalizeArea: normalizeArea, normalizeStep: normalizeStep, normalizeRating: normalizeRating, parseCprText: parseCprText, findDate: findDate, sortReports: sortReports,
@@ -1066,7 +1174,8 @@ KIND: standalone   (on a CASE line block: items are served one by one, not as a 
     accuracyByDomain: accuracyByDomain, accuracyByArea: accuracyByDomain, weakestQueue: weakestQueue, missedQueue: missedQueue, sessionQueue: sessionQueue, shuffle: shuffle, rng: rng, RECENT_MS: RECENT_MS,
     estimateAbility: estimateAbility, difficultyToB: difficultyToB, createMock: createMock, mockReport: mockReport, MOCK_PRESETS: MOCK_PRESETS, hashStr: hashStr, pct: pct,
     looksLikeQbank: looksLikeQbank, parseQbank: parseQbank, mapQbankItem: mapQbankItem, parseFlashcards: parseFlashcards, looksLikeFlashcards: looksLikeFlashcards,
-    leitnerUpdate: leitnerUpdate, isDue: isDue, buildDeck: buildDeck, leitnerSummary: leitnerSummary, isPharmCard: isPharmCard, LEITNER_DAYS: LEITNER_DAYS };
+    leitnerUpdate: leitnerUpdate, isDue: isDue, buildDeck: buildDeck, leitnerSummary: leitnerSummary, isPharmCard: isPharmCard, LEITNER_DAYS: LEITNER_DAYS,
+    keyWords: keyWords, keyWordsHtml: keyWordsHtml, itemKeyWords: itemKeyWords, KW_WHY: KW_WHY };
   if (typeof module !== 'undefined' && module.exports) module.exports = api; else root.Core = api;
 })(this);
 
@@ -1083,7 +1192,7 @@ window.SAMPLE_FLASHCARDS = [{"id":"gz-bb-1","class":"Beta blockers","front":"Met
   'use strict';
   var C = window.Core, A = C.AREAS, S = C.STEPS;
   var K = { reports: 'nclexcs.cprReports.v1', progress: 'nclexcs.progress.v1', history: 'nclexcs.history.v1', theme: 'nclexcs.theme', lastMock: 'nclexcs.lastMock.v1',
-    leitner: 'nclexcs.leitner.v1', notes: 'nclexcs.readingNotes.v1', legacyBank: 'nclexcs.bank.v1' };
+    leitner: 'nclexcs.leitner.v1', notes: 'nclexcs.readingNotes.v1', legacyBank: 'nclexcs.bank.v1', kw: 'nclexcs.kwHighlight.v1' };
   function load(k, d) { try { var v = localStorage.getItem(k); return v ? JSON.parse(v) : d; } catch (e) { return d; } }
   function save(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); return true; } catch (e) { console.warn('save failed', k, e); return false; } }
   function $(id) { return document.getElementById(id); }
@@ -1132,6 +1241,10 @@ window.SAMPLE_FLASHCARDS = [{"id":"gz-bb-1","class":"Beta blockers","front":"Met
   // ---------- theme ----------
   function applyTheme(t) { document.documentElement.setAttribute('data-theme', t); $('themeBtn').innerHTML = t === 'dark' ? '&#9728; Light' : '&#9790; Dark'; }
   applyTheme(load(K.theme, (window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light'));
+  // ---------- key-word highlighting setting (default on) ----------
+  var kwOn = load(K.kw, true) !== false;
+  $('kwToggle').checked = kwOn;
+  $('kwToggle').onchange = function () { kwOn = $('kwToggle').checked; save(K.kw, kwOn); if (typeof cur !== 'undefined' && cur && cur.locked) showKeyWords(); };
   $('themeBtn').onclick = function () { var t = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'; save(K.theme, t); applyTheme(t); };
 
   // ---------- tabs ----------
@@ -1303,6 +1416,7 @@ window.SAMPLE_FLASHCARDS = [{"id":"gz-bb-1","class":"Beta blockers","front":"Met
     if (keys.indexOf(keepTab) === -1) keepTab = keys[0];
     tabsEl.innerHTML = keys.map(function (k) { return '<button data-k="' + esc(k) + '" class="' + (k === keepTab ? 'on' : '') + '">' + esc(EXN[k] || k) + '</button>'; }).join('');
     bodyEl.innerHTML = exhibitHtml(ex[keepTab]);
+    if (bodyEl.id === 'exBody') markExhibit();
     tabsEl.querySelectorAll('button').forEach(function (b) { b.onclick = function () { exTab = b.dataset.k; renderTabs(tabsEl, bodyEl, ex, exTab); }; });
     return keepTab;
   }
@@ -1341,7 +1455,8 @@ window.SAMPLE_FLASHCARDS = [{"id":"gz-bb-1","class":"Beta blockers","front":"Met
     if (it.noKey && session.mode !== 'mock') meta.push('<span class="badge nokey" title="The source document has no answer key for this item, so it is shown for practice but never scored.">no answer key - not scored</span>');
     if (it.autoTagged && session.mode !== 'mock') meta.push('<span class="badge auto" title="Client Needs area, step and difficulty for this item were inferred automatically (roughly 70-80% accurate), not assigned by the source.">auto-tagged</span>');
     $('qMeta').innerHTML = meta.join(' &nbsp; ');
-    $('qStem').textContent = it.q + (it.type === 'sata' && !it.selectN && !/select all|apply/i.test(it.q) ? ' Select all that apply.' : '');
+    cur.stem = it.q + (it.type === 'sata' && !it.selectN && !/select all|apply/i.test(it.q) ? ' Select all that apply.' : '');
+    $('qStem').textContent = cur.stem;
     $('qFeedback').innerHTML = ''; $('lockBtn').classList.remove('hidden'); $('lockBtn').disabled = true; $('nextBtn').classList.add('hidden');
     renderBody();
   }
@@ -1445,6 +1560,7 @@ window.SAMPLE_FLASHCARDS = [{"id":"gz-bb-1","class":"Beta blockers","front":"Met
       document.querySelectorAll('#qBody input, #qBody select').forEach(function (x) { x.disabled = true; });
       if (session.mode === 'mock') { session.i++; return nextItem(); }
       $('qFeedback').innerHTML = '<div class="notice warn"><b>No answer key in the source document</b> - this item is for practice only and is not scored or counted in your stats.' + (it.rationale ? '<br><b>Rationale (from the source):</b> ' + esc(it.rationale) : '') + (it.keyNote ? '<br><span class="mute small">' + esc(it.keyNote) + '</span>' : '') + '</div>';
+      showKeyWords();
       $('lockBtn').classList.add('hidden'); $('nextBtn').classList.remove('hidden'); $('nextBtn').textContent = session.i + 1 < session.queue.length ? 'Next' : 'See summary';
       return;
     }
@@ -1476,6 +1592,44 @@ window.SAMPLE_FLASHCARDS = [{"id":"gz-bb-1","class":"Beta blockers","front":"Met
     var rule = C.ruleText(it); rule = rule ? ' (' + rule + ')' : '';
     $('qFeedback').innerHTML = '<div class="notice ' + (sc.correct ? '' : 'warn') + '"><b>' + (sc.correct ? 'Full credit!' : sc.earned ? 'Partial credit - good progress.' : 'Not this time - a good one to learn from.') + '</b> Score: <span id="scoreVal">' + sc.earned + ' / ' + sc.max + '</span>' + esc(rule) +
       '<br><b>Answer:</b> ' + esc(C.correctAnswerText(it)) + (it.type === 'ordered' ? ' (option numbers, first to last)' : '') + (it.rationale ? '<br><b>Rationale:</b> ' + esc(it.rationale) : '') + (it.strategy ? '<br><b>Strategy:</b> ' + esc(it.strategy) : '') + (it.keyNote ? '<br><span class="mute small"><b>Key note:</b> ' + esc(it.keyNote) + '</span>' : '') + (it.autoTagged ? '<br><span class="mute small">Area/step tags on this item were inferred automatically and may be off.</span>' : '') + (cur.changes ? '<br><span class="mute small">You changed your answer ' + cur.changes + ' time' + (cur.changes === 1 ? '' : 's') + ' before locking it in.</span>' : '') + '</div>';
+    showKeyWords();
+  }
+  // ---------- key words to catch: only after an answer is locked in, never in the mock (it has no item review) ----------
+  function kwActive() { return kwOn && session && session.mode !== 'mock' && cur && cur.locked; }
+  function showKeyWords() {
+    var old = $('kwNote'); if (old) old.parentNode.removeChild(old);
+    if (!cur) return;
+    if (!kwActive()) { $('qStem').textContent = cur.stem; markExhibit(); return; }
+    cur.kw = cur.kw || C.itemKeyWords(cur.item, cur.stem, 4);
+    $('qStem').innerHTML = C.keyWordsHtml(cur.stem, cur.kw.spans);
+    if (cur.kw.notes.length) {
+      var d = document.createElement('div'); d.id = 'kwNote'; d.className = 'kwnote small';
+      d.innerHTML = '<b>Key words to catch</b> <span class="mute">(auto-detected key words)</span><ul>' + cur.kw.notes.map(function (n) {
+        return '<li><mark class="kw kw-' + n.cls + '">' + esc(n.text) + '</mark> ' + esc(n.why) + '</li>'; }).join('') + '</ul>';
+      $('qFeedback').appendChild(d);
+    }
+    markExhibit();
+  }
+  // marks the stem's lab names, source words, population words and answer-link words where they appear in the case panel (max 4)
+  function markExhibit() {
+    var body = $('exBody'); if (!body) return;
+    body.querySelectorAll('mark.kw-ex').forEach(function (m) { m.replaceWith(document.createTextNode(m.textContent)); }); body.normalize();
+    if (!kwActive() || !cur.kw || document.querySelector('#player .exam').classList.contains('solo')) return;
+    var terms = [];
+    cur.kw.spans.forEach(function (sp) {
+      var t = sp.type === 'value' ? (/^[A-Za-z][A-Za-z0-9]{1,}/.exec(sp.text) || [''])[0] : /src|link|lab|pop/.test(sp.type) ? sp.text : '';
+      if (t.length >= 2 && terms.indexOf(t.toLowerCase()) === -1) terms.push(t.toLowerCase());
+    });
+    var n = 0;
+    terms.forEach(function (t) {
+      if (n >= 4) return;
+      var re = new RegExp('\\b' + t.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '\\b', 'i'), w = document.createTreeWalker(body, NodeFilter.SHOW_TEXT), node;
+      while ((node = w.nextNode())) {
+        var m = re.exec(node.nodeValue); if (!m) continue;
+        var mid = node.splitText(m.index); mid.splitText(m[0].length);
+        var mk = document.createElement('mark'); mk.className = 'kw kw-cue kw-ex'; mk.textContent = mid.nodeValue; mid.parentNode.replaceChild(mk, mid); n++; break;
+      }
+    });
   }
   $('nextBtn').onclick = function () { session.i++; if (session.i < session.queue.length) nextItem(); else endSession(); };
   $('pQuit').onclick = function () { if (!session) return; if (session.mode === 'mock') { if (!confirm('End the mock now? You will get a report based on the items answered so far.')) return; session.mock.finish('quit'); return finishMock(); } endSession(); };
