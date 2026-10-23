@@ -106,6 +106,8 @@ mark.kw-neg{background:var(--badbg);color:var(--bad);font-weight:700;box-shadow:
 .kwtoggle{display:inline-flex;align-items:center;gap:6px;margin-top:8px;cursor:pointer}.kwtoggle input{margin:0}
 .anxflag{background:var(--nearbg);color:var(--ink);border:1px solid var(--near);border-left:5px solid var(--near);border-radius:8px;padding:10px 12px;margin:8px 0;font-weight:500}
 .anxflag b{color:var(--near)}.anxflag ol{margin:6px 0 0;padding-left:20px;font-weight:400}.anxflag li{margin:4px 0}
+.syncbtn{margin-left:auto}.syncbtn+.themebtn{margin-left:0}#syncPanel{border:2px solid var(--pri)}#syncPanel h2{margin-top:0}
+@media (max-width:600px){#syncPanel .row .btn{flex:1 1 100%;text-align:center}}
 
 </style>
 </head>
@@ -119,9 +121,21 @@ mark.kw-neg{background:var(--badbg);color:var(--bad);font-weight:700;box-shadow:
     <button data-tab="cards">Flashcards</button>
     <button data-tab="bank">Question bank</button>
   </nav>
+  <button id="syncBtn" class="themebtn syncbtn" title="Save or load your progress file" aria-expanded="false" aria-controls="syncPanel">&#8645; Progress</button>
   <button id="themeBtn" class="themebtn" title="Toggle dark/light">&#9790; Dark</button>
 </header>
 <main>
+  <div class="card hidden" id="syncPanel">
+    <h2>Progress file</h2>
+    <p class="small mute">Move your study progress between devices (phone, laptop). The file holds your answers, flags, flashcard boxes, mock results, CPR ratings and settings - not the question bank or flashcard decks, and never your name or candidate number. Loading <b>merges</b> with what is already here.</p>
+    <div class="row">
+      <button class="btn" id="saveProgress">Save progress file</button>
+      <button class="btn sec hidden" id="shareProgress">Share progress file</button>
+      <label class="btn sec" id="loadProgress">Load progress file<input type="file" id="loadProgressFile" accept=".json,.txt,application/json,text/plain" class="hidden"></label>
+      <button class="btn sec" id="syncClose">Close</button>
+    </div>
+    <div id="syncMsg"></div>
+  </div>
   <!-- PRACTICE -->
   <section id="tab-practice">
     <div class="card" id="practiceSetup">
@@ -798,6 +812,78 @@ KIND: standalone   (on a CASE line block: items are served one by one, not as a 
     return s;
   }
 
+
+  // ---------- progress file (Save / Load progress): user state only, no question/flashcard content, no name or candidate number ----------
+  var PROGRESS_FORMAT = 'nclex-trainer-progress', PROGRESS_VERSION = 1;
+  /** CPR report reduced to the fields the app needs; free-text source labels (could be a file name with a name in it) are replaced. */
+  function cleanCprReport(r) {
+    if (!r || typeof r !== 'object' || r.attempt == null || !r.ratings || typeof r.ratings !== 'object') return null;
+    var ratings = {}; Object.keys(r.ratings).forEach(function (k) { if (DOMAINS.indexOf(k) !== -1 && /^(Above|Near|Below)$/.test(r.ratings[k])) ratings[k] = r.ratings[k]; });
+    var o = { id: String(r.id || ('cpr-' + r.attempt + '-' + (r.date || ''))), attempt: +r.attempt, date: /^\d{4}-\d{2}-\d{2}$/.test(r.date || '') ? r.date : '', ratings: ratings,
+      source: /^(manual entry|pasted text)$/.test(r.source || '') ? r.source : 'imported' };
+    if (r.savedAt) o.savedAt = String(r.savedAt);
+    return o;
+  }
+  /** Build the export object. st: {progress, history, leitner, mocks, lastMock, settings, cprReports, readingNotes} */
+  function buildProgressFile(st, nowMs) {
+    return { format: PROGRESS_FORMAT, version: PROGRESS_VERSION, exportedAt: new Date(nowMs || Date.now()).toISOString(),
+      note: 'Study progress only (item ids, answers history, flashcard boxes, mock results, settings). Load the same question bank / flashcard files to see it mapped onto content.',
+      progress: st.progress || {}, history: st.history || [], leitner: st.leitner || {}, mocks: st.mocks || [], lastMock: st.lastMock || null,
+      settings: st.settings || {}, cprReports: (st.cprReports || []).map(cleanCprReport).filter(Boolean), readingNotes: st.readingNotes || {} };
+  }
+  /** Throws a readable Error if d is not a progress file this version can read. */
+  function validateProgressFile(d) {
+    if (!d || typeof d !== 'object' || Array.isArray(d) || d.format !== PROGRESS_FORMAT) throw new Error('this is not an NCLEX Trainer progress file');
+    if (typeof d.version !== 'number' || d.version < 1 || d.version > PROGRESS_VERSION) throw new Error('progress file version ' + d.version + ' is not supported by this copy of the app (supports up to ' + PROGRESS_VERSION + ')');
+    var isObj = function (x) { return x == null || (typeof x === 'object' && !Array.isArray(x)); };
+    if (!isObj(d.progress) || !isObj(d.leitner) || !isObj(d.settings) || !isObj(d.readingNotes)) throw new Error('progress file is damaged (bad progress/leitner/settings section)');
+    if ((d.history != null && !Array.isArray(d.history)) || (d.mocks != null && !Array.isArray(d.mocks)) || (d.cprReports != null && !Array.isArray(d.cprReports))) throw new Error('progress file is damaged (bad history/mocks/CPR section)');
+    return true;
+  }
+  function mockKey(m) { return m.id || (m.ts + '|' + m.n + '|' + m.theta); }
+  /** Merge incoming progress file into current state. Returns {state, summary:{questions, flashcards, mocks, history, cpr}}. Pure. */
+  function mergeProgress(cur, inc) {
+    cur = cur || {}; validateProgressFile(inc);
+    var out = {}, sum = { questions: 0, flashcards: 0, mocks: 0, history: 0, cpr: 0 };
+    // per item: keep the more recently answered record
+    out.progress = Object.assign({}, cur.progress || {});
+    Object.keys(inc.progress || {}).forEach(function (id) {
+      var a = out.progress[id], b = inc.progress[id]; if (!b || typeof b !== 'object') return; sum.questions++;
+      if (!a || (b.last || 0) > (a.last || 0)) out.progress[id] = b;
+    });
+    // answer history: union without duplicates, oldest first
+    var seen = {}, hist = [];
+    (cur.history || []).concat(inc.history || []).forEach(function (h) {
+      if (!h || h.itemId == null) return; var k = h.itemId + '|' + h.ts + '|' + (h.mode || '') + '|' + h.frac;
+      if (seen[k]) return; seen[k] = 1; hist.push(h);
+    });
+    sum.history = hist.length - (cur.history || []).length;
+    hist.sort(function (x, y) { return (x.ts || 0) - (y.ts || 0); }); out.history = hist.length > 20000 ? hist.slice(-20000) : hist;
+    // flashcards: take the more recently reviewed Leitner state
+    out.leitner = Object.assign({}, cur.leitner || {});
+    Object.keys(inc.leitner || {}).forEach(function (id) {
+      var a = out.leitner[id], b = inc.leitner[id]; if (!b || typeof b !== 'object') return; sum.flashcards++;
+      if (!a || (b.last || 0) > (a.last || 0) || ((b.last || 0) === (a.last || 0) && (b.seen || 0) > (a.seen || 0))) out.leitner[id] = b;
+    });
+    // mocks: union by id
+    var mk = {}, mocks = [];
+    (cur.mocks || []).concat(inc.mocks || []).forEach(function (m) { if (!m || typeof m !== 'object') return; var k = mockKey(m); if (mk[k]) return; mk[k] = 1; mocks.push(m); });
+    mocks.sort(function (x, y) { return (x.ts || 0) - (y.ts || 0); }); out.mocks = mocks.slice(-200); sum.mocks = (inc.mocks || []).length;
+    var lc = cur.lastMock, li = inc.lastMock; out.lastMock = !lc ? (li || null) : !li ? lc : ((li.ts || 0) > (lc.ts || 0) ? li : lc);
+    // CPR reports: union by id (newer savedAt wins), skip same attempt+date duplicates
+    var reps = (cur.cprReports || []).slice();
+    (inc.cprReports || []).map(cleanCprReport).filter(Boolean).forEach(function (r) {
+      var i = reps.findIndex(function (x) { return x.id === r.id || (+x.attempt === r.attempt && (x.date || '') === r.date); });
+      if (i === -1) { reps.push(r); sum.cpr++; } else if ((r.savedAt || '') > (reps[i].savedAt || '')) reps[i] = Object.assign({}, reps[i], r);
+    });
+    out.cprReports = reps;
+    // reading notes: union per case/step (current device's text wins on conflict); settings: the loaded file's settings apply
+    out.readingNotes = JSON.parse(JSON.stringify(cur.readingNotes || {}));
+    Object.keys(inc.readingNotes || {}).forEach(function (id) { var n = inc.readingNotes[id]; if (!n || typeof n !== 'object') return; out.readingNotes[id] = Object.assign({}, n, out.readingNotes[id] || {}); });
+    out.settings = Object.assign({}, cur.settings || {}, inc.settings || {});
+    return { state: out, summary: sum };
+  }
+
   function accuracyByDomain(history) {
     var acc = {};
     (history || []).forEach(function (h) {
@@ -1178,7 +1264,7 @@ KIND: standalone   (on a CASE line block: items are served one by one, not as a 
   var api = { AREAS: AREAS, STEPS: STEPS, CJ: CJ, DOMAINS: DOMAINS, SHORT: SHORT, RATINGS: RATINGS, SEV: SEV, TEST_PLAN: TEST_PLAN, STEP_PROMPTS: STEP_PROMPTS,
     normalizeArea: normalizeArea, normalizeStep: normalizeStep, normalizeRating: normalizeRating, parseCprText: parseCprText, findDate: findDate, sortReports: sortReports,
     analyzeReports: analyzeReports, recommend: recommend, parseTextBank: parseTextBank, parseJsonBank: parseJsonBank, parseHighlight: parseHighlight, splitExhibits: splitExhibits,
-    scoreItem: scoreItem, isComplete: isComplete, correctAnswerText: correctAnswerText, ruleText: ruleText, BOWTIE: BOWTIE, switchStats: switchStats, anxietyFlag: anxietyFlag,
+    scoreItem: scoreItem, isComplete: isComplete, correctAnswerText: correctAnswerText, ruleText: ruleText, BOWTIE: BOWTIE, switchStats: switchStats, anxietyFlag: anxietyFlag, buildProgressFile: buildProgressFile, validateProgressFile: validateProgressFile, mergeProgress: mergeProgress, cleanCprReport: cleanCprReport, PROGRESS_FORMAT: PROGRESS_FORMAT,
     accuracyByDomain: accuracyByDomain, accuracyByArea: accuracyByDomain, weakestQueue: weakestQueue, missedQueue: missedQueue, sessionQueue: sessionQueue, shuffle: shuffle, rng: rng, RECENT_MS: RECENT_MS,
     estimateAbility: estimateAbility, difficultyToB: difficultyToB, createMock: createMock, mockReport: mockReport, MOCK_PRESETS: MOCK_PRESETS, hashStr: hashStr, pct: pct,
     looksLikeQbank: looksLikeQbank, parseQbank: parseQbank, mapQbankItem: mapQbankItem, parseFlashcards: parseFlashcards, looksLikeFlashcards: looksLikeFlashcards,
@@ -1200,7 +1286,7 @@ window.SAMPLE_FLASHCARDS = [{"id":"gz-bb-1","class":"Beta blockers","front":"Met
   'use strict';
   var C = window.Core, A = C.AREAS, S = C.STEPS;
   var K = { reports: 'nclexcs.cprReports.v1', progress: 'nclexcs.progress.v1', history: 'nclexcs.history.v1', theme: 'nclexcs.theme', lastMock: 'nclexcs.lastMock.v1',
-    leitner: 'nclexcs.leitner.v1', notes: 'nclexcs.readingNotes.v1', legacyBank: 'nclexcs.bank.v1', kw: 'nclexcs.kwHighlight.v1' };
+    leitner: 'nclexcs.leitner.v1', notes: 'nclexcs.readingNotes.v1', legacyBank: 'nclexcs.bank.v1', kw: 'nclexcs.kwHighlight.v1', mocks: 'nclexcs.mocks.v1' };
   function load(k, d) { try { var v = localStorage.getItem(k); return v ? JSON.parse(v) : d; } catch (e) { return d; } }
   function save(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); return true; } catch (e) { console.warn('save failed', k, e); return false; } }
   function $(id) { return document.getElementById(id); }
@@ -1749,7 +1835,8 @@ window.SAMPLE_FLASHCARDS = [{"id":"gz-bb-1","class":"Beta blockers","front":"Met
   function finishMock() {
     var s = session; if (!s) return; session = null; stopPlayer();
     var r = C.mockReport(s.mock);
-    save(K.lastMock, { when: new Date(now()).toLocaleString(), n: r.n, estimate: r.estimate, confident: r.confident, theta: r.theta });
+    var mrec = { id: uid(), ts: now(), when: new Date(now()).toLocaleString(), preset: s.preset, n: r.n, estimate: r.estimate, confident: r.confident, theta: r.theta, se: r.se, reason: r.reason, switches: r.switches };
+    save(K.lastMock, mrec); var mocks = load(K.mocks, []); mocks.push(mrec); save(K.mocks, mocks.slice(-200));
     $('tab-mock').classList.remove('hidden'); $('mockSetup').classList.add('hidden');
     var verdict = r.n === 0 ? 'No items were answered.' : (r.estimate === 'pass' ? 'Estimate: likely ABOVE the passing standard' : 'Estimate: likely BELOW the passing standard');
     var conf = r.confident ? 'The 95% confidence interval ended fully on one side of the passing standard.' : (r.enough ? 'The confidence interval still overlapped the passing standard, so this is a closer call.' : 'Fewer than the minimum number of items were answered, so treat this estimate as rough.');
@@ -1855,6 +1942,7 @@ window.SAMPLE_FLASHCARDS = [{"id":"gz-bb-1","class":"Beta blockers","front":"Met
   function importJson(data, label, replace) {
     if (looksLikeCprList(data)) data = { cprReports: data };
     if (C.looksLikeFlashcards(data)) { importCards(data, label); return { kind: 'cards' }; }
+    if (data && data.format === C.PROGRESS_FORMAT) { var pr = applyProgressFile(data); return { kind: 'progress', summary: pr }; }
     if (data && !Array.isArray(data) && (data.cprReports || data.format === 'nclex-case-study-trainer-backup')) { restoreBackup(data); return { kind: 'backup' }; }
     var list = Array.isArray(data) ? data : (data.items || data.questions || null);
     var t0 = performance.now(), r = list && C.looksLikeQbank(list) ? C.parseQbank(list) : C.parseJsonBank(data);
@@ -1871,6 +1959,42 @@ window.SAMPLE_FLASHCARDS = [{"id":"gz-bb-1","class":"Beta blockers","front":"Met
     msg('bankMsg', 'Backup restored' + (d.cprReports ? ' (' + d.cprReports.length + ' CPR reports)' : '') + '.');
     if (Array.isArray(d.cprReports)) try { renderCpr(); } catch (e) {}
   }
+  // ---------- Save / Load progress file (user state only; merges on load) ----------
+  function progressState() {
+    return { progress: progress, history: history, leitner: leitner, mocks: load(K.mocks, []), lastMock: load(K.lastMock, null), cprReports: reports, readingNotes: rnotes,
+      settings: { theme: document.documentElement.getAttribute('data-theme'), kwHighlight: kwOn } };
+  }
+  function progressFileName() { var d = new Date(now()), p = function (n) { return (n < 10 ? '0' : '') + n; }; return 'nclex-progress-' + d.getFullYear() + '-' + p(d.getMonth() + 1) + '-' + p(d.getDate()) + '.json'; }
+  function progressBlob() { return new Blob([JSON.stringify(C.buildProgressFile(progressState(), now()))], { type: 'application/json' }); }
+  function summaryText(sm) { return 'Loaded progress for ' + sm.questions + ' question' + (sm.questions === 1 ? '' : 's') + ', ' + sm.flashcards + ' flashcard' + (sm.flashcards === 1 ? '' : 's') + ', ' + sm.mocks + ' mock' + (sm.mocks === 1 ? '' : 's') + '.' + (sm.cpr ? ' Added ' + sm.cpr + ' CPR report' + (sm.cpr === 1 ? '' : 's') + '.' : ''); }
+  function applyProgressFile(d) {
+    var m = C.mergeProgress(progressState(), d), st = m.state;
+    progress = st.progress; history = st.history; leitner = st.leitner; reports = st.cprReports; rnotes = st.readingNotes;
+    save(K.progress, progress); save(K.history, history); save(K.leitner, leitner); save(K.reports, reports); save(K.notes, rnotes); save(K.mocks, st.mocks); if (st.lastMock) save(K.lastMock, st.lastMock);
+    if (st.settings.theme === 'dark' || st.settings.theme === 'light') { save(K.theme, st.settings.theme); applyTheme(st.settings.theme); }
+    if (typeof st.settings.kwHighlight === 'boolean') { kwOn = st.settings.kwHighlight; save(K.kw, kwOn); $('kwToggle').checked = kwOn; }
+    [renderCpr, renderBank, renderCards, renderPracticeSetup, renderMockSetup].forEach(function (f) { try { f(); } catch (e) {} });
+    return m.summary;
+  }
+  $('syncBtn').onclick = function () { var p = $('syncPanel'), open = p.classList.toggle('hidden') === false; $('syncBtn').setAttribute('aria-expanded', open); if (open) { msg('syncMsg', ''); p.scrollIntoView({ block: 'nearest' }); } };
+  $('syncClose').onclick = function () { $('syncPanel').classList.add('hidden'); $('syncBtn').setAttribute('aria-expanded', 'false'); };
+  $('saveProgress').onclick = function () {
+    var blob = progressBlob(), name = progressFileName(), a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = name;
+    document.body.appendChild(a); a.click(); a.remove(); setTimeout(function () { URL.revokeObjectURL(a.href); }, 30000);
+    msg('syncMsg', 'Saved <b>' + esc(name) + '</b> (' + Math.max(1, Math.round(blob.size / 1024)) + ' KB): ' + Object.keys(progress).length + ' questions, ' + Object.keys(leitner).length + ' flashcards, ' + load(K.mocks, []).length + ' mocks.' + (canShare() ? ' On a phone you can also use <b>Share progress file</b>.' : ''));
+  };
+  function canShare() { try { return !!(navigator.share && navigator.canShare && window.File && navigator.canShare({ files: [new File(['{}'], 'x.json', { type: 'application/json' })] })); } catch (e) { return false; } }
+  if (canShare()) $('shareProgress').classList.remove('hidden');
+  $('shareProgress').onclick = async function () {
+    var f = new File([progressBlob()], progressFileName(), { type: 'application/json' });
+    try { await navigator.share({ files: [f], title: 'NCLEX progress file' }); msg('syncMsg', 'Shared ' + esc(f.name) + '.'); }
+    catch (e) { if (e && e.name === 'AbortError') return; msg('syncMsg', 'Sharing did not work here (' + esc(e.message) + '). Use <b>Save progress file</b> instead.', 'warn'); }
+  };
+  $('loadProgressFile').onchange = async function (e) {
+    var f = e.target.files[0]; e.target.value = ''; if (!f) return;
+    try { var d = await readJsonFile(f); C.validateProgressFile(d); msg('syncMsg', summaryText(applyProgressFile(d))); }
+    catch (err) { msg('syncMsg', 'Could not load ' + esc(f.name) + ': ' + esc(err.message) + '.', 'err'); }
+  };
   function reportImport(r, label) {
     if (r.kind !== 'bank') return;
     msg('bankMsg', 'Added ' + r.added + ' item(s) from ' + esc(label) + (r.dup ? ' (' + r.dup + ' already in the bank, skipped)' : '') + ' in ' + r.ms + ' ms.' + (r.errors.length ? '<br>Notes: ' + r.errors.map(esc).join('<br>') : ''), r.errors.length ? 'warn' : '');
@@ -1936,6 +2060,7 @@ window.SAMPLE_FLASHCARDS = [{"id":"gz-bb-1","class":"Beta blockers","front":"Met
         var t0 = performance.now(), data = await readJsonFile(f), r = importJson(data, f.name);
         if (r.kind === 'cards') notes.push('Flashcards from ' + esc(f.name) + ': ' + cards.length + ' cards in the deck now.');
         else if (r.kind === 'bank') notes.push(esc(f.name) + ': added ' + r.added + ' questions' + (r.dup ? ' (' + r.dup + ' already present)' : '') + ' in ' + Math.round(performance.now() - t0) + ' ms.' + (r.errors.length ? ' Notes: ' + r.errors.map(esc).join('; ') : ''));
+        else if (r.kind === 'progress') notes.push(esc(f.name) + ': ' + summaryText(r.summary));
         else notes.push(esc(f.name) + ': ' + (data.bank || data.progress || data.flashcards ? 'backup restored' : 'CPR history loaded') + (function (l) { return Array.isArray(l) ? ' (' + l.length + ' CPR reports)' : ''; })(Array.isArray(data) ? data : data.cprReports) + '.');
       } catch (err) { notes.push('<b>Could not import ' + esc(f.name) + ':</b> ' + esc(err.message)); }
     }
@@ -1951,7 +2076,7 @@ window.SAMPLE_FLASHCARDS = [{"id":"gz-bb-1","class":"Beta blockers","front":"Met
     cards = await store.get('flashcards'); if (!cards) { cards = C.parseFlashcards(window.SAMPLE_FLASHCARDS || []).cards; saveCards(); }
     showTab('practice');
   })();
-  window.__app = { ready: ready, get reports() { return reports; }, get bank() { return bank; }, get cards() { return cards; }, get leitner() { return leitner; }, get session() { return session; }, get cur() { return cur; }, get progress() { return progress; }, C: C,
+  window.__app = { ready: ready, get reports() { return reports; }, get bank() { return bank; }, get cards() { return cards; }, get leitner() { return leitner; }, get session() { return session; }, get cur() { return cur; }, get progress() { return progress; }, get history() { return history; }, C: C,
     startWeak: startWeak, startCase: startCase, showTab: showTab, setClockOffset: function (ms) { clockOffset = ms; }, importJson: importJson, fromText: fromText, loadLibrary: loadLibrary };
 })();
 
