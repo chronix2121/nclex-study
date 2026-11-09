@@ -108,6 +108,30 @@ mark.kw-neg{background:var(--badbg);color:var(--bad);font-weight:700;box-shadow:
 .anxflag b{color:var(--near)}.anxflag ol{margin:6px 0 0;padding-left:20px;font-weight:400}.anxflag li{margin:4px 0}
 .syncbtn{margin-left:auto}.syncbtn+.themebtn{margin-left:0}#syncPanel{border:2px solid var(--pri)}#syncPanel h2{margin-top:0}
 @media (max-width:600px){#syncPanel .row .btn{flex:1 1 100%;text-align:center}}
+/* reasoning tools: categorized cues, legend, teaching mode, error tags, analytics */
+:root{--c-qual:#fde2e2;--c-quali:#a11d1d;--c-abn:#ffd8b0;--c-abni:#8a3b00;--c-val:#fff1a8;--c-crit:#ead9ff;--c-criti:#5a2a9c;--c-det:#ffd6ec;--c-deti:#8f1d5c;--c-time:#c9f0ec;--c-timei:#0f5e57;--c-hx:#dbe6f7;--c-hxi:#1f3f75;--c-pop:#e4ecd2;--c-popi:#3f5a12}
+[data-theme=dark]{--c-qual:#5a2024;--c-quali:#ffc4c4;--c-abn:#5f3512;--c-abni:#ffd2a6;--c-val:#5c4f12;--c-crit:#3d2a5e;--c-criti:#e1cdff;--c-det:#5a2140;--c-deti:#ffc9e6;--c-time:#163f3c;--c-timei:#b6efe8;--c-hx:#22324f;--c-hxi:#c9dafc;--c-pop:#33401c;--c-popi:#dbeab8}
+mark.kc{color:inherit}mark.kc-qual{background:var(--c-qual);color:var(--c-quali);font-weight:700;box-shadow:inset 0 -2px 0 var(--c-quali)}
+mark.kc-abn{background:var(--c-abn);color:var(--c-abni);font-weight:700}mark.kc-val{background:var(--c-val)}mark.kc-crit{background:var(--c-crit);color:var(--c-criti)}
+mark.kc-det{background:var(--c-det);color:var(--c-deti)}mark.kc-time{background:var(--c-time);color:var(--c-timei)}mark.kc-hx{background:var(--c-hx);color:var(--c-hxi)}mark.kc-pop{background:var(--c-pop);color:var(--c-popi)}
+.kc-task{text-decoration:underline dotted var(--pri);text-decoration-thickness:2px;text-underline-offset:4px}
+.kclegend{display:flex;flex-wrap:wrap;gap:4px 10px;margin:6px 0}.kcl{font-size:12px;white-space:nowrap}.kcl.off{opacity:.45}
+.kwhead{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.linkbtn{background:none;border:0;color:var(--pri);cursor:pointer;padding:2px 4px;font:inherit;font-size:13px;text-decoration:underline}
+.autob,.srcb{display:inline-block;font-size:10.5px;font-weight:600;padding:0 6px;border-radius:9px;vertical-align:middle;letter-spacing:.02em}
+.autob{background:var(--prisoft);color:var(--pri);border:1px dashed var(--pri)}.srcb{background:var(--okbg);color:var(--ok);border:1px solid var(--ok)}
+.flag{color:var(--near);background:var(--nearbg);border-radius:6px;padding:4px 8px;display:inline-block;margin:4px 0}li.flag{display:list-item}
+.kctask{margin:6px 0}.kctask ul,.cuelist{margin:4px 0 0;padding-left:18px}.cuelist li{margin:2px 0}
+.tagpanel{margin:10px 0;padding:10px 12px;border:1px solid var(--line);border-left:4px solid var(--pri);border-radius:8px;background:var(--inner)}
+.tags{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:4px 12px;margin:6px 0 8px}.tagopt{cursor:pointer}.tagopt .why{display:block;font-size:11.5px;margin-left:22px}
+.sugg{font-size:10.5px;font-weight:600;background:var(--nearbg);color:var(--near);border:1px solid var(--near);border-radius:9px;padding:0 6px}
+.teach{border:2px solid var(--pri);border-radius:10px;padding:10px 12px;margin:8px 0;background:var(--inner)}.teach h3{margin:6px 0 8px}
+.teachhead{display:flex;align-items:center;gap:10px}.tdots{display:inline-flex;gap:4px}.tdots i{width:22px;height:5px;border-radius:3px;background:var(--line)}.tdots i.on{background:var(--pri)}
+.findings td{font-size:13px;vertical-align:top}.srcq{margin-top:4px;font-size:12.5px}
+.genstrat{margin:8px 0;padding:8px 10px;border:1px dashed var(--line);border-radius:8px;font-size:13px}
+.rtab td,.rtab th{font-size:13px}.minibar{display:inline-block;width:70px;height:7px;background:var(--none);border-radius:4px;vertical-align:middle;margin-left:4px}.minibar i{display:block;height:100%;border-radius:4px;background:var(--pri)}
+b.up{color:var(--ok)}b.down{color:var(--bad)}
+.daily{display:flex;gap:6px;align-items:flex-end;flex-wrap:wrap}.daily span{display:flex;flex-direction:column;align-items:center;font-size:10px;color:var(--mute)}.daily i{display:block;width:18px;background:var(--pri);border-radius:3px 3px 0 0}
 
 </style>
 </head>
@@ -153,6 +177,7 @@ mark.kw-neg{background:var(--badbg);color:var(--bad);font-weight:700;box-shadow:
       <div class="row"><select id="caseSel" aria-label="Pick a case study"><option value="">Practice a specific case...</option></select>
         <button class="btn sec" id="startCase">Start this case</button></div>
       <label class="small kwtoggle"><input type="checkbox" id="kwToggle" checked> Highlight key words after answering</label>
+      <label class="small kwtoggle"><input type="checkbox" id="teachToggle"> Teaching mode: review each answer step by step</label>
       <p class="mute small" id="weakNote"></p>
       <div id="readingList"></div>
     </div>
@@ -243,6 +268,7 @@ mark.kw-neg{background:var(--badbg);color:var(--bad);font-weight:700;box-shadow:
       <h3>Client Needs</h3><div id="trend" class="scroll"></div>
       <h3>Clinical Judgment</h3><div id="trendCJ" class="scroll"></div>
     </div>
+    <div class="card" id="reasonDash"></div>
     <div class="card"><h2>Saved reports</h2><div id="reportList"></div></div>
   </section>
 
@@ -814,7 +840,7 @@ KIND: standalone   (on a CASE line block: items are served one by one, not as a 
 
 
   // ---------- progress file (Save / Load progress): user state only, no question/flashcard content, no name or candidate number ----------
-  var PROGRESS_FORMAT = 'nclex-trainer-progress', PROGRESS_VERSION = 1;
+  var PROGRESS_FORMAT = 'nclex-trainer-progress', PROGRESS_VERSION = 2; // v2: history entries may carry error tags (tags) and picked options (pick); v1 files still load
   /** CPR report reduced to the fields the app needs; free-text source labels (could be a file name with a name in it) are replaced. */
   function cleanCprReport(r) {
     if (!r || typeof r !== 'object' || r.attempt == null || !r.ratings || typeof r.ratings !== 'object') return null;
@@ -855,7 +881,12 @@ KIND: standalone   (on a CASE line block: items are served one by one, not as a 
     var seen = {}, hist = [];
     (cur.history || []).concat(inc.history || []).forEach(function (h) {
       if (!h || h.itemId == null) return; var k = h.itemId + '|' + h.ts + '|' + (h.mode || '') + '|' + h.frac;
-      if (seen[k]) return; seen[k] = 1; hist.push(h);
+      if (seen[k] != null) { // same attempt on both sides: keep the union of confirmed error tags
+        var o = hist[seen[k]], t = (o.tags || []).slice(); (Array.isArray(h.tags) ? h.tags : []).forEach(function (x) { if (t.indexOf(x) === -1) t.push(x); });
+        if (t.length > (o.tags || []).length) { hist[seen[k]] = Object.assign({}, o, { tags: t }); sum.tags = (sum.tags || 0) + 1; }
+        return;
+      }
+      seen[k] = hist.length; hist.push(h);
     });
     sum.history = hist.length - (cur.history || []).length;
     hist.sort(function (x, y) { return (x.ts || 0) - (y.ts || 0); }); out.history = hist.length > 20000 ? hist.slice(-20000) : hist;
@@ -1260,6 +1291,313 @@ KIND: standalone   (on a CASE line block: items are served one by one, not as a 
     else if (it.type === 'ordered' && it.options && it.answer && it.answer.length) answers = [it.options[it.answer[0]] || ''];
     return keyWords(stem == null ? it.q : stem, { answers: answers, strategy: it.strategy, max: max });
   }
+  // ---------- Stem analysis (categorized cues + legend), rule-based on the item text only; shown only after lock-in ----------
+  // Categories have fixed colors (style.css .kc-*). Nothing here is generated: every label is a fixed rule description.
+  var SA_CATS = [
+    { k: 'qual', label: 'Qualifier / priority word', desc: 'NOT, EXCEPT, FIRST, PRIORITY, initial, further teaching: changes what the right answer looks like' },
+    { k: 'abn', label: 'Abnormal vital sign or lab', desc: 'outside the typical adult reference range (or the range given in the case)' },
+    { k: 'val', label: 'Clinical value', desc: 'a number to check: in range, or no reliable fixed range for it' },
+    { k: 'crit', label: 'Critical clinical finding', desc: 'a finding that can signal an urgent problem' },
+    { k: 'det', label: 'Deterioration indicator', desc: 'a sign the client may be getting worse' },
+    { k: 'time', label: 'Time-sensitive information', desc: 'new, sudden or timing cues: acute changes come first' },
+    { k: 'hx', label: 'Relevant history', desc: 'history or known conditions that change risk or the safe choice' },
+    { k: 'pop', label: 'Population', desc: 'age or pregnancy: normal values and risks differ' }
+  ];
+  var SA_LABEL = {}; SA_CATS.forEach(function (c) { SA_LABEL[c.k] = c; });
+  var SA_RANK = { qual: 0, abn: 1, val: 2, det: 3, crit: 4, time: 5, hx: 6, pop: 7 };
+  var SA_CRIT = /\b(?:chest (?:pain|pressure|tightness)|shortness of breath|dyspnea|difficulty breathing|stridor|wheez(?:e|es|ing)|crackles|absent breath sounds|diminished breath sounds|tracheal deviation|jugular (?:vein|venous) distention|JVD|hemorrhag(?:e|ing)|(?:bright red |frank |active )?bleeding|hematemesis|melena|coffee[- ]ground|petechiae|seizures?|seizure activity|unresponsive|pulseless|cyanosis|cyanotic|(?:sudden |severe |worst )?headache|blurred vision|vision changes|slurred speech|facial droop(?:ing)?|unilateral weakness|one-sided weakness|numbness|tingling|paresthesias?|swelling of the (?:lips|tongue|face|throat)|hives|urticaria|anaphyla(?:xis|ctic)|rigid(?:ity)?|board-like|rebound tenderness|guarding|calf (?:pain|tenderness)|absent (?:pedal |distal )?pulses?|nuchal rigidity|Kussmaul|fruity (?:breath|odor)|Chvostek|Trousseau|hyperreflexia|clonus|chest wall|suicidal|homicidal|hallucinat(?:ions?|ing)|fall(?:en|s)? (?:risk|out of bed)|bradycardi[ac]|tachycardi[ac]|tachypne(?:a|ic)|bradypne(?:a|ic)|hypotensi(?:on|ve)|hypertensi(?:ve crisis|ve emergency)|hypoxi[ac]|hypoxemia|hypoglycemi[ac]|hyperkalemi[ac]|hypokalemi[ac]|hyponatremi[ac]|hypernatremi[ac]|hypocalcemi[ac]|dysrhythmias?|arrhythmias?|ventricular (?:tachycardia|fibrillation)|oliguri[ac]|anuri[ac]|dark (?:amber |tea-colored )?urine|fever|febrile|sepsis|septic)\b/gi;
+  var SA_DET = /\b(?:(?:new(?:ly)? |acute(?:ly)? |increasing(?:ly)? |more )?confus(?:ed|ion)|disoriented|disorientation|restless(?:ness)?|agitat(?:ed|ion)|letharg(?:y|ic)|drows(?:y|iness)|somnolen(?:t|ce)|obtunded|difficult to arouse|(?:decreased|decreasing|altered|declining|change in) (?:level of consciousness|LOC|mental status|responsiveness)|(?:cool|cold),? (?:and )?clammy|clammy|diaphore(?:sis|tic)|mottl(?:ed|ing)|pal(?:e|lor)|capillary refill (?:of |greater than |>\s?)?\d+\s?(?:seconds|sec|s)\b|weak,? thready pulse|thready pulse|accessory muscles?|nasal flaring|retractions|grunting|gasping|impending doom|(?:decreasing|dropping|falling) (?:blood pressure|BP|oxygen saturation|urine output)|(?:rising|increasing) (?:heart rate|pulse|respiratory rate)|deteriorat(?:ing|ion|ed)|worsen(?:ing|ed)|unable to (?:speak|swallow|follow commands))\b/gi;
+  var SA_HX = /\b(?:(?:a |past |significant |medical |known )*(?:history|hx) of [A-Za-z0-9 ,'-]{3,40}?(?=[.;,]|\s(?:who|and is|and has|is|was|presents|comes|reports|admitted|receiving)\b|$)|diagnosed with [A-Za-z0-9 '-]{3,40}?(?=[.;,]|\s(?:who|and|is|was)\b|$)|known (?:to have )?[A-Za-z0-9 '-]{3,30}?(?=[.;,]|\s(?:who|and|is|was)\b|$)|(?:type [12] )?diabetes(?: mellitus)?|heart failure|HF|COPD|chronic obstructive pulmonary disease|asthma|chronic kidney disease|CKD|end-stage (?:renal|kidney) disease|ESRD|cirrhosis|atrial fibrillation|myocardial infarction|coronary artery disease|stroke|seizure disorder|epilepsy|HIV|dementia|Alzheimer(?:'s)? disease|Parkinson(?:'s)? disease|sickle cell (?:disease|anemia|crisis)|immunocompromised|transplant|allerg(?:y|ic) to [A-Za-z -]{3,25}?(?=[.;,]|\s(?:who|and|is)\b|$)|(?:taking|takes|receiving|prescribed) (?:warfarin|heparin|digoxin|lithium|insulin|furosemide|metformin|an anticoagulant|a beta blocker|steroids|prednisone|MAOIs?|opioids?))/gi;
+  var SA_KPLUS = /\b(K\+?|Na\+?|Ca2?\+{0,2}|Mg2?\+{0,2}|Cl-?|Hb|Plt|PLT|Glu)\s?(?:of|is|was|=|:)?\s?(\d+(?:\.\d+)?)\s?(mEq\/L|mmol\/L|mg\/dL|g\/dL)?/g;
+  // fixed typical ADULT reference ranges (common nursing-textbook values; facilities vary). Only names with one widely used range are listed.
+  var REF = {
+    potassium: { lo: 3.5, hi: 5.0, u: 'mEq/L', units: /^(meq\/l|mmol\/l)?$/i }, sodium: { lo: 135, hi: 145, u: 'mEq/L', units: /^(meq\/l|mmol\/l)?$/i }, chloride: { lo: 98, hi: 106, u: 'mEq/L', units: /^(meq\/l|mmol\/l)?$/i },
+    calcium: { lo: 9.0, hi: 10.5, u: 'mg/dL (total)', units: /^(mg\/dl)?$/i }, magnesium: { lo: 1.3, hi: 2.1, u: 'mEq/L', units: /^meq\/l$/i, preg: false },
+    phosphorus: { lo: 3.0, hi: 4.5, u: 'mg/dL', units: /^(mg\/dl)?$/i }, glucose: { lo: 70, hi: 110, u: 'mg/dL (fasting)', units: /^(mg\/dl)?$/i },
+    hemoglobin: { lo: 12, hi: 18, u: 'g/dL (women 12-16, men 14-18)', units: /^(g\/dl)?$/i, preg: false }, hematocrit: { lo: 37, hi: 52, u: '% (women 37-47, men 42-52)', units: /^%?$/, preg: false },
+    platelets: { lo: 150000, hi: 400000, u: '/mm3', k: true, preg: false }, wbc: { lo: 4500, hi: 11000, u: '/mm3', k: true, preg: false },
+    bun: { lo: 10, hi: 20, u: 'mg/dL', units: /^(mg\/dl)?$/i, preg: false }, creatinine: { lo: 0.6, hi: 1.3, u: 'mg/dL', units: /^(mg\/dl)?$/i, preg: false },
+    ph: { lo: 7.35, hi: 7.45, u: '' }, paco2: { lo: 35, hi: 45, u: 'mm Hg', preg: false }, pao2: { lo: 80, hi: 100, u: 'mm Hg' }, hco3: { lo: 22, hi: 26, u: 'mEq/L', preg: false },
+    lithium: { lo: 0.6, hi: 1.2, u: 'mEq/L (therapeutic)' }, digoxin: { lo: 0.5, hi: 2.0, u: 'ng/mL (therapeutic)' }, albumin: { lo: 3.5, hi: 5.0, u: 'g/dL', preg: false },
+    bnp: { lo: 0, hi: 100, u: 'pg/mL' }, a1c: { lo: 4.0, hi: 5.6, u: '% (non-diabetic)' }, sg: { lo: 1.005, hi: 1.030, u: '' }, lactate: { lo: 0.5, hi: 2.0, u: 'mmol/L', units: /^(mmol\/l)?$/i },
+    anc: { lo: 1500, hi: Infinity, u: '/mm3' }, cd4: { lo: 500, hi: 1500, u: 'cells/mm3' },
+    hr: { lo: 60, hi: 100, u: 'beats/min', vital: true }, rr: { lo: 12, hi: 20, u: 'breaths/min', vital: true }, spo2: { lo: 95, hi: 100, u: '%', vital: true, preg: true },
+    temp: { vital: true, preg: true }, bp: { vital: true, preg: true }, uo: { lo: 30, hi: Infinity, u: 'mL/hr (at least)', preg: true }, cvp: { lo: 2, hi: 8, u: 'mm Hg' }, icp: { lo: 5, hi: 15, u: 'mm Hg' },
+    fhr: { lo: 110, hi: 160, u: 'beats/min (fetal)', fetal: true }, inr: {}, aptt: {}
+  };
+  var REF_NAMES = [[/^(?:serum |blood )?potassium|^k\+?$/i, 'potassium'], [/^(?:serum |blood )?sodium|^na\+?$/i, 'sodium'], [/^chloride|^cl-?$/i, 'chloride'], [/^ionized calcium/i, ''], [/^(?:serum |total )?calcium|^ca2?\+*$/i, 'calcium'],
+    [/^magnesium|^mg2?\+*$/i, 'magnesium'], [/^phosph/i, 'phosphorus'], [/^(?:blood |serum |capillary |fasting )?(?:glucose|blood sugar)|^glu$/i, 'glucose'], [/^(?:hemoglobin a1c|hba1c|a1c)/i, 'a1c'],
+    [/^(?:hemoglobin|hgb|hb)$/i, 'hemoglobin'], [/^(?:hematocrit|hct)$/i, 'hematocrit'], [/^(?:platelets?(?: count)?|plt)$/i, 'platelets'], [/^(?:wbc|white blood cells?(?: count)?)$/i, 'wbc'],
+    [/^bun$/i, 'bun'], [/^(?:serum )?creatinine/i, 'creatinine'], [/^(?:arterial )?ph$/i, 'ph'], [/^paco2$/i, 'paco2'], [/^pao2$/i, 'pao2'], [/^(?:hco3|bicarbonate)$/i, 'hco3'],
+    [/^lithium/i, 'lithium'], [/^digoxin/i, 'digoxin'], [/^albumin/i, 'albumin'], [/^bnp$/i, 'bnp'], [/^specific gravity/i, 'sg'], [/^lactate/i, 'lactate'], [/^anc$/i, 'anc'], [/^cd4/i, 'cd4'],
+    [/^(?:heart rate|apical pulse|pulse|hr)$/i, 'hr'], [/^(?:respiratory rate|respirations|rr)$/i, 'rr'], [/^(?:oxygen saturation|o2 sat(?:uration)?|spo2|sao2|pulse oximetry(?: reading)?)$/i, 'spo2'],
+    [/^(?:temperature|temp)$/i, 'temp'], [/^(?:blood pressure|bp)$/i, 'bp'], [/^urine output$/i, 'uo'], [/^cvp$/i, 'cvp'], [/^icp$/i, 'icp'], [/^(?:fetal heart rate|fhr)$/i, 'fhr'], [/^inr$/i, 'inr'], [/^(?:aptt|ptt)$/i, 'aptt']];
+  function refKey(name) { name = String(name || '').trim().replace(/\s+/g, ' '); for (var i = 0; i < REF_NAMES.length; i++) if (REF_NAMES[i][0].test(name)) return REF_NAMES[i][1]; return ''; }
+  function fmtNum(x) { return x === Infinity ? '' : String(x); }
+  function popContext(text) {
+    var t = String(text || ''), ped = /\b(?:infants?|newborns?|neonates?|neonatal|toddlers?|preschool(?:er)?s?|school-age|adolescents?|child(?:ren)?|pediatric|preterm|premature|\d{1,2}-(?:month|week|day)-old|(?:[1-9]|1[0-7])-year-old)\b/i.test(t);
+    return { ped: ped, preg: /\b(?:pregnan(?:t|cy)|gestation|antepartum|intrapartum|labor(?:ing)?|primigravida|multigravida|G\d+\s?P\d+|preeclampsia|eclampsia)\b/i.test(t) };
+  }
+  /** Judge one value against a fixed reference range. -> {key, name, value, unit, status: low|high|normal|unknown, range, note, src: 'fixed'|'case'} */
+  function judgeValue(name, numText, unit, ctx, srcRange) {
+    ctx = ctx || {}; var key = refKey(name), r = REF[key], o = { key: key, name: String(name || '').trim(), value: String(numText || '').trim(), unit: String(unit || '').trim(), status: 'unknown', range: '', note: '', src: 'fixed' };
+    var nums = String(numText || '').replace(/,/g, '').match(/\d+(?:\.\d+)?/g) || [], v = +nums[0];
+    if (!nums.length || isNaN(v)) { o.note = 'no number found'; return o; }
+    if (srcRange) { // range printed in the case itself wins over the fixed table
+      var sr = String(srcRange).replace(/,/g, '').match(/(\d+(?:\.\d+)?)\s*(?:-|–|to)\s*(\d+(?:\.\d+)?)/);
+      var lt = !sr && String(srcRange).replace(/,/g, '').match(/^\s*(?:<|less than|under|below)\s*(\d+(?:\.\d+)?)/i), gt = !sr && String(srcRange).replace(/,/g, '').match(/^\s*(?:>|greater than|over|above)\s*(\d+(?:\.\d+)?)/i);
+      if (lt && nums.length === 1) { o.src = 'case'; o.range = 'under ' + lt[1] + (o.unit ? ' ' + o.unit : ''); o.status = v >= +lt[1] ? 'high' : 'normal'; return o; }
+      if (gt && nums.length === 1) { o.src = 'case'; o.range = 'over ' + gt[1] + (o.unit ? ' ' + o.unit : ''); o.status = v <= +gt[1] ? 'low' : 'normal'; return o; }
+      if (sr && nums.length === 1) { o.src = 'case'; o.range = sr[1] + '-' + sr[2] + (o.unit ? ' ' + o.unit : ''); o.status = v < +sr[1] ? 'low' : v > +sr[2] ? 'high' : 'normal'; return o; }
+    }
+    if (!key || !r) { o.note = key === '' && /ionized/i.test(name) ? 'ionized calcium has a different range' : 'no single reliable reference range for this value'; return o; }
+    if (ctx.ped && !r.fetal) { o.note = 'pediatric cue in the item: age-specific norms apply, adult range not used'; return o; }
+    if (ctx.preg && r.preg === false) { o.note = 'pregnancy cue in the item: this range changes in pregnancy, adult range not used'; return o; }
+    if (r.vital && ctx.preg && r.preg !== true) { o.note = 'pregnancy cue in the item: vital-sign norms shift, adult range not used'; return o; }
+    if (r.units && o.unit && !r.units.test(o.unit)) { o.note = 'unit ' + o.unit + ' differs from the reference unit (' + r.u + ')'; return o; }
+    if (key === 'magnesium' && !o.unit) { o.note = 'magnesium range depends on the unit (mEq/L vs mg/dL)'; return o; }
+    var lo = r.lo, hi = r.hi, u = r.u;
+    if (key === 'bp') {
+      if (nums.length < 2) { o.note = 'only one blood pressure number given'; return o; }
+      var sys = +nums[0], dia = +nums[1]; o.range = 'systolic 90-139 and diastolic under 90 mm Hg (optimal under 120/80)';
+      o.status = sys < 90 ? 'low' : (sys >= 140 || dia >= 90) ? 'high' : 'normal'; return o;
+    }
+    if (key === 'temp') {
+      var f = v > 50 || /F/i.test(o.unit); lo = f ? 96.8 : 36.0; hi = f ? 100.3 : 37.9; u = f ? '°F (fever 100.4 °F or higher)' : '°C (fever 38.0 °C or higher)';
+    } else if (key === 'inr') {
+      if (/warfarin|coumadin|anticoagula/i.test(ctx.text || '')) { lo = 2.0; hi = 3.0; u = '(therapeutic on warfarin; 2.5-3.5 for mechanical valves)'; } else { lo = 0.8; hi = 1.1; u = '(no anticoagulant)'; }
+    } else if (key === 'aptt') {
+      if (/heparin/i.test(ctx.text || '')) { o.note = 'on heparin the target is 1.5-2.5 times the control value, which the item does not give'; return o; }
+      lo = 30; hi = 40; u = 'seconds';
+    } else if (key === 'uo') {
+      if (/kg/i.test(o.unit)) { lo = 0.5; u = 'mL/kg/hr (at least)'; } else if (!/hr|hour|h$/i.test(o.unit)) { o.note = 'urine output needs a per-hour amount to judge'; return o; }
+    } else if (r.k && v < 1000) { lo = r.lo / 1000; hi = r.hi / 1000; u = 'x 10^3/mm3'; }
+    o.range = (hi === Infinity ? 'at least ' + fmtNum(lo) : fmtNum(lo) + '-' + fmtNum(hi)) + (u ? ' ' + u : '');
+    o.status = v < lo ? 'low' : v > hi ? 'high' : 'normal';
+    return o;
+  }
+  var VAL_NAME = new RegExp('^(?:serum |blood |arterial |capillary |fasting )?(' + KW_LABS + '|' + KW_VITALS + ')', 'i');
+  /** Parse a 'value' span text such as "potassium level of 6.2 mEq/L" or "BP 88/50" into a judged value. */
+  function judgeSpan(text, ctx) {
+    var nm = VAL_NAME.exec(text), off = nm ? nm[0].length : 0, num = /\d+(?:,\d{3})*(?:\.\d+)?(?:\s?\/\s?\d+(?:\.\d+)?)?/.exec(text.slice(off));
+    if (!num) return null;
+    var unit = text.slice(off + num.index + num[0].length).trim();
+    return judgeValue(nm ? nm[1] : '', num[0], unit, ctx);
+  }
+  function saRuleSpans(stem, q) {
+    var c = [], m;
+    KW_RULES.forEach(function (r) {
+      var t = r[1]; if (t === 'lab') return; r[0].lastIndex = 0;
+      while ((m = r[0].exec(stem))) {
+        var s = m.index, e = s + m[0].replace(/\s+$/, '').length; if (e <= s) { r[0].lastIndex++; continue; }
+        if (r[2] === 'q' && (s < q[0] || e > q[1])) continue;
+        if (t === 'neg' && / not$/i.test(m[0].slice(0, e - s))) s = e - 3;
+        if (t === 'value' && /(?:sodium|potassium|calcium|magnesium)\s$/i.test(stem.slice(Math.max(0, s - 10), s))) continue; // a dose ("potassium chloride 20 mEq"), not a lab value
+        if (t === 'pop') { var age = /^(\d+)-year-old$/i.exec(m[0]); if (age && +age[1] >= 18 && +age[1] < 65) continue; }
+        c.push({ s: s, e: e, cat: /neg|teach|follow|prio/.test(t) ? 'qual' : t === 'value' ? 'val' : t, rt: t });
+      }
+    });
+    SA_KPLUS.lastIndex = 0; while ((m = SA_KPLUS.exec(stem))) if (/\.|mEq|mmol|mg|g\//.test(m[0])) c.push({ s: m.index, e: m.index + m[0].replace(/\s+$/, '').length, cat: 'val', rt: 'value' });
+    [[SA_CRIT, 'crit'], [SA_DET, 'det'], [SA_HX, 'hx']].forEach(function (p) {
+      p[0].lastIndex = 0;
+      while ((m = p[0].exec(stem))) { var txt = m[0].replace(/[\s,]+$/, ''); if (txt.length < 2) { p[0].lastIndex++; continue; }
+        if (p[1] !== 'hx' && /\b(?:no|denies|denied|without|not|negative for|absence of|free of)\s+(?:[\w-]+\s+){0,2}$/i.test(stem.slice(Math.max(0, m.index - 40), m.index))) continue; // negated ("no other bleeding noted")
+        c.push({ s: m.index, e: m.index + txt.length, cat: p[1], rt: p[1] }); }
+    });
+    return c;
+  }
+  var TASK_RULES = [
+    ['teach', /further (?:teaching|instruction|education)|need(?:s)? (?:for )?(?:more |additional )?(?:teaching|instruction|clarification)|misunderst|lack of understanding/i, 'Find the statement or action that shows a WRONG understanding (the "teaching needed" option).'],
+    ['neg', /\b(?:NOT|EXCEPT|LEAST)\b|\b(?:avoid|contraindicated|unsafe|inappropriate|incorrect|question the (?:order|prescription)|clarify the (?:order|prescription))\b/, 'Find the option that is wrong, unsafe or should not be done.'],
+    ['follow', /follow[- ]?up|\breport\b|\bnotify\b|unexpected|most concern|greatest concern|immediate attention|requires? (?:further )?(?:assessment|intervention)/i, 'Find the finding that is abnormal or unexpected and needs action.'],
+    ['evaluate', /effective|improv|expected outcome|goal (?:has been|was) met|resolved|indicates? (?:that )?(?:the )?(?:treatment|therapy|medication|intervention|teaching) (?:has been|was|is) (?:effective|successful)|desired effect|therapeutic effect/i, 'Evaluate: find the evidence that shows whether the treatment worked.'],
+    ['prio', /\b(?:first|priority|prioritize|initial(?:ly)?|immediate(?:ly)?|most important|highest|next|best|most appropriate)\b/i, 'Prioritize: pick the ONE option that comes first (most urgent or safest).'],
+    ['sata', /select all|that apply/i, 'Judge every option on its own; select each one that is correct.'],
+    ['ngn', /for each|indicate (?:whether|which)|complete the (?:following )?(?:sentence|diagram)|drag|place|highlight|click|in what order|arrange|sequence/i, 'Work through each row, blank or slot separately against the case data.']
+  ];
+  /** The question sentence (what is being asked) + rule-based task hints. null text when the item does not contain a clear question. */
+  function questionTask(stem) {
+    stem = String(stem || ''); var q = kwQuestionRange(stem), text = stem.slice(q[0]).trim(), hints = [];
+    var clear = /\?/.test(text) || /(?::|\.\.\.|\u2026|_{2,})\s*$/.test(text) || /^(?:select|identify|indicate|complete|choose|click|drag|place|arrange|highlight|which|what|how|for each|in what order)\b/i.test(text);
+    TASK_RULES.forEach(function (r) { if (r[1].test(text) && hints.length < 2 && !(r[0] === 'prio' && hints.some(function (h) { return h.k === 'neg' || h.k === 'teach'; }))) hints.push({ k: r[0], text: r[2] }); });
+    return { text: clear && text.length >= 6 ? text : null, range: q, hints: hints };
+  }
+  /** Full stem analysis: every category (no cap), each span labelled; values judged against reference ranges.
+   *  opts: {strategy, context (case text for population/drug context)} */
+  function analyzeStem(stem, opts) {
+    stem = String(stem || ''); opts = opts || {}; var q = kwQuestionRange(stem), ctx = popContext(stem + ' ' + (opts.context || '')); ctx.text = stem + ' ' + (opts.context || '');
+    var cands = saRuleSpans(stem, q), m;
+    kwSourceWords(opts.strategy).forEach(function (p) { var mm = new RegExp('\\b' + kwEscRe(p) + '\\b', 'i').exec(stem); if (mm) cands.push({ s: mm.index, e: mm.index + mm[0].length, cat: 'crit', rt: 'src' }); });
+    cands.forEach(function (c) { if (c.cat === 'val') { c.judge = judgeSpan(stem.slice(c.s, c.e), ctx); if (c.judge && (c.judge.status === 'low' || c.judge.status === 'high')) c.cat = 'abn'; } });
+    cands.sort(function (a, b) { return SA_RANK[a.cat] - SA_RANK[b.cat] || (b.e - b.s) - (a.e - a.s) || a.s - b.s; });
+    var picked = [];
+    cands.forEach(function (c) { if (!picked.some(function (p) { return c.s < p.e && p.s < c.e; })) picked.push(c); });
+    picked.sort(function (a, b) { return a.s - b.s; });
+    var counts = {}, quals = [], values = [];
+    var spans = picked.map(function (p) {
+      var text = stem.slice(p.s, p.e); counts[p.cat] = (counts[p.cat] || 0) + 1;
+      if (p.cat === 'qual') quals.push(text.toLowerCase().replace(/\s+/g, ' ').replace(/^(require|need|indicate|warrant)s\b/, '$1').replace(/follow up/, 'follow-up'));
+      if (p.judge) values.push(Object.assign({ text: text }, p.judge));
+      return { s: p.s, e: p.e, text: text, cat: p.cat, type: p.rt, cls: p.cat, why: (KW_WHY[p.rt] && p.cat === 'qual' ? KW_WHY[p.rt] : SA_LABEL[p.cat].desc), judge: p.judge || null };
+    });
+    return { spans: spans, counts: counts, cats: Object.keys(counts), quals: quals, values: values, task: questionTask(stem), pop: ctx };
+  }
+  /** Escaped HTML of the stem with category marks; the question sentence is wrapped in <span class="kc-task">. */
+  function stemHtml(text, a) {
+    text = String(text || ''); var out = '', at = 0, qs = a && a.task && a.task.text ? a.task.range[0] : -1, opened = false;
+    function pushText(upto) {
+      if (qs >= at && qs < upto && !opened) { out += kwEsc(text.slice(at, qs)) + '<span class="kc-task" title="What the question is asking">'; opened = true; at = qs; }
+      out += kwEsc(text.slice(at, upto)); at = upto;
+    }
+    (a ? a.spans : []).forEach(function (p) {
+      if (p.s < at || p.e > text.length) return; pushText(p.s);
+      if (qs >= 0 && !opened && p.s >= qs) { out += '<span class="kc-task" title="What the question is asking">'; opened = true; }
+      var tip = SA_LABEL[p.cat].label + ': ' + p.why + (p.judge && p.judge.range ? ' (reference ' + p.judge.range + ')' : '');
+      out += '<mark class="kw kc kc-' + p.cat + '" data-cat="' + p.cat + '" title="' + kwEsc(tip) + '">' + kwEsc(text.slice(p.s, p.e)) + '</mark>'; at = p.e;
+    });
+    pushText(text.length);
+    return out + (opened ? '</span>' : '');
+  }
+  function itemContextText(c, it) {
+    var ex = Object.assign({}, (c && c.exhibits) || {}, (it && it.exhibits) || {});
+    return [(c && c.scenario) || '', (it && it.context) || ''].concat(Object.keys(ex).map(function (k) { return ex[k] || ''; })).join('\n');
+  }
+  /** Analysis for an app item (stem as displayed + its case for context). */
+  function itemStemAnalysis(it, stem, c) { return analyzeStem(stem == null ? it.q : stem, { strategy: it.strategy, context: itemContextText(c, it) }); }
+  var EX_VITAL_HEAD = /^(?:hr|heart rate|pulse|apical pulse|rr|resp(?:irations|iratory rate)?|bp|blood pressure|spo2|o2 sat(?:uration)?|sao2|temp(?:erature)?|urine output|cvp|icp|fhr)$/i;
+  /** Findings in the case panel (exhibits as displayed): judged values from tables/lines + deterioration/critical words. */
+  function exhibitFindings(ex, ctxText) {
+    var ctx = popContext(ctxText || ''), out = [], seen = {}; ctx.text = ctxText || '';
+    function add(f) { var k = (f.where || '') + '|' + f.text.toLowerCase(); if (seen[k]) return; seen[k] = 1; out.push(f); }
+    Object.keys(ex || {}).forEach(function (k) {
+      if (k === 'scenario' && !ex[k]) return;
+      var lines = String(ex[k] || '').split('\n'), head = null, m;
+      lines.forEach(function (l) {
+        if (l.indexOf('|') !== -1) {
+          var cells = l.split('|').map(function (x) { return x.trim(); });
+          if (!head) { head = cells; return; }
+          var refCol = head.findIndex(function (h) { return /ref|normal|range/i.test(h); }), valCol = head.findIndex(function (h) { return /result|value|level/i.test(h); });
+          if (refKey(cells[0]) || valCol > 0) { // lab table: Test | Result | Reference
+            var vc = valCol > 0 ? valCol : 1, val = cells[vc] || '', num = /\d+(?:,\d{3})*(?:\.\d+)?(?:\s?\/\s?\d+)?/.exec(val);
+            if (num && cells[0]) { var j = judgeValue(cells[0], num[0], val.slice(num.index + num[0].length).trim(), ctx, refCol > 0 ? cells[refCol] : null); add(Object.assign({ text: cells[0] + ' ' + val, cat: j.status === 'low' || j.status === 'high' ? 'abn' : 'val', where: k }, j)); }
+            return;
+          }
+          head.forEach(function (h, i) { // vitals table: Time | HR | BP | ...
+            if (!EX_VITAL_HEAD.test(h) || !cells[i]) return; var n2 = /\d+(?:\.\d+)?(?:\s?\/\s?\d+)?/.exec(cells[i]); if (!n2) return;
+            var j2 = judgeValue(h, n2[0], cells[i].slice(n2.index + n2[0].length).trim(), ctx); add(Object.assign({ text: h + ' ' + cells[i] + (cells[0] && i !== 0 ? ' (' + cells[0] + ')' : ''), cat: j2.status === 'low' || j2.status === 'high' ? 'abn' : 'val', where: k }, j2));
+          });
+          return;
+        }
+        head = null;
+        var a = analyzeStem(l, { context: ctxText });
+        a.spans.forEach(function (sp) { if (sp.cat === 'abn' || sp.cat === 'val') add(Object.assign({ text: sp.text, cat: sp.cat, where: k }, sp.judge || {})); else if (sp.cat === 'det' || sp.cat === 'crit') add({ text: sp.text, cat: sp.cat, where: k }); });
+      });
+    });
+    return out;
+  }
+  /** Sentences of the source rationale that mention a term (for "interpret the findings"; quoting only, never rewriting). */
+  function rationaleMentions(rationale, term) {
+    var t = String(term || '').toLowerCase().replace(/[^a-z0-9 ]+/g, ' ').trim().split(/\s+/).filter(function (w) { return w.length >= 3 && !/^(?:the|and|with|level|levels|serum|blood|was|has|of)$/.test(w); })[0];
+    if (!t || !rationale) return [];
+    return String(rationale).replace(/([.!?])\s+(?=[A-Z0-9("'])/g, '$1\u0001').split('\u0001').map(function (x) { return x.trim(); }).filter(function (s) { return s.toLowerCase().indexOf(t) !== -1; }).slice(0, 2);
+  }
+  /** The user's answer as readable text (mirrors correctAnswerText). */
+  function userAnswerText(it, resp) {
+    resp = resp || []; var L = function (i) { return String(+i + 1); };
+    if (it.type === 'single' || it.type === 'sata') return resp.length ? resp.slice().sort(function (a, b) { return a - b; }).map(L).join(', ') : '(none)';
+    if (it.type === 'ordered') return resp.map(L).join(' \u2192 ');
+    if (it.type === 'matrix' && it.multi) return it.rows.map(function (r, i) { var s = resp[i] || []; return r.label + ' = ' + (s.length ? s.map(function (a) { return it.columns[a]; }).join(' + ') : 'none'); }).join('; ');
+    if (it.type === 'matrix') return it.rows.map(function (r, i) { return r.label + ' = ' + (resp[i] != null ? it.columns[resp[i]] : '-'); }).join('; ');
+    if (it.type === 'cloze') return it.blanks.map(function (b, i) { return '(' + (i + 1) + ') ' + (resp[i] != null && b.options[resp[i]] != null ? b.options[resp[i]] : '-'); }).join('; ');
+    if (it.type === 'bowtie') return BOWTIE.map(function (g) { return g.label + ': ' + resp.filter(function (t) { return String(t).split(':')[0] === g.k; }).map(function (t) { return it[g.k].options[+String(t).split(':')[1]]; }).join('; '); }).join(' | ');
+    var segs = it.segments || parseHighlight(it.text); return resp.map(function (i) { return segs[i] ? '"' + segs[i].text + '"' : ''; }).filter(Boolean).join(', ') || '(none)';
+  }
+
+  // ---------- Error classification (user-confirmed tags; suggestions only where a rule has evidence) ----------
+  var ERROR_TAGS = [
+    { k: 'knowledge', label: 'Knowledge deficit' }, { k: 'keyword', label: 'Missed keyword' }, { k: 'cue', label: 'Missed clinical cue' }, { k: 'misread', label: 'Misinterpreted question' },
+    { k: 'priority', label: 'Incorrect prioritization' }, { k: 'distractor', label: 'Distractor selection' }, { k: 'changed', label: 'Changed correct answer' }, { k: 'sequence', label: 'Incorrect intervention or sequencing' }
+  ];
+  var ERROR_LABEL = {}; ERROR_TAGS.forEach(function (t) { ERROR_LABEL[t.k] = t.label; });
+  /** o: {frac, anxiety, resp, analysis (analyzeStem result)}. Returns [{k, why}] - rule evidence only; the user confirms. */
+  function suggestErrorTags(it, o) {
+    o = o || {}; var out = [], a = o.analysis || analyzeStem(it.q || ''), resp = o.resp || [];
+    if (!it || it.noKey || !(o.frac < 1)) return out;
+    if (o.anxiety) out.push({ k: 'changed', why: 'Testing Anxiety Flag: your first answer was right and you changed it' });
+    if (it.type === 'ordered') out.push({ k: 'sequence', why: 'ordered-response item answered in the wrong order' });
+    else if (it.type === 'bowtie' && it.actions && resp.filter(function (t) { var p = String(t).split(':'); return p[0] === 'actions' && it.actions.answer.indexOf(+p[1]) !== -1; }).length < it.actions.answer.length) out.push({ k: 'sequence', why: 'bowtie "actions to take" not all correct' });
+    var qs = a.spans.filter(function (s) { return s.cat === 'qual'; });
+    if (qs.length) out.push({ k: 'keyword', why: 'the question has a qualifier you may have missed: ' + qs.slice(0, 3).map(function (s) { return '"' + s.text + '"'; }).join(', ') });
+    var prioWords = qs.filter(function (s) { return s.type === 'prio'; });
+    if (it.step === 'Prioritize Hypotheses' || prioWords.length) out.push({ k: 'priority', why: it.step === 'Prioritize Hypotheses' ? 'this item tests Prioritize Hypotheses' : 'the question asks for a priority (' + prioWords.slice(0, 2).map(function (s) { return '"' + s.text + '"'; }).join(', ') + ')' });
+    return out;
+  }
+  // option wording patterns (rule-based; only detectable from the option text)
+  var DISTRACTOR_RULES = [
+    ['assess', /^(?:assess|reassess|check|monitor|observe|evaluate|obtain|measure|auscultate|palpate|inspect|review|ask)\b/i, 'Assess / check / monitor option'],
+    ['notify', /\b(?:notify|call|contact|consult|page|inform|report (?:to|the findings))\b.{0,40}\b(?:provider|physician|HCP|PHCP|health ?care provider|doctor|charge nurse|rapid response|supervisor|surgeon|pharmacist)\b/i, 'Notify the provider / call for help option'],
+    ['document', /\b(?:document|record|chart)\b/i, 'Document / record option'],
+    ['absolute', /\b(?:always|never|all|none|only|must|every|completely|entirely)\b/i, 'Absolute wording (always, never, only, all)'],
+    ['reassure', /\b(?:reassure|don't worry|do not worry|nothing to worry|is normal|this is expected|tell the client (?:that )?(?:it|this) is (?:normal|expected))\b/i, 'Reassurance / "this is normal" option'],
+    ['delegate', /\b(?:delegate|assign|ask the (?:UAP|AP|assistive personnel|LPN|nursing assistant))\b/i, 'Delegate / assign option']
+  ];
+  function distractorPatterns(text) { return DISTRACTOR_RULES.filter(function (r) { return r[1].test(String(text || '')); }).map(function (r) { return r[0]; }); }
+
+  /** Personal reasoning analytics from answer history (practice attempts only) + item lookup.
+   *  getItem(id) -> {item, case} | null. opts: {dayKey(ts), minMisses} */
+  function reasoningAnalytics(history, getItem, opts) {
+    opts = opts || {}; var dayKey = opts.dayKey || function (ts) { return new Date(ts).toISOString().slice(0, 10); }, minMisses = opts.minMisses || 5;
+    var pr = (history || []).filter(function (h) { return h && h.itemId != null && h.mode !== 'mock' && typeof h.frac === 'number'; });
+    var misses = pr.filter(function (h) { return h.frac < 1; }), cache = {};
+    function an(id) { if (id in cache) return cache[id]; var r = getItem(id); cache[id] = r ? { item: r.item, a: itemStemAnalysis(r.item, null, r['case']) } : null; return cache[id]; }
+    var res = { attempts: pr.length, misses: misses.length, unmatched: 0, minMisses: minMisses };
+    // 1. most frequent reasoning errors (confirmed tags only)
+    var tagged = pr.filter(function (h) { return h.tags && h.tags.length; }), tc = {};
+    tagged.forEach(function (h) { h.tags.forEach(function (k) { if (ERROR_LABEL[k]) tc[k] = (tc[k] || 0) + 1; }); });
+    res.errors = { tagged: tagged.length, list: Object.keys(tc).map(function (k) { return { k: k, label: ERROR_LABEL[k], n: tc[k] }; }).sort(function (a, b) { return b.n - a.n; }) };
+    // 2. qualifiers + 3. cue categories: miss rate on attempts whose stem contains them
+    var qual = {}, cat = {};
+    pr.forEach(function (h) {
+      var x = an(h.itemId); if (!x) { if (h.frac < 1) res.unmatched++; return; }
+      var miss = h.frac < 1, qs = {}; x.a.quals.forEach(function (w) { qs[w] = 1; });
+      Object.keys(qs).forEach(function (w) { var o = qual[w] || (qual[w] = { word: w, attempts: 0, misses: 0 }); o.attempts++; if (miss) o.misses++; });
+      x.a.cats.forEach(function (c) { var o = cat[c] || (cat[c] = { k: c, label: SA_LABEL[c].label, attempts: 0, misses: 0 }); o.attempts++; if (miss) o.misses++; });
+    });
+    var byMiss = function (a, b) { return b.misses - a.misses || b.attempts - a.attempts; };
+    res.keywords = Object.keys(qual).map(function (k) { return qual[k]; }).filter(function (o) { return o.misses > 0; }).sort(byMiss);
+    res.cues = Object.keys(cat).map(function (k) { return cat[k]; }).filter(function (o) { return o.misses > 0; }).sort(byMiss);
+    // 4. distractor patterns (single/sata misses with recorded picks)
+    var dp = {}, picked = 0, repeat = { items: 0, list: [] }, picksBy = {};
+    misses.forEach(function (h) {
+      if (!Array.isArray(h.pick)) return; var x = an(h.itemId); if (!x || !x.item.options || !(x.item.type === 'single' || x.item.type === 'sata')) return;
+      var wrong = h.pick.filter(function (i) { return x.item.answer.indexOf(i) === -1; }); if (!wrong.length) return; picked++;
+      var pats = {}; wrong.forEach(function (i) { distractorPatterns(x.item.options[i]).forEach(function (p) { pats[p] = 1; }); });
+      Object.keys(pats).forEach(function (p) { dp[p] = (dp[p] || 0) + 1; });
+      (picksBy[h.itemId] = picksBy[h.itemId] || []).push(wrong);
+    });
+    Object.keys(picksBy).forEach(function (id) { var l = picksBy[id]; if (l.length < 2) return; var c = {}; l.forEach(function (w) { w.forEach(function (i) { c[i] = (c[i] || 0) + 1; }); }); var rep = Object.keys(c).filter(function (i) { return c[i] >= 2; }); if (rep.length) { repeat.items++; repeat.list.push({ itemId: id, options: rep.map(Number) }); } });
+    res.distractors = { misses: picked, list: DISTRACTOR_RULES.filter(function (r) { return dp[r[0]]; }).map(function (r) { return { k: r[0], label: r[2], n: dp[r[0]] }; }).sort(function (a, b) { return b.n - a.n; }), repeat: repeat };
+    // 5. first attempt vs later attempts on the same items (later attempts come after the rationale was shown)
+    var byItem = {}; pr.slice().sort(function (a, b) { return (a.ts || 0) - (b.ts || 0); }).forEach(function (h) { (byItem[h.itemId] = byItem[h.itemId] || []).push(h); });
+    var f = [], l = [];
+    Object.keys(byItem).forEach(function (id) { var a = byItem[id]; if (a.length < 2) return; f.push(a[0].frac); a.slice(1).forEach(function (h) { l.push(h.frac); }); });
+    res.review = { items: f.length, first: f.length ? mean(f) : null, later: l.length ? mean(l) : null, laterAttempts: l.length };
+    // 6. trend by Client Needs area and Clinical Judgment step: last 5 study days vs the 5 before
+    var days = []; pr.forEach(function (h) { var d = dayKey(h.ts || 0); if (days.indexOf(d) === -1) days.push(d); }); days.sort();
+    var recent = days.slice(-5), earlier = days.slice(-10, -5);
+    function trend(field, list) {
+      return list.map(function (k) {
+        var r = { k: k, recent: { n: 0, p: 0 }, earlier: { n: 0, p: 0 } };
+        pr.forEach(function (h) { if (h[field] !== k) return; var d = dayKey(h.ts || 0), g = recent.indexOf(d) !== -1 ? r.recent : earlier.indexOf(d) !== -1 ? r.earlier : null; if (g) { g.n++; g.p += h.frac; } });
+        [r.recent, r.earlier].forEach(function (g) { g.pct = g.n ? g.p / g.n : null; });
+        r.change = r.recent.n >= 5 && r.earlier.n >= 5 ? r.recent.pct - r.earlier.pct : null; return r;
+      }).filter(function (r) { return r.recent.n || r.earlier.n; });
+    }
+    res.trend = { days: days.length, recentDays: recent, earlierDays: earlier, areas: trend('area', AREAS), steps: trend('step', STEPS),
+      daily: days.slice(-10).map(function (d) { var n = 0, p = 0; pr.forEach(function (h) { if (dayKey(h.ts || 0) === d) { n++; p += h.frac; } }); return { day: d, n: n, pct: n ? p / n : 0 }; }) };
+    res.enough = { misses: misses.length >= minMisses, tags: tagged.length >= 3, distractors: picked >= minMisses, review: f.length >= 3, trend: earlier.length >= 1 };
+    return res;
+  }
   function pct(x) { return Math.round(x * 100) + '%'; }
   var api = { AREAS: AREAS, STEPS: STEPS, CJ: CJ, DOMAINS: DOMAINS, SHORT: SHORT, RATINGS: RATINGS, SEV: SEV, TEST_PLAN: TEST_PLAN, STEP_PROMPTS: STEP_PROMPTS,
     normalizeArea: normalizeArea, normalizeStep: normalizeStep, normalizeRating: normalizeRating, parseCprText: parseCprText, findDate: findDate, sortReports: sortReports,
@@ -1269,7 +1607,9 @@ KIND: standalone   (on a CASE line block: items are served one by one, not as a 
     estimateAbility: estimateAbility, difficultyToB: difficultyToB, createMock: createMock, mockReport: mockReport, MOCK_PRESETS: MOCK_PRESETS, hashStr: hashStr, pct: pct,
     looksLikeQbank: looksLikeQbank, parseQbank: parseQbank, mapQbankItem: mapQbankItem, parseFlashcards: parseFlashcards, looksLikeFlashcards: looksLikeFlashcards,
     leitnerUpdate: leitnerUpdate, isDue: isDue, buildDeck: buildDeck, leitnerSummary: leitnerSummary, isPharmCard: isPharmCard, LEITNER_DAYS: LEITNER_DAYS,
-    keyWords: keyWords, keyWordsHtml: keyWordsHtml, itemKeyWords: itemKeyWords, KW_WHY: KW_WHY };
+    keyWords: keyWords, keyWordsHtml: keyWordsHtml, itemKeyWords: itemKeyWords, KW_WHY: KW_WHY,
+    SA_CATS: SA_CATS, analyzeStem: analyzeStem, itemStemAnalysis: itemStemAnalysis, stemHtml: stemHtml, questionTask: questionTask, judgeValue: judgeValue, exhibitFindings: exhibitFindings, itemContextText: itemContextText,
+    rationaleMentions: rationaleMentions, userAnswerText: userAnswerText, ERROR_TAGS: ERROR_TAGS, suggestErrorTags: suggestErrorTags, distractorPatterns: distractorPatterns, reasoningAnalytics: reasoningAnalytics, PROGRESS_VERSION: PROGRESS_VERSION };
   if (typeof module !== 'undefined' && module.exports) module.exports = api; else root.Core = api;
 })(this);
 
@@ -1286,7 +1626,7 @@ window.SAMPLE_FLASHCARDS = [{"id":"gz-bb-1","class":"Beta blockers","front":"Met
   'use strict';
   var C = window.Core, A = C.AREAS, S = C.STEPS;
   var K = { reports: 'nclexcs.cprReports.v1', progress: 'nclexcs.progress.v1', history: 'nclexcs.history.v1', theme: 'nclexcs.theme', lastMock: 'nclexcs.lastMock.v1',
-    leitner: 'nclexcs.leitner.v1', notes: 'nclexcs.readingNotes.v1', legacyBank: 'nclexcs.bank.v1', kw: 'nclexcs.kwHighlight.v1', mocks: 'nclexcs.mocks.v1' };
+    leitner: 'nclexcs.leitner.v1', notes: 'nclexcs.readingNotes.v1', legacyBank: 'nclexcs.bank.v1', kw: 'nclexcs.kwHighlight.v1', mocks: 'nclexcs.mocks.v1', kwAll: 'nclexcs.kwAll.v1', teach: 'nclexcs.teachMode.v1' };
   function load(k, d) { try { var v = localStorage.getItem(k); return v ? JSON.parse(v) : d; } catch (e) { return d; } }
   function save(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); return true; } catch (e) { console.warn('save failed', k, e); return false; } }
   function $(id) { return document.getElementById(id); }
@@ -1339,6 +1679,10 @@ window.SAMPLE_FLASHCARDS = [{"id":"gz-bb-1","class":"Beta blockers","front":"Met
   var kwOn = load(K.kw, true) !== false;
   $('kwToggle').checked = kwOn;
   $('kwToggle').onchange = function () { kwOn = $('kwToggle').checked; save(K.kw, kwOn); if (typeof cur !== 'undefined' && cur && cur.locked) showKeyWords(); };
+  // ---------- all-cue legend view (default off = compact 4-cue view) + Teaching mode (default off) ----------
+  var kwAll = load(K.kwAll, false) === true, teachOn = load(K.teach, false) === true;
+  $('teachToggle').checked = teachOn;
+  $('teachToggle').onchange = function () { teachOn = $('teachToggle').checked; save(K.teach, teachOn); };
   $('themeBtn').onclick = function () { var t = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'; save(K.theme, t); applyTheme(t); };
 
   // ---------- tabs ----------
@@ -1469,7 +1813,51 @@ window.SAMPLE_FLASHCARDS = [{"id":"gz-bb-1","class":"Beta blockers","front":"Met
     };
     return '<table class="heat">' + head + (extra ? row(extra, '') : '') + list.map(function (a) { return row(a, a.rank); }).join('') + '</table>';
   }
+  // ---------- Reasoning analytics (practice attempts; rule-based + your confirmed error tags) ----------
+  function itemLookup() { var m = {}; bank.forEach(function (c) { c.items.forEach(function (it) { m[it.id] = { item: it, 'case': c }; }); }); return function (id) { return m[id] || null; }; }
+  function localDay(ts) { var d = new Date(ts); return d.getFullYear() + '-' + (d.getMonth() < 9 ? '0' : '') + (d.getMonth() + 1) + '-' + (d.getDate() < 10 ? '0' : '') + d.getDate(); }
+  function pc(x) { return x == null ? '-' : Math.round(x * 100) + '%'; }
+  function bar(x) { return '<span class="minibar"><i style="width:' + Math.round(Math.max(0, Math.min(1, x)) * 100) + '%"></i></span>'; }
+  function renderReasoning() {
+    var el = $('reasonDash'); if (!el) return;
+    var r = C.reasoningAnalytics(history, itemLookup(), { dayKey: localDay }), mm = r.minMisses;
+    var flag = function (t) { return '<p class="flag small">' + t + '</p>'; };
+    var h = '<h2>Reasoning analytics</h2><p class="mute small">From your practice answers on this device (mock answers are not included). Based on <b>' + r.attempts + '</b> attempt' + (r.attempts === 1 ? '' : 's') + ' and <b>' + r.misses + '</b> miss' + (r.misses === 1 ? '' : 'es') + '. ' + AUTO + ' sections use fixed text rules on the questions; error types come only from tags you saved.' + (r.unmatched ? ' ' + r.unmatched + ' missed answer' + (r.unmatched === 1 ? ' is' : 's are') + ' for items not in the current bank and could not be analyzed.' : '') + '</p>';
+    // errors
+    h += '<h3>Most frequent reasoning errors <span class="mute small">(your tags)</span></h3>';
+    var tot = r.errors.list.reduce(function (a, x) { return a + x.n; }, 0);
+    h += r.enough.tags ? '<table class="rtab"><tr><th>Error type</th><th>Times tagged</th><th></th></tr>' + r.errors.list.map(function (x) { return '<tr><td>' + esc(x.label) + '</td><td>' + x.n + '</td><td>' + bar(x.n / (r.errors.list[0].n || 1)) + '</td></tr>'; }).join('') + '</table><p class="mute small">Based on ' + r.errors.tagged + ' tagged answer' + (r.errors.tagged === 1 ? '' : 's') + ' (' + tot + ' tags).</p>'
+      : flag('Not enough data yet: ' + r.errors.tagged + ' tagged answer' + (r.errors.tagged === 1 ? '' : 's') + '. Save tags on at least 3 misses to see a pattern.');
+    // keywords
+    h += '<h3>Frequently overlooked qualifiers ' + AUTO + '</h3>';
+    h += r.enough.misses && r.keywords.length ? '<table class="rtab"><tr><th>Word in the question</th><th>Missed</th><th>Miss rate</th></tr>' + r.keywords.slice(0, 8).map(function (x) { return '<tr><td><mark class="kw kc kc-qual">' + esc(x.word) + '</mark></td><td>' + x.misses + ' of ' + x.attempts + '</td><td>' + pc(x.misses / x.attempts) + ' ' + bar(x.misses / x.attempts) + '</td></tr>'; }).join('') + '</table><p class="mute small">Your overall miss rate: ' + pc(r.attempts ? r.misses / r.attempts : null) + '. A qualifier well above that is worth slowing down for.</p>'
+      : flag('Not enough data yet: based on ' + r.misses + ' miss' + (r.misses === 1 ? '' : 'es') + ' (needs ' + mm + '+ misses on items with qualifiers like NOT, FIRST, PRIORITY).');
+    // cues
+    h += '<h3>Clinical cue types in missed questions ' + AUTO + '</h3>';
+    h += r.enough.misses && r.cues.length ? '<table class="rtab"><tr><th>Cue type in the stem</th><th>Missed</th><th>Miss rate</th></tr>' + r.cues.map(function (x) { return '<tr><td><mark class="kw kc kc-' + x.k + '">' + esc(x.label) + '</mark></td><td>' + x.misses + ' of ' + x.attempts + '</td><td>' + pc(x.misses / x.attempts) + ' ' + bar(x.misses / x.attempts) + '</td></tr>'; }).join('') + '</table>'
+      : flag('Not enough data yet: based on ' + r.misses + ' miss' + (r.misses === 1 ? '' : 'es') + ' (needs ' + mm + '+).');
+    // distractors
+    h += '<h3>Repeated distractor patterns ' + AUTO + '</h3>';
+    h += r.enough.distractors ? (r.distractors.list.length ? '<table class="rtab"><tr><th>Wrong option you picked looked like</th><th>Misses</th></tr>' + r.distractors.list.map(function (x) { return '<tr><td>' + esc(x.label) + '</td><td>' + x.n + ' of ' + r.distractors.misses + '</td></tr>'; }).join('') + '</table>' : '<p class="small">No wording pattern stood out in the wrong options you picked.</p>') +
+        '<p class="small">Same wrong option picked again on a repeat attempt: <b>' + r.distractors.repeat.items + '</b> item' + (r.distractors.repeat.items === 1 ? '' : 's') + '.</p><p class="mute small">Multiple-choice and select-all misses only (' + r.distractors.misses + ' so far); patterns come from the option wording, so things like "the most invasive option" cannot be detected.</p>'
+      : flag('Not enough data yet: ' + r.distractors.misses + ' multiple-choice/select-all miss' + (r.distractors.misses === 1 ? '' : 'es') + ' with your picks recorded (needs ' + mm + '+; picks are recorded from this update on).');
+    // review
+    h += '<h3>Accuracy before vs after reviewing rationales</h3>';
+    h += r.enough.review ? '<table class="rtab"><tr><th></th><th>Accuracy</th></tr><tr><td>First attempt</td><td>' + pc(r.review.first) + ' ' + bar(r.review.first) + '</td></tr><tr><td>Later attempts (after seeing the rationale)</td><td>' + pc(r.review.later) + ' ' + bar(r.review.later) + '</td></tr></table><p class="mute small">Based on ' + r.review.items + ' item' + (r.review.items === 1 ? '' : 's') + ' you answered more than once (' + r.review.laterAttempts + ' later attempt' + (r.review.laterAttempts === 1 ? '' : 's') + '). Repeat items can feel easier because they are familiar.</p>'
+      : flag('Not enough data yet: ' + r.review.items + ' item' + (r.review.items === 1 ? '' : 's') + ' answered more than once (needs 3+). "Review missed" builds this.');
+    // trend
+    h += '<h3>Change over time by area and step</h3>';
+    if (!r.enough.trend) h += flag('Not enough data yet: practice on ' + r.trend.days + ' day' + (r.trend.days === 1 ? '' : 's') + ' so far (needs 6+ study days to compare your last 5 days with the 5 before).');
+    else {
+      var row = function (x) { var ch = x.change; return '<tr><td>' + esc(x.k) + '</td><td>' + pc(x.earlier.pct) + ' <span class="mute">(' + x.earlier.n + ')</span></td><td>' + pc(x.recent.pct) + ' <span class="mute">(' + x.recent.n + ')</span></td><td>' + (ch == null ? '<span class="mute">too few items</span>' : '<b class="' + (ch > 0.05 ? 'up' : ch < -0.05 ? 'down' : '') + '">' + (ch > 0 ? '+' : '') + Math.round(ch * 100) + ' pts</b>') + '</td></tr>'; };
+      var head = function (t) { return '<tr><th>' + t + '</th><th>Earlier 5 days</th><th>Last 5 days</th><th>Change</th></tr>'; };
+      h += '<div class="scroll"><table class="rtab">' + head('Client Needs area') + r.trend.areas.map(row).join('') + head('Clinical judgment step') + r.trend.steps.map(row).join('') + '</table></div><p class="mute small">Days = days you practiced. Change is shown only when both periods have 5+ items.</p>';
+    }
+    if (r.trend.daily.length) h += '<p class="small"><b>Daily accuracy, last ' + r.trend.daily.length + ' study day' + (r.trend.daily.length === 1 ? '' : 's') + ':</b></p><div class="daily">' + r.trend.daily.map(function (d) { return '<span title="' + esc(d.day) + ': ' + pc(d.pct) + ' of ' + d.n + ' items"><i style="height:' + Math.max(4, Math.round(d.pct * 48)) + 'px"></i><small>' + esc(d.day.slice(5)) + '</small></span>'; }).join('') + '</div>';
+    el.innerHTML = h;
+  }
   function renderCpr() {
+    try { renderReasoning(); } catch (e) { console.warn('reasoning analytics', e); }
     var an = analysis(), rec = C.recommend(an), rs = an.reports, sh = $('startHere');
     if (!rec) sh.innerHTML = '<h2>Start here</h2><p>Add your CPRs below - or press <b>Import my CPR history</b> and pick your CPR backup file (.json). Once at least one is in, this box will name the 1-2 areas to work on first, so studying feels less scattered.</p>';
     else {
@@ -1662,17 +2050,22 @@ window.SAMPLE_FLASHCARDS = [{"id":"gz-bb-1","class":"Beta blockers","front":"Met
     meta.anxiety = cur.anxiety = C.anxietyFlag(it, cur.changes ? cur.initial : null, cur.resp); // Testing Anxiety Flag: first answer right, changed to wrong
     document.querySelectorAll('#qBody input, #qBody select').forEach(function (x) { x.disabled = true; });
     var p = progress[it.id] || { attempts: 0, points: 0 }; p.attempts++; p.points += sc.frac; p.lastCorrect = sc.correct; p.last = now(); p.lastAnxiety = meta.anxiety; if (meta.anxiety) p.anxiety = (p.anxiety || 0) + 1; progress[it.id] = p; save(K.progress, progress);
-    history.push({ itemId: it.id, area: it.area || null, step: it.step || null, frac: sc.frac, correct: sc.correct, ts: now(), mode: session.mode, anxiety: meta.anxiety || undefined });
+    var hEntry = { itemId: it.id, area: it.area || null, step: it.step || null, frac: sc.frac, correct: sc.correct, ts: now(), mode: session.mode, anxiety: meta.anxiety || undefined };
+    if (!sc.correct && (it.type === 'single' || it.type === 'sata')) hEntry.pick = cur.resp.slice(); // chosen options on a miss (for distractor-pattern analytics)
+    history.push(hEntry); cur.hEntry = hEntry; cur.sc = sc;
     if (history.length > 20000) history = history.slice(-20000);
     save(K.history, history);
     session.results.push({ area: it.area, step: it.step, frac: sc.frac, correct: sc.correct }); session.switchLog.push(meta);
     if (meta.anxiety) session.anxietyItems.push({ q: cur.stem, answer: C.correctAnswerText(it), area: it.area, step: it.step }); // shown only after the mock ends
     if (session.mode === 'mock') { session.mock.record(sc.frac, meta); session.i++; if (session.mock.done) return finishMock(); return nextItem(); }
-    showFeedback(it, sc);
-    $('lockBtn').classList.add('hidden'); $('nextBtn').classList.remove('hidden');
+    $('lockBtn').classList.add('hidden');
     $('nextBtn').textContent = session.i + 1 < session.queue.length ? 'Next' : 'See summary';
+    if (teachOn) { cur.teach = { stage: 1 }; renderTeach(); return; }
+    $('nextBtn').classList.remove('hidden');
+    showFeedback(it, sc);
   };
-  function showFeedback(it, sc) {
+  function markAnswers(it) {
+    if (cur.marked) return; cur.marked = true;
     if (it.type === 'single' || it.type === 'sata') document.querySelectorAll('#qBody .opt').forEach(function (l) { var i = +l.dataset.i; if (it.answer.indexOf(i) !== -1) l.classList.add('correct'); else if (cur.resp.indexOf(i) !== -1) l.classList.add('wrong'); });
     if (it.type === 'matrix' && it.multi) document.querySelectorAll('#qBody tr[data-r]').forEach(function (tr) {
       var ri = +tr.dataset.r, tds = tr.querySelectorAll('td'), sel = cur.resp[ri] || [];
@@ -1685,34 +2078,125 @@ window.SAMPLE_FLASHCARDS = [{"id":"gz-bb-1","class":"Beta blockers","front":"Met
     if (it.type === 'cloze') document.querySelectorAll('#qBody select').forEach(function (s) { s.classList.add(+s.value === it.blanks[+s.dataset.b].answer ? 'correct' : 'wrong'); });
     if (it.type === 'highlight') { var segs = it.segments || C.parseHighlight(it.text); document.querySelectorAll('#qBody .hl').forEach(function (sp) { var sg = segs[+sp.dataset.s], sel = cur.resp.indexOf(+sp.dataset.s) !== -1; if (sg.correct) sp.classList.add('correct'); else if (sel) sp.classList.add('wrong'); }); }
     if (it.type === 'bowtie') document.querySelectorAll('#qBody .opt[data-tok]').forEach(function (l) { var p = l.dataset.tok.split(':'), ok = it[p[0]].answer.indexOf(+p[1]) !== -1; if (ok) l.classList.add('correct'); else if (cur.resp.indexOf(l.dataset.tok) !== -1) l.classList.add('wrong'); l.querySelector('input').disabled = true; });
+  }
+  function feedbackHtml(it, sc) {
     var rule = C.ruleText(it); rule = rule ? ' (' + rule + ')' : '';
-    $('qFeedback').innerHTML = (cur.anxiety ? ANXIETY_HTML : '') + '<div class="notice ' + (sc.correct ? '' : 'warn') + '"><b>' + (sc.correct ? 'Full credit!' : sc.earned ? 'Partial credit - good progress.' : 'Not this time - a good one to learn from.') + '</b> Score: <span id="scoreVal">' + sc.earned + ' / ' + sc.max + '</span>' + esc(rule) +
-      '<br><b>Answer:</b> ' + esc(C.correctAnswerText(it)) + (it.type === 'ordered' ? ' (option numbers, first to last)' : '') + (it.rationale ? '<br><b>Rationale:</b> ' + esc(it.rationale) : '') + (it.strategy ? '<br><b>Strategy:</b> ' + esc(it.strategy) : '') + (it.keyNote ? '<br><span class="mute small"><b>Key note:</b> ' + esc(it.keyNote) + '</span>' : '') + (it.autoTagged ? '<br><span class="mute small">Area/step tags on this item were inferred automatically and may be off.</span>' : '') + (cur.changes ? '<br><span class="mute small">You changed your answer ' + cur.changes + ' time' + (cur.changes === 1 ? '' : 's') + ' before locking it in.</span>' : '') + '</div>';
-    showKeyWords();
+    return (cur.anxiety ? ANXIETY_HTML : '') + '<div class="notice ' + (sc.correct ? '' : 'warn') + '"><b>' + (sc.correct ? 'Full credit!' : sc.earned ? 'Partial credit - good progress.' : 'Not this time - a good one to learn from.') + '</b> Score: <span id="scoreVal">' + sc.earned + ' / ' + sc.max + '</span>' + esc(rule) +
+      '<br><b>Answer:</b> ' + esc(C.correctAnswerText(it)) + (it.type === 'ordered' ? ' (option numbers, first to last)' : '') + (it.rationale ? '<br><span class="srcb">Source</span> <b>Source rationale:</b> ' + esc(it.rationale) : '<br><span class="mute small">This item has no source rationale.</span>') + (it.strategy ? '<br><span class="srcb">Source</span> <b>Source strategy:</b> ' + esc(it.strategy) : '') + (it.keyNote ? '<br><span class="mute small"><b>Key note:</b> ' + esc(it.keyNote) + '</span>' : '') + (it.autoTagged ? '<br><span class="mute small">Area/step tags on this item were inferred automatically and may be off.</span>' : '') + (cur.changes ? '<br><span class="mute small">You changed your answer ' + cur.changes + ' time' + (cur.changes === 1 ? '' : 's') + ' before locking it in.</span>' : '') + '</div>';
+  }
+  function showFeedback(it, sc) {
+    markAnswers(it);
+    $('qFeedback').innerHTML = feedbackHtml(it, sc);
+    showKeyWords(); renderTagPanel();
   }
   var ANXIETY_MSG = 'You originally chose the correct answer but changed it. Trust your gut!';
   var ANXIETY_HTML = '<div class="anxflag" id="anxFlag" role="status"><b>&#9888;&#65039; Testing Anxiety Flag:</b> ' + ANXIETY_MSG + '</div>';
   // ---------- key words to catch: only after an answer is locked in, never in the mock (it has no item review) ----------
-  function kwActive() { return kwOn && session && session.mode !== 'mock' && cur && cur.locked; }
+  /** 'full' (every category + legend), 'compact' (the original max-4 key words) or null. Never in the mock, never before Lock it in. */
+  function hlMode() { if (!session || session.mode === 'mock' || !cur || !cur.locked) return null; if (cur.teach) return 'full'; if (!kwOn) return null; return kwAll ? 'full' : 'compact'; }
+  function kwActive() { return !!hlMode(); }
+  function stemAnalysis() { return cur.sa || (cur.sa = C.itemStemAnalysis(cur.item, cur.stem, bank[cur.ref.ci])); }
+  var AUTO = '<span class="autob" title="Found by fixed text rules in this app, not written by a person or the question source">Auto-detected</span>';
+  function legendHtml(a) {
+    return '<div class="kclegend" id="kcLegend">' + C.SA_CATS.map(function (c) { var n = a.counts[c.k] || 0; return '<span class="kcl' + (n ? '' : ' off') + '" title="' + esc(c.desc) + '"><mark class="kw kc kc-' + c.k + '">' + esc(c.label) + '</mark>' + (n ? ' ' + n : '') + '</span>'; }).join('') +
+      '<span class="kcl"><span class="kc-task">question being asked</span></span></div>';
+  }
+  function taskHtml(a) {
+    var t = a.task;
+    return '<div class="kctask" id="kcTask"><b>What the question is asking:</b> ' + (t.text ? '&ldquo;' + esc(t.text) + '&rdquo;' : '<span class="flag">Not enough data in this item to determine the exact question sentence.</span>') +
+      (t.hints.length ? '<ul>' + t.hints.map(function (h) { return '<li>' + esc(h.text) + '</li>'; }).join('') + '</ul>' : '') + '</div>';
+  }
   function showKeyWords() {
     var old = $('kwNote'); if (old) old.parentNode.removeChild(old);
     if (!cur) return;
-    if (!kwActive()) { $('qStem').textContent = cur.stem; markExhibit(); return; }
+    var mode = hlMode();
+    if (!mode) { $('qStem').textContent = cur.stem; markExhibit(); return; }
     cur.kw = cur.kw || C.itemKeyWords(cur.item, cur.stem, 4);
-    $('qStem').innerHTML = C.keyWordsHtml(cur.stem, cur.kw.spans);
-    if (cur.kw.notes.length) {
-      var d = document.createElement('div'); d.id = 'kwNote'; d.className = 'kwnote small';
-      d.innerHTML = '<b>Key words to catch</b> <span class="mute">(auto-detected key words)</span><ul>' + cur.kw.notes.map(function (n) {
-        return '<li><mark class="kw kw-' + n.cls + '">' + esc(n.text) + '</mark> ' + esc(n.why) + '</li>'; }).join('') + '</ul>';
-      $('qFeedback').appendChild(d);
+    var d = document.createElement('div'); d.id = 'kwNote'; d.className = 'kwnote small';
+    if (mode === 'full') {
+      var a = stemAnalysis(); $('qStem').innerHTML = C.stemHtml(cur.stem, a);
+      if (cur.teach) { markExhibit(); return; } // the Teaching panel shows its own legend
+      d.innerHTML = '<div class="kwhead"><b>Question cues</b> ' + AUTO + ' <button class="linkbtn" id="kwAllBtn">Show fewer</button></div>' + legendHtml(a) + taskHtml(a);
+    } else {
+      $('qStem').innerHTML = C.keyWordsHtml(cur.stem, cur.kw.spans);
+      d.innerHTML = '<div class="kwhead"><b>Key words to catch</b> <span class="mute">(auto-detected key words)</span> <button class="linkbtn" id="kwAllBtn">Show all cues + legend</button></div>' + (cur.kw.notes.length ? '<ul>' + cur.kw.notes.map(function (n) {
+        return '<li><mark class="kw kw-' + n.cls + '">' + esc(n.text) + '</mark> ' + esc(n.why) + '</li>'; }).join('') + '</ul>' : '');
     }
+    var tp = $('tagPanel'); if (tp) $('qFeedback').insertBefore(d, tp); else $('qFeedback').appendChild(d);
+    $('kwAllBtn').onclick = function () { kwAll = !kwAll; save(K.kwAll, kwAll); showKeyWords(); };
     markExhibit();
+  }
+  // ---------- error tags (after a miss; optional on a shaky correct answer) ----------
+  function renderTagPanel() {
+    var old = $('tagPanel'); if (old) old.parentNode.removeChild(old);
+    if (!cur || !cur.hEntry || !session || session.mode === 'mock') return;
+    var it = cur.item, miss = !cur.sc.correct, d = document.createElement('div'); d.id = 'tagPanel'; d.className = 'tagpanel small';
+    if (!miss && !cur.tagOpen && !(cur.hEntry.tags && cur.hEntry.tags.length)) {
+      d.innerHTML = '<button class="linkbtn" id="tagOpen">Right, but unsure? Tag what felt shaky</button>'; $('qFeedback').appendChild(d);
+      $('tagOpen').onclick = function () { cur.tagOpen = true; renderTagPanel(); }; return;
+    }
+    if (!cur.tagSel) {
+      cur.sugg = miss ? C.suggestErrorTags(it, { frac: cur.sc.frac, anxiety: cur.anxiety, resp: cur.resp, analysis: stemAnalysis() }) : [];
+      cur.tagSel = (cur.hEntry.tags && cur.hEntry.tags.slice()) || cur.sugg.map(function (x) { return x.k; });
+    }
+    var sug = {}; cur.sugg.forEach(function (x) { sug[x.k] = x.why; });
+    var saved = cur.hEntry.tags && cur.hEntry.tags.length;
+    d.innerHTML = '<div class="kwhead"><b>' + (miss ? 'What went wrong? Pick all that apply' : 'What felt shaky? Pick all that apply') + '</b></div>' +
+      (cur.sugg.length ? '<p class="mute">' + AUTO + ' suggestions are pre-checked from rules (item type, qualifiers in the question, the anxiety flag). Uncheck anything that does not fit; nothing is saved until you press Save.</p>' : '') +
+      '<div class="tags">' + C.ERROR_TAGS.map(function (t) {
+        return '<label class="tagopt"><input type="checkbox" value="' + t.k + '"' + (cur.tagSel.indexOf(t.k) !== -1 ? ' checked' : '') + '> ' + esc(t.label) + (sug[t.k] ? ' <span class="sugg" title="' + esc(sug[t.k]) + '">suggested</span><span class="mute why"> ' + esc(sug[t.k]) + '</span>' : '') + '</label>';
+      }).join('') + '</div><div class="row"><button class="btn sec" id="tagSave">Save tags</button><span id="tagMsg" class="mute">' + (saved ? 'Saved: ' + cur.hEntry.tags.length + ' tag' + (cur.hEntry.tags.length === 1 ? '' : 's') + '.' : '') + '</span></div>';
+    $('qFeedback').appendChild(d);
+    d.querySelectorAll('input').forEach(function (inp) { inp.onchange = function () { var k = inp.value, i = cur.tagSel.indexOf(k); if (inp.checked && i === -1) cur.tagSel.push(k); if (!inp.checked && i !== -1) cur.tagSel.splice(i, 1); $('tagMsg').textContent = 'Not saved yet.'; }; });
+    $('tagSave').onclick = function () {
+      if (cur.tagSel.length) { cur.hEntry.tags = cur.tagSel.slice(); cur.hEntry.tagTs = now(); } else { delete cur.hEntry.tags; delete cur.hEntry.tagTs; }
+      save(K.history, history); $('tagMsg').textContent = cur.tagSel.length ? 'Saved: ' + cur.tagSel.length + ' tag' + (cur.tagSel.length === 1 ? '' : 's') + '.' : 'Tags cleared.';
+    };
+  }
+  // ---------- Teaching mode: reveal the explanation in 5 stages (practice only) ----------
+  var TEACH = ['Identify the important information', 'Interpret the clinical findings', 'Determine the immediate concern', 'Select the safest nursing action', 'Review the complete rationale'];
+  var GENERAL_STRATEGY = '<div class="genstrat"><b>General strategy</b> <span class="mute">(a general test-taking framework, not specific to this item)</span>: airway, breathing, circulation first; physiological needs before psychosocial (Maslow); safety and risk reduction; acute before chronic, unstable before stable, actual problems before potential ones; assess before acting unless the situation is an emergency.</div>';
+  function findingsHtml() {
+    var it = cur.item, c = bank[cur.ref.ci], a = stemAnalysis(), ctxText = C.itemContextText(c, it);
+    var ex = Object.assign({}, (c && c.exhibits) || {}, it.exhibits || {}); ex.scenario = [(c && c.scenario) || '', it.context || ''].join('\n');
+    var stemF = a.spans.filter(function (s) { return s.cat === 'abn' || (s.cat === 'val' && s.judge && s.judge.key) || s.cat === 'det' || s.cat === 'crit'; }).map(function (s) { return Object.assign({ text: s.text, cat: s.cat, where: 'question' }, s.judge || {}); });
+    var exF = C.exhibitFindings(ex, ctxText).filter(function (f) { return f.cat === 'abn' || f.cat === 'det' || f.cat === 'crit' || (f.cat === 'val' && f.key); });
+    var all = stemF.concat(exF).slice(0, 16), more = stemF.length + exF.length - all.length;
+    if (!all.length) return '<p class="flag">Not enough data in this item to identify abnormal values or deterioration cues (none detected in the question or the case panel).</p>';
+    var WH = { question: 'question', scenario: 'case', notes: "nurses' notes", vitals: 'vitals', labs: 'labs', orders: 'orders' };
+    var rows = all.map(function (f) {
+      var st = f.status === 'low' ? '<span class="pill r-Below">low</span>' : f.status === 'high' ? '<span class="pill r-Below">high</span>' : f.status === 'normal' ? '<span class="pill r-Above">in range</span>' : '';
+      var ref = f.range ? esc(f.range) + ' <span class="mute">(' + (f.src === 'case' ? 'range printed in the case' : 'typical adult reference range') + ')</span>' : f.note ? '<span class="flag">' + esc('Not enough data to judge: ' + f.note) + '</span>' : '<span class="mute">' + esc(({ det: 'Deterioration indicator', crit: 'Critical clinical finding' })[f.cat] || '') + ': ' + esc(f.cat === 'det' ? 'a sign the client may be getting worse' : 'a finding that can signal an urgent problem') + '</span>';
+      var q = C.rationaleMentions(it.rationale, f.key ? (f.name || f.text) : f.text);
+      return '<tr><td><mark class="kw kc kc-' + f.cat + '">' + esc(f.text) + '</mark><br><span class="mute">' + esc(WH[f.where] || f.where) + '</span></td><td>' + st + '</td><td>' + ref + (q.length ? '<div class="srcq"><span class="srcb">Source</span> ' + q.map(esc).join(' ') + '</div>' : '') + '</td></tr>';
+    }).join('');
+    return '<div class="scroll"><table class="findings"><tr><th>Finding</th><th>Status</th><th>Reference / meaning</th></tr>' + rows + '</table></div>' + (more > 0 ? '<p class="mute">' + more + ' more not shown.</p>' : '') +
+      (it.rationale ? '' : '<p class="flag">This item has no source rationale, so no interpretation of these findings can be quoted.</p>');
+  }
+  function renderTeach() {
+    var it = cur.item, t = cur.teach, sc = cur.sc, a = stemAnalysis(), body = '';
+    if (t.stage >= 4) markAnswers(it);
+    if (t.stage === 1) body = '<p>Highlighted in the question above. Hover a highlight to see why it matters.</p>' + legendHtml(a) +
+      '<ul class="cuelist">' + (a.spans.length ? a.spans.map(function (s) { return '<li><mark class="kw kc kc-' + s.cat + '">' + esc(s.text) + '</mark> <span class="mute">' + esc(C.SA_CATS.filter(function (c) { return c.k === s.cat; })[0].label) + '</span></li>'; }).join('') : '<li class="flag">Not enough data in this item to highlight cues (no rule matched the question text).</li>') + '</ul>';
+    else if (t.stage === 2) body = findingsHtml();
+    else if (t.stage === 3) body = taskHtml(a) + '<p><b>Clinical judgment step:</b> ' + (it.step ? esc(it.step) + (it.autoTagged ? ' <span class="mute">(tag inferred automatically; may be off)</span>' : ' <span class="mute">(from the item)</span>') : '<span class="flag">Not enough data in this item to determine the clinical judgment step (not tagged).</span>') + '</p>' +
+      (it.area ? '<p><b>Client Needs area:</b> ' + esc(it.area) + '</p>' : '') + GENERAL_STRATEGY;
+    else if (t.stage === 4) body = (cur.anxiety ? ANXIETY_HTML : '') + '<div class="notice ' + (sc.correct ? '' : 'warn') + '"><b>' + (sc.correct ? 'Full credit!' : sc.earned ? 'Partial credit.' : 'Not this time.') + '</b> Score: ' + sc.earned + ' / ' + sc.max +
+      '<br><b>Correct answer:</b> ' + esc(C.correctAnswerText(it)) + '<br><b>Your answer:</b> ' + esc(C.userAnswerText(it, cur.resp)) + '</div><p class="mute">The answer is marked on the options. Why each option is right or wrong comes from the source rationale in the next stage.</p>';
+    else body = feedbackHtml(it, sc);
+    $('qFeedback').innerHTML = '<div class="teach" id="teachPanel" data-stage="' + t.stage + '"><div class="teachhead"><b>Teaching mode</b> <span class="tdots">' + TEACH.map(function (x, i) { return '<i class="' + (i < t.stage ? 'on' : '') + '"></i>'; }).join('') + '</span></div>' +
+      '<h3 id="teachTitle">Stage ' + t.stage + ' of 5: ' + esc(TEACH[t.stage - 1]) + (t.stage < 4 ? ' ' + AUTO : '') + '</h3>' + body +
+      (t.stage < 5 ? '<div class="row"><button class="btn" id="teachNext">Next: ' + esc(TEACH[t.stage]) + '</button><button class="linkbtn" id="teachAll">Skip to full rationale</button></div>' : '') + '</div>';
+    showKeyWords();
+    if (t.stage < 5) { $('nextBtn').classList.add('hidden'); $('teachNext').onclick = function () { t.stage++; renderTeach(); }; $('teachAll').onclick = function () { t.stage = 5; renderTeach(); }; }
+    else { $('nextBtn').classList.remove('hidden'); renderTagPanel(); }
   }
   // marks the stem's lab names, source words, population words and answer-link words where they appear in the case panel (max 4)
   function markExhibit() {
     var body = $('exBody'); if (!body) return;
     body.querySelectorAll('mark.kw-ex').forEach(function (m) { m.replaceWith(document.createTextNode(m.textContent)); }); body.normalize();
-    if (!kwActive() || !cur.kw || document.querySelector('#player .exam').classList.contains('solo')) return;
+    if (!kwActive() || document.querySelector('#player .exam').classList.contains('solo')) return;
+    cur.kw = cur.kw || C.itemKeyWords(cur.item, cur.stem, 4);
     var terms = [];
     cur.kw.spans.forEach(function (sp) {
       var t = sp.type === 'value' ? (/^[A-Za-z][A-Za-z0-9]{1,}/.exec(sp.text) || [''])[0] : /src|link|lab|pop/.test(sp.type) ? sp.text : '';
@@ -1962,17 +2446,19 @@ window.SAMPLE_FLASHCARDS = [{"id":"gz-bb-1","class":"Beta blockers","front":"Met
   // ---------- Save / Load progress file (user state only; merges on load) ----------
   function progressState() {
     return { progress: progress, history: history, leitner: leitner, mocks: load(K.mocks, []), lastMock: load(K.lastMock, null), cprReports: reports, readingNotes: rnotes,
-      settings: { theme: document.documentElement.getAttribute('data-theme'), kwHighlight: kwOn } };
+      settings: { theme: document.documentElement.getAttribute('data-theme'), kwHighlight: kwOn, kwAll: kwAll, teachMode: teachOn } };
   }
   function progressFileName() { var d = new Date(now()), p = function (n) { return (n < 10 ? '0' : '') + n; }; return 'nclex-progress-' + d.getFullYear() + '-' + p(d.getMonth() + 1) + '-' + p(d.getDate()) + '.json'; }
   function progressBlob() { return new Blob([JSON.stringify(C.buildProgressFile(progressState(), now()))], { type: 'application/json' }); }
-  function summaryText(sm) { return 'Loaded progress for ' + sm.questions + ' question' + (sm.questions === 1 ? '' : 's') + ', ' + sm.flashcards + ' flashcard' + (sm.flashcards === 1 ? '' : 's') + ', ' + sm.mocks + ' mock' + (sm.mocks === 1 ? '' : 's') + '.' + (sm.cpr ? ' Added ' + sm.cpr + ' CPR report' + (sm.cpr === 1 ? '' : 's') + '.' : ''); }
+  function summaryText(sm) { return 'Loaded progress for ' + sm.questions + ' question' + (sm.questions === 1 ? '' : 's') + ', ' + sm.flashcards + ' flashcard' + (sm.flashcards === 1 ? '' : 's') + ', ' + sm.mocks + ' mock' + (sm.mocks === 1 ? '' : 's') + '.' + (sm.cpr ? ' Added ' + sm.cpr + ' CPR report' + (sm.cpr === 1 ? '' : 's') + '.' : '') + (sm.tags ? ' Merged error tags on ' + sm.tags + ' answer' + (sm.tags === 1 ? '' : 's') + '.' : ''); }
   function applyProgressFile(d) {
     var m = C.mergeProgress(progressState(), d), st = m.state;
     progress = st.progress; history = st.history; leitner = st.leitner; reports = st.cprReports; rnotes = st.readingNotes;
     save(K.progress, progress); save(K.history, history); save(K.leitner, leitner); save(K.reports, reports); save(K.notes, rnotes); save(K.mocks, st.mocks); if (st.lastMock) save(K.lastMock, st.lastMock);
     if (st.settings.theme === 'dark' || st.settings.theme === 'light') { save(K.theme, st.settings.theme); applyTheme(st.settings.theme); }
     if (typeof st.settings.kwHighlight === 'boolean') { kwOn = st.settings.kwHighlight; save(K.kw, kwOn); $('kwToggle').checked = kwOn; }
+    if (typeof st.settings.kwAll === 'boolean') { kwAll = st.settings.kwAll; save(K.kwAll, kwAll); }
+    if (typeof st.settings.teachMode === 'boolean') { teachOn = st.settings.teachMode; save(K.teach, teachOn); $('teachToggle').checked = teachOn; }
     [renderCpr, renderBank, renderCards, renderPracticeSetup, renderMockSetup].forEach(function (f) { try { f(); } catch (e) {} });
     return m.summary;
   }
